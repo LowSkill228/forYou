@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Я люблю тебя больше всего на свете</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #ffb6c1, #ff69b4, #ffc0cb, #ff85a2);
+    background-size: 400% 400%;
+    animation: bgShift 10s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .text {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 900;
+    font-size: 6vw;
+    text-align: center;
+    padding: 0 20px;
+    opacity: 0;
+    transform: scale(0.5);
+    animation:
+      appear 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+      colorChange 6s linear infinite 1.8s;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6);
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-5deg);
+      filter: blur(10px);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.1) rotate(2deg);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes colorChange {
+    0%   { color: #ffffff; }
+    16%  { color: #ff0059; }
+    33%  { color: #ffd700; }
+    50%  { color: #00e5ff; }
+    66%  { color: #ff00e5; }
+    83%  { color: #7cff00; }
+    100% { color: #ffffff; }
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -10%;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(-110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="text">Я ЛЮБЛЮ ТЕБЯ<br>БОЛЬШЕ ВСЕГО НА СВЕТЕ</div>
+
+<script>
+  const hearts = ['❤','💕','💖','💗','💓','💞'];
+  function createHeart() {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + 'vw';
+    const duration = 6 + Math.random()*6;
+    h.style.animationDuration = duration + 's';
+    h.style.fontSize = (16 + Math.random()*24) + 'px';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), duration*1000);
+  }
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
