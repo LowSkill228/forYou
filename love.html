@@ -191,6 +191,92 @@
   }
 
 
+  .popup-gif {
+    position: fixed;
+    bottom: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    max-width: 60vw;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .popup-gif.show {
+    animation: popupGif 2.7s ease-out forwards;
+  }
+
+  @keyframes popupGif {
+    0% {
+      bottom: -300px;
+      opacity: 0;
+    }
+    16% {
+      bottom: 30px;
+      opacity: 1;
+    }
+    80% {
+      bottom: 30px;
+      opacity: 1;
+    }
+    100% {
+      bottom: -300px;
+      opacity: 0;
+    }
+  }
+
+  .heart-btn {
+    position: relative;
+    margin-top: 26px;
+    width: 90px;
+    height: 90px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: kittenAppear 1.5s ease-out forwards;
+    animation-delay: 2.2s;
+  }
+
+  .heart-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ff5f6d, #ff85a2, #ff3d68);
+    clip-path: path("M45 82 C45 82 10 58 10 34 C10 20 20 12 32 12 C39 12 44 16 45 22 C46 16 51 12 58 12 C70 12 80 20 80 34 C80 58 45 82 45 82 Z");
+    box-shadow: 0 6px 18px rgba(255, 60, 100, 0.5);
+    animation: heartBeat 1.4s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+
+  .heart-btn:active::before {
+    transform: scale(0.85);
+  }
+
+  .heart-btn span {
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1em;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    margin-top: -6px;
+  }
+
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.1); }
+    30% { transform: scale(0.97); }
+    45% { transform: scale(1.06); }
+    60% { transform: scale(1); }
+  }
+
   .heart {
     position: fixed;
     bottom: -10%;
@@ -224,7 +310,11 @@
       </div>
       <div class="kitten-caption">ты самый лучший котенок</div>
     </div>
+
+    <button class="heart-btn" onclick="showPopupGif()"><span>жмак</span></button>
   </div>
+
+  <img id="popupGif" class="popup-gif" src="https://media1.tenor.com/m/Yp0KOBZZ9RYAAAAC/%D0%BA%D0%BE%D1%82-%D0%BF%D0%BE%D1%86%D0%B5%D0%BB%D1%83%D0%B9.gif" alt="котик">
 
 <script>
   const hearts = ['❤','💕','💖','💗','💓','💞'];
@@ -240,6 +330,13 @@
     setTimeout(() => h.remove(), duration*1000);
   }
   setInterval(createHeart, 400);
+
+  function showPopupGif() {
+    const gif = document.getElementById('popupGif');
+    gif.classList.remove('show');
+    void gif.offsetWidth; // force reflow to restart animation
+    gif.classList.add('show');
+  }
 </script>
 
 </body>
