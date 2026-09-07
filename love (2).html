@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Я люблю тебя больше всего на свете</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #ffb6c1, #ff69b4, #ffc0cb, #ff85a2);
+    background-size: 400% 400%;
+    animation: bgShift 10s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .text {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    text-align: center;
+    padding: 0 20px;
+    opacity: 0;
+    transform: scale(0.5);
+    background: linear-gradient(90deg, #ff5f6d, #ffc371, #ff9a9e, #a18cd1, #fbc2eb, #ff5f6d);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation:
+      appear 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+      gradientFlow 6s ease infinite 1.8s;
+    filter: drop-shadow(0 0 18px rgba(255,255,255,0.5));
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-5deg);
+      filter: blur(10px);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.1) rotate(2deg);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .kitten-wrap {
+    position: fixed;
+    top: 8%;
+    left: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: rotate(25deg);
+    animation: kittenAppear 1.5s ease-out forwards;
+    animation-delay: 1.6s;
+  }
+
+  @keyframes kittenAppear {
+    0% {
+      opacity: 0;
+      transform: rotate(25deg) translateY(20px) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(25deg) translateY(0) scale(1);
+    }
+  }
+
+  .kitten-frame {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding: 4px;
+    background: conic-gradient(from 0deg, #ff5f6d, #ffc371, #ff9a5a, #ff6a3d, #ffb347, #ff5f6d);
+    background-size: 300% 300%;
+    animation:
+      borderColorShift 5s linear infinite,
+      kittenWiggle 4s ease-in-out infinite;
+    box-shadow: 0 0 25px rgba(255, 120, 80, 0.6);
+  }
+
+  @keyframes borderColorShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes kittenWiggle {
+    0%   { transform: translate(0px, 0px) rotate(0deg); }
+    15%  { transform: translate(2px, -1.5px) rotate(1deg); }
+    30%  { transform: translate(-1.5px, 2px) rotate(-1deg); }
+    45%  { transform: translate(1.5px, 1.5px) rotate(0.5deg); }
+    60%  { transform: translate(-2px, -1px) rotate(-0.5deg); }
+    75%  { transform: translate(1px, -2px) rotate(1deg); }
+    90%  { transform: translate(-1px, 1px) rotate(-0.5deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+  }
+
+  .kitten-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: #fff;
+  }
+
+  .kitten-caption {
+    margin-top: 2px;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 800;
+    font-size: 0.8em;
+    letter-spacing: 0.3px;
+    background: linear-gradient(90deg, #ff5f6d, #ffc371, #ff9a9e, #a18cd1, #fbc2eb, #ff5f6d);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
+    animation: gradientFlow 6s ease infinite;
+    text-align: center;
+  }
+
+  .date-badge {
+    position: fixed;
+    top: 24px;
+    right: 16px;
+    transform: rotate(20deg);
+    transform-origin: center center;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    background: linear-gradient(90deg, #ff5f6d, #ffc371, #ff9a9e, #a18cd1, #fbc2eb, #ff5f6d);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
+    opacity: 0;
+    animation:
+      dateAppear 1.5s ease-out forwards,
+      gradientFlow 6s ease infinite 1.6s;
+    animation-delay: 1.6s, 1.6s;
+  }
+
+  @keyframes dateAppear {
+    0% {
+      opacity: 0;
+      transform: rotate(20deg) scale(0.7);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(20deg) scale(1);
+    }
+  }
+
+
+  .heart {
+    position: fixed;
+    bottom: -10%;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(-110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="date-badge">03.09.2026 💖</div>
+
+  <div class="page">
+    <div class="text">Я ЛЮБЛЮ ТЕБЯ<br>БОЛЬШЕ ВСЕГО НА СВЕТЕ</div>
+
+    <div class="kitten-wrap">
+      <div class="kitten-frame">
+        <img class="kitten-photo" src="kitten.jpeg" alt="котёнок">
+      </div>
+      <div class="kitten-caption">ты самый лучший котенок</div>
+    </div>
+  </div>
+
+<script>
+  const hearts = ['❤','💕','💖','💗','💓','💞'];
+  function createHeart() {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + 'vw';
+    const duration = 6 + Math.random()*6;
+    h.style.animationDuration = duration + 's';
+    h.style.fontSize = (16 + Math.random()*24) + 'px';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), duration*1000);
+  }
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
