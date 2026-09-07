@@ -264,11 +264,120 @@
     }
   }
 
+  .heart-chip {
+    position: fixed;
+    width: 56px;
+    height: 56px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 45;
+    opacity: 0;
+    animation: kittenAppear 1.2s ease-out forwards;
+  }
+
+  .heart-chip .heart-shape {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 14px var(--heart-shadow, rgba(41, 121, 255, 0.5)));
+    animation: heartBeat 1.4s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+
+  .heart-chip .heart-shape path {
+    fill: var(--heart-fill, #2979ff);
+  }
+
+  .heart-chip:active .heart-shape {
+    transform: scale(0.85);
+  }
+
+  .heart-chip span {
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.85em;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    margin-top: -14px;
+    transition: opacity 0.3s ease;
+  }
+
+  .heart-message {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20% 22% 46%;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+    background: linear-gradient(120deg, #ffffff, #ffe1ec, #ffd6e8, #ffffff);
+    background-size: 250% 250%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition: opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s;
+  }
+
+  .heart-chip.expanded .heart-message {
+    opacity: 1;
+    transform: scale(1);
+    animation: gradientFlow 4s ease infinite;
+  }
+
+  .heart-chip {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .heart-chip.vanish {
+    opacity: 0;
+    transform: scale(0.3);
+    pointer-events: none;
+  }
+
+  .heart-chip.expanded {
+    width: 260px;
+    height: 260px;
+    z-index: 80;
+    transition: width 1.4s cubic-bezier(0.34, 1.2, 0.64, 1), height 1.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+
+  .heart-chip.expanded .heart-shape {
+    animation: none;
+    transform: none !important;
+  }
+
+  .heart-chip.expanded .default-label {
+    opacity: 0;
+  }
+
+  .heart-chip.expanded .heart-message {
+    opacity: 1;
+  }
+
   .heart-btn {
     position: relative;
     margin-top: 26px;
-    width: 90px;
-    height: 90px;
+    width: 76px;
+    height: 76px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -280,18 +389,17 @@
     animation-delay: 2.2s;
   }
 
-  .heart-btn::before {
-    content: "";
+  .heart-btn .heart-shape {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #ff5f6d, #ff85a2, #ff3d68);
-    clip-path: path("M45 82 C45 82 10 58 10 34 C10 20 20 12 32 12 C39 12 44 16 45 22 C46 16 51 12 58 12 C70 12 80 20 80 34 C80 58 45 82 45 82 Z");
-    box-shadow: 0 6px 18px rgba(255, 60, 100, 0.5);
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 14px rgba(255, 60, 100, 0.5));
     animation: heartBeat 1.4s ease-in-out infinite;
     transition: transform 0.15s ease;
   }
 
-  .heart-btn:active::before {
+  .heart-btn:active .heart-shape {
     transform: scale(0.85);
   }
 
@@ -303,7 +411,7 @@
     font-size: 1em;
     font-family: 'Segoe UI', 'Arial', sans-serif;
     text-shadow: 0 1px 4px rgba(0,0,0,0.25);
-    margin-top: -6px;
+    margin-top: -14px;
   }
 
   @keyframes heartBeat {
@@ -338,6 +446,17 @@
 
   <div class="date-badge">03.09.2026 💖</div>
 
+  <button id="chainHeart" class="heart-chip" style="top: 90px; right: 70px; --heart-fill: #2979ff; --heart-shadow: rgba(41, 121, 255, 0.5);" onclick="heartStage2()">
+    <svg class="heart-shape" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <path d="M50 88 C50 88 8 55 8 30 C8 14 20 3 34 3 C42 3 49 8 50 18 C51 8 58 3 66 3 C80 3 92 14 92 30 C92 55 50 88 50 88 Z"/>
+    </svg>
+    <span class="default-label">жми</span>
+    <div class="heart-message">
+      я хочу, чтобы ты это запомнила, зайчик
+      <span class="heart-message-sub">ты моё всё</span>
+    </div>
+  </button>
+
   <div class="page">
     <div class="text">Я ЛЮБЛЮ ТЕБЯ<br>БОЛЬШЕ ВСЕГО НА СВЕТЕ</div>
 
@@ -348,7 +467,19 @@
       <div class="kitten-caption">ты самый лучший котенок</div>
     </div>
 
-    <button class="heart-btn" onclick="showPopupGif()"><span>жмак</span></button>
+    <button class="heart-btn" onclick="showPopupGif()">
+      <svg class="heart-shape" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="pinkHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff5f6d"/>
+            <stop offset="50%" stop-color="#ff85a2"/>
+            <stop offset="100%" stop-color="#ff3d68"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 88 C50 88 8 55 8 30 C8 14 20 3 34 3 C42 3 49 8 50 18 C51 8 58 3 66 3 C80 3 92 14 92 30 C92 55 50 88 50 88 Z" fill="url(#pinkHeartGrad)"/>
+      </svg>
+      <span>жмак</span>
+    </button>
   </div>
 
   <img id="popupGif" class="popup-gif" src="https://media1.tenor.com/m/Yp0KOBZZ9RYAAAAC/%D0%BA%D0%BE%D1%82-%D0%BF%D0%BE%D1%86%D0%B5%D0%BB%D1%83%D0%B9.gif" alt="котик">
@@ -378,6 +509,7 @@
 
   function spawnPopWords() {
     const count = 5 + Math.floor(Math.random() * 2); // 5-6 слов
+    const colors = ['#0033ff', '#00c2ff', '#00e676', '#ffea00', '#ff6d00', '#8e00ff', '#00ffd5', '#ffffff'];
     for (let i = 0; i < count; i++) {
       setTimeout(() => {
         const word = document.createElement('div');
@@ -386,10 +518,44 @@
         word.style.left = (10 + Math.random() * 75) + 'vw';
         word.style.top = (15 + Math.random() * 60) + 'vh';
         word.style.fontSize = (1.2 + Math.random() * 0.9) + 'em';
+        word.style.color = colors[Math.floor(Math.random() * colors.length)];
         document.body.appendChild(word);
         setTimeout(() => word.remove(), 1700);
       }, i * 150);
     }
+  }  function heartStage2() {
+    const btn = document.getElementById('chainHeart');
+    btn.style.top = '';
+    btn.style.right = '';
+    btn.style.bottom = '30%';
+    btn.style.left = '12%';
+    btn.style.setProperty('--heart-fill', '#ffcc00');
+    btn.style.setProperty('--heart-shadow', 'rgba(255, 190, 0, 0.55)');
+    btn.setAttribute('onclick', 'heartStage3()');
+  }
+
+  function heartStage3() {
+    const btn = document.getElementById('chainHeart');
+    const left = 40 + Math.random() * 20; // 40-60% ближе к центру
+    const top = 35 + Math.random() * 20;  // 35-55% ближе к центру
+    btn.style.bottom = '';
+    btn.style.right = '';
+    btn.style.left = left + 'vw';
+    btn.style.top = top + 'vh';
+    btn.style.setProperty('--heart-fill', '#ff0022');
+    btn.style.setProperty('--heart-shadow', 'rgba(255, 0, 40, 0.55)');
+    btn.setAttribute('onclick', 'heartStage4()');
+  }
+
+  function heartStage4() {
+    const btn = document.getElementById('chainHeart');
+    btn.removeAttribute('onclick');
+    btn.classList.add('expanded');
+    setTimeout(() => {
+      btn.classList.remove('expanded');
+      btn.classList.add('vanish');
+      setTimeout(() => btn.remove(), 600);
+    }, 5000);
   }
 </script>
 
