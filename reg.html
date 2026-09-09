@@ -72,7 +72,39 @@
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-    transition: border-color 0.6s ease, box-shadow 0.6s ease;
+    transition: border-color 0.6s ease;
+  }
+
+  /* Плавающие светящиеся частицы — красиво реагируют на музыку */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle-wrap {
+    position: absolute;
+    animation-name: floatParticle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .particle-core {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    filter: blur(6px);
+    opacity: 0.3;
+    transition: background 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  @keyframes floatParticle {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(24px, -34px); }
   }
 
   h1 {
@@ -278,6 +310,8 @@
   <div class="bg-layer" id="bg-layer-1" style="background-image:url('omen2.jpg'); opacity:1;"></div>
   <div class="bg-layer" id="bg-layer-2" style="opacity:0;"></div>
 
+  <div class="particles" id="particles"></div>
+
   <audio id="bg-music" preload="auto"></audio>
 
   <div class="theme-switcher">
@@ -379,7 +413,7 @@
   // Замените имена файлов на свои, если они называются иначе.
   const themes = {
     blue:  { music: 'muz.mp3',       bg: 'omen2.jpg' },
-    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpg' },
+    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpeg' },
     green: { music: 'muz-green.mp3', bg: 'sky.jpg' }
   };
 
@@ -388,6 +422,37 @@
 
   let layerA = document.getElementById('bg-layer-1');
   let layerB = document.getElementById('bg-layer-2');
+
+  const cardEl = document.querySelector('.card');
+
+  // rgb-версии акцентных цветов тем — нужны для плавного цветного свечения (box-shadow)
+  const themeColors = {
+    blue:  '41, 197, 255',
+    pink:  '255, 79, 163',
+    green: '78, 224, 138'
+  };
+
+  // Создаём плавающие светящиеся частицы (бонусный красивый эффект)
+  const particlesContainer = document.getElementById('particles');
+  const PARTICLE_COUNT = 7;
+  const particleCores = [];
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'particle-wrap';
+    const size = 60 + Math.random() * 90;
+    wrap.style.left = Math.random() * 100 + '%';
+    wrap.style.top = Math.random() * 100 + '%';
+    wrap.style.width = size + 'px';
+    wrap.style.height = size + 'px';
+    wrap.style.animationDuration = (8 + Math.random() * 8).toFixed(1) + 's';
+    wrap.style.animationDelay = (-Math.random() * 10).toFixed(1) + 's';
+
+    const core = document.createElement('div');
+    core.className = 'particle-core';
+    wrap.appendChild(core);
+    particlesContainer.appendChild(wrap);
+    particleCores.push(core);
+  }
 
   // Плавная смена картинки фона (кроссфейд между двумя слоями).
   // Сначала предзагружаем картинку — если файл не найден (404) или
@@ -497,6 +562,23 @@
     layerA.style.transform = `scale(${scale.toFixed(4)})`;
     layerB.style.filter = `brightness(${brightness.toFixed(3)})`;
     layerB.style.transform = `scale(${scale.toFixed(4)})`;
+
+    // Неоновое свечение вокруг карточки в цвет текущей темы
+    const rgb = themeColors[currentTheme] || themeColors.blue;
+    const glowSize = (18 + smoothedLevel * 70).toFixed(1);
+    const glowAlpha = (0.22 + smoothedLevel * 0.4).toFixed(3);
+    cardEl.style.boxShadow =
+      `0 20px 60px rgba(0, 0, 0, 0.45), 0 0 ${glowSize}px rgba(${rgb}, ${glowAlpha})`;
+
+    // Частицы: лёгкая индивидуальная "игра" фазами + общая реакция на бас
+    const now = performance.now() / 1000;
+    particleCores.forEach((core, i) => {
+      const phase = Math.sin(now * 0.6 + i * 1.3) * 0.08;
+      const partScale = 1 + smoothedLevel * 0.7 + phase;
+      const opacity = 0.22 + smoothedLevel * 0.45;
+      core.style.transform = `scale(${partScale.toFixed(3)})`;
+      core.style.opacity = opacity.toFixed(3);
+    });
   }
 
   // Музыка НЕ стартует автоматически — ждём выбора пользователя.
