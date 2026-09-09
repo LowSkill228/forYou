@@ -96,8 +96,8 @@
     height: 100%;
     border-radius: 50%;
     background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-    filter: blur(6px);
-    opacity: 0.3;
+    filter: blur(10px);
+    opacity: 0.35;
     transition: background 0.6s ease;
     will-change: transform, opacity;
   }
@@ -413,7 +413,7 @@
   // Замените имена файлов на свои, если они называются иначе.
   const themes = {
     blue:  { music: 'muz.mp3',       bg: 'omen2.jpg' },
-    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpg' },
+    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpeg' },
     green: { music: 'muz-green.mp3', bg: 'sky.jpg' }
   };
 
@@ -439,7 +439,7 @@
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const wrap = document.createElement('div');
     wrap.className = 'particle-wrap';
-    const size = 60 + Math.random() * 90;
+    const size = 140 + Math.random() * 170;
     wrap.style.left = Math.random() * 100 + '%';
     wrap.style.top = Math.random() * 100 + '%';
     wrap.style.width = size + 'px';
@@ -563,21 +563,26 @@
     layerB.style.filter = `brightness(${brightness.toFixed(3)})`;
     layerB.style.transform = `scale(${scale.toFixed(4)})`;
 
-    // Неоновое свечение вокруг карточки в цвет текущей темы
+    // Неоновое свечение вокруг карточки в цвет текущей темы — сделано заметнее
     const rgb = themeColors[currentTheme] || themeColors.blue;
-    const glowSize = (18 + smoothedLevel * 70).toFixed(1);
-    const glowAlpha = (0.22 + smoothedLevel * 0.4).toFixed(3);
+    const glowSize = (30 + smoothedLevel * 130).toFixed(1);
+    const glowSize2 = (10 + smoothedLevel * 50).toFixed(1);
+    const glowAlpha = (0.3 + smoothedLevel * 0.5).toFixed(3);
     cardEl.style.boxShadow =
-      `0 20px 60px rgba(0, 0, 0, 0.45), 0 0 ${glowSize}px rgba(${rgb}, ${glowAlpha})`;
+      `0 20px 60px rgba(0, 0, 0, 0.45), 0 0 ${glowSize}px rgba(${rgb}, ${glowAlpha}), 0 0 ${glowSize2}px rgba(${rgb}, ${(glowAlpha * 0.8).toFixed(3)})`;
 
-    // Частицы: лёгкая индивидуальная "игра" фазами + общая реакция на бас
+    // Частицы: лёгкая индивидуальная "игра" фазами + общая реакция на бас,
+    // плюс собственная пульсирующая тень (свечение) у каждой частицы
     const now = performance.now() / 1000;
+    const particleShadow = (12 + smoothedLevel * 70).toFixed(1);
+    const particleShadowAlpha = (0.35 + smoothedLevel * 0.45).toFixed(3);
     particleCores.forEach((core, i) => {
-      const phase = Math.sin(now * 0.6 + i * 1.3) * 0.08;
-      const partScale = 1 + smoothedLevel * 0.7 + phase;
-      const opacity = 0.22 + smoothedLevel * 0.45;
+      const phase = Math.sin(now * 0.6 + i * 1.3) * 0.1;
+      const partScale = 1 + smoothedLevel * 0.85 + phase;
+      const opacity = 0.3 + smoothedLevel * 0.5;
       core.style.transform = `scale(${partScale.toFixed(3)})`;
       core.style.opacity = opacity.toFixed(3);
+      core.style.boxShadow = `0 0 ${particleShadow}px rgba(${rgb}, ${particleShadowAlpha})`;
     });
   }
 
