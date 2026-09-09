@@ -386,16 +386,25 @@
   let layerA = document.getElementById('bg-layer-1');
   let layerB = document.getElementById('bg-layer-2');
 
-  // Плавная смена картинки фона (кроссфейд между двумя слоями)
+  // Плавная смена картинки фона (кроссфейд между двумя слоями).
+  // Сначала предзагружаем картинку — если файл не найден (404) или
+  // назван иначе, фон не поменяется молча, а в консоли будет предупреждение.
   function crossfadeBackground(url) {
-    layerB.style.backgroundImage = `url('${url}')`;
-    // форсируем перерисовку, чтобы transition сработал
-    void layerB.offsetWidth;
-    layerB.style.opacity = '1';
-    layerA.style.opacity = '0';
-    const tmp = layerA;
-    layerA = layerB;
-    layerB = tmp;
+    const preload = new Image();
+    preload.onload = () => {
+      layerB.style.backgroundImage = `url('${url}')`;
+      // форсируем перерисовку, чтобы transition сработал
+      void layerB.offsetWidth;
+      layerB.style.opacity = '1';
+      layerA.style.opacity = '0';
+      const tmp = layerA;
+      layerA = layerB;
+      layerB = tmp;
+    };
+    preload.onerror = () => {
+      console.warn('Не удалось загрузить фон: "' + url + '". Проверьте, что файл лежит рядом с reg.html и имя совпадает (с учётом регистра).');
+    };
+    preload.src = url;
   }
 
   function setActiveButton(name) {
