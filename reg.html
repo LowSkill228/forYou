@@ -56,6 +56,9 @@
     background-position: center;
     background-repeat: no-repeat;
     transition: opacity 1.1s ease;
+    transform: scale(1);
+    filter: brightness(1);
+    will-change: filter, transform;
     z-index: -2;
   }
 
@@ -376,7 +379,7 @@
   // Замените имена файлов на свои, если они называются иначе.
   const themes = {
     blue:  { music: 'muz.mp3',       bg: 'omen2.jpg' },
-    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpeg' },
+    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpg' },
     green: { music: 'muz-green.mp3', bg: 'sky.jpg' }
   };
 
@@ -427,12 +430,73 @@
       music.pause();
       music.src = t.music;
       music.currentTime = 0;
-      music.play().catch(() => {});
+      music.play().then(() => ensureAudioGraph()).catch(() => {});
     } else if (music.paused) {
-      music.play().catch(() => {});
+      music.play().then(() => ensureAudioGraph()).catch(() => {});
+    } else {
+      ensureAudioGraph();
     }
 
     currentTheme = name;
+  }
+
+  // ---- Пульсация фона в такт музыке (Web Audio API) ----
+  // Анализируем громкость трека в реальном времени и мягко
+  // модулируем яркость и масштаб текущей картинки фона.
+  let audioCtx = null;
+  let analyser = null;
+  let freqData = null;
+  let smoothedLevel = 0;
+  let pulseLoopStarted = false;
+
+  function ensureAudioGraph() {
+    if (audioCtx) {
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      return;
+    }
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new Ctx();
+      const source = audioCtx.createMediaElementSource(music);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.6;
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) {
+      console.warn('Не удалось запустить аудио-анализ для пульсации фона:', e);
+      return;
+    }
+    if (!pulseLoopStarted) {
+      pulseLoopStarted = true;
+      requestAnimationFrame(pulseLoop);
+    }
+  }
+
+  function pulseLoop() {
+    requestAnimationFrame(pulseLoop);
+    if (!analyser) return;
+
+    analyser.getByteFrequencyData(freqData);
+
+    // Берём в основном низкие/средние частоты — там сильнее всего
+    // "бьётся" ритм (бас/бочка), это даёт красивую пульсацию.
+    const bassRange = Math.max(1, Math.floor(freqData.length * 0.25));
+    let sum = 0;
+    for (let i = 0; i < bassRange; i++) sum += freqData[i];
+    const rawLevel = sum / bassRange / 255; // 0..1
+
+    // Плавное сглаживание, чтобы не дёргалось резко каждый кадр
+    smoothedLevel += (rawLevel - smoothedLevel) * 0.18;
+
+    const brightness = 1 + smoothedLevel * 0.55;
+    const scale = 1 + smoothedLevel * 0.045;
+
+    layerA.style.filter = `brightness(${brightness.toFixed(3)})`;
+    layerA.style.transform = `scale(${scale.toFixed(4)})`;
+    layerB.style.filter = `brightness(${brightness.toFixed(3)})`;
+    layerB.style.transform = `scale(${scale.toFixed(4)})`;
   }
 
   // Музыка НЕ стартует автоматически — ждём выбора пользователя.
