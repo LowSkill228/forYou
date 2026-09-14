@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Регистрация</title>
+<style>
+  :root{
+    --accent: #29c5ff;
+    --accent-2: #4a7dff;
+    --card-bg: rgba(20, 26, 38, 0.55);
+    --field-bg: rgba(255, 255, 255, 0.06);
+    --field-border: rgba(255, 255, 255, 0.12);
+    --text-main: #eef2f8;
+    --text-muted: #8a93a6;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  /* Тема: синяя (по умолчанию) */
+  body.theme-blue{
+    --accent: #29c5ff;
+    --accent-2: #4a7dff;
+  }
+  /* Тема: розовая */
+  body.theme-pink{
+    --accent: #ff4fa3;
+    --accent-2: #ff7eb9;
+  }
+  /* Тема: светло-зелёная */
+  body.theme-green{
+    --accent: #4ee08a;
+    --accent-2: #8bffb0;
+  }
+
+  /* Два слоя фона для плавного кроссфейда картинок */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 1.1s ease;
+    transform: scale(1);
+    filter: brightness(1);
+    will-change: filter, transform;
+    z-index: -2;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 36px 32px 28px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    transition: border-color 0.6s ease;
+  }
+
+  /* Плавающие светящиеся частицы — красиво реагируют на музыку */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle-wrap {
+    position: absolute;
+    animation-name: floatParticle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .particle-core {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    filter: blur(10px);
+    opacity: 0.35;
+    transition: background 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  @keyframes floatParticle {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(24px, -34px); }
+  }
+
+  h1 {
+    margin: 0 0 24px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: 0.2px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field {
+    position: relative;
+  }
+
+  .field input {
+    width: 100%;
+    background: var(--field-bg);
+    border: 1px solid var(--field-border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 14px;
+    color: var(--text-main);
+    outline: none;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .field input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(41, 197, 255, 0.15);
+  }
+
+  .field.has-toggle input {
+    padding-right: 44px;
+  }
+
+  .toggle-visibility {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.4s ease;
+  }
+
+  .toggle-visibility svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .submit-btn {
+    margin-top: 8px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #04101c;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+    box-shadow: 0 8px 24px rgba(41, 197, 255, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.5s ease, background 0.6s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(41, 197, 255, 0.45);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 16px;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .divider span {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .social-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .social-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid var(--field-border);
+    background: var(--field-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+  }
+
+  .social-btn:hover {
+    border-color: var(--accent);
+    background: rgba(41, 197, 255, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .switch-line {
+    margin: 18px 0 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .switch-line a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.4s ease;
+  }
+
+  .switch-line a:hover {
+    text-decoration: underline;
+  }
+
+  /* Блок из трёх круглых кнопок выбора темы/музыки */
+  .theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+  }
+
+  .theme-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(20, 26, 38, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+  }
+
+  .theme-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .theme-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .theme-btn.theme-blue-btn  { color: #29c5ff; }
+  .theme-btn.theme-pink-btn  { color: #ff4fa3; }
+  .theme-btn.theme-green-btn { color: #4ee08a; }
+
+  .theme-btn.active {
+    border-color: currentColor;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 35%, transparent);
+  }
+</style>
+</head>
+<body class="theme-blue">
+
+  <!-- Два слоя фона: между ними идёт плавный кроссфейд при смене темы -->
+  <div class="bg-layer" id="bg-layer-1" style="background-image:url('omen2.jpg'); opacity:1;"></div>
+  <div class="bg-layer" id="bg-layer-2" style="opacity:0;"></div>
+
+  <div class="particles" id="particles"></div>
+
+  <audio id="bg-music" preload="auto"></audio>
+
+  <div class="theme-switcher">
+    <button type="button" class="theme-btn theme-blue-btn" id="btn-blue" onclick="selectTheme('blue')" aria-label="Синяя тема и музыка">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+    </button>
+
+    <button type="button" class="theme-btn theme-pink-btn" id="btn-pink" onclick="selectTheme('pink')" aria-label="Розовая тема и музыка">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+    </button>
+
+    <button type="button" class="theme-btn theme-green-btn" id="btn-green" onclick="selectTheme('green')" aria-label="Светло-зелёная тема и музыка">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+    </button>
+  </div>
+
+  <div class="card">
+    <h1>Регистрация</h1>
+    <form onsubmit="return false;">
+      <div class="field">
+        <input type="text" placeholder="Имя пользователя" autocomplete="username">
+      </div>
+
+      <div class="field">
+        <input type="email" placeholder="Email" autocomplete="email">
+      </div>
+
+      <div class="field has-toggle">
+        <input type="password" id="password" placeholder="Пароль" autocomplete="new-password">
+        <button type="button" class="toggle-visibility" onclick="togglePassword('password', this)" aria-label="Показать пароль">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <div class="field has-toggle">
+        <input type="password" id="password2" placeholder="Повторите пароль" autocomplete="new-password">
+        <button type="button" class="toggle-visibility" onclick="togglePassword('password2', this)" aria-label="Показать пароль">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <button type="submit" class="submit-btn">Создать аккаунт</button>
+    </form>
+
+    <div class="divider"><span>или</span></div>
+
+    <div class="social-row">
+      <button type="button" class="social-btn" aria-label="Войти через Google">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="#4285F4" d="M23.52 12.27c0-.82-.07-1.6-.2-2.36H12v4.47h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.74z"></path>
+          <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.9l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.26v3.1A12 12 0 0 0 12 24z"></path>
+          <path fill="#FBBC05" d="M5.27 14.29a7.2 7.2 0 0 1 0-4.58v-3.1H1.26a12 12 0 0 0 0 10.78z"></path>
+          <path fill="#EA4335" d="M12 4.75c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.26 6.61l4.01 3.1C6.22 6.86 8.87 4.75 12 4.75z"></path>
+        </svg>
+      </button>
+
+      <button type="button" class="social-btn" aria-label="Войти через VK">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <rect width="24" height="24" rx="6" fill="#0077FF"></rect>
+          <path fill="#fff" d="M12.79 17.35c-5.1 0-8.02-3.5-8.14-9.32h2.6c.08 4.24 1.94 6.03 3.42 6.4v-6.4h2.45v3.68c1.46-.16 3-1.82 3.51-3.68h2.44a7.5 7.5 0 0 1-3.05 4.66 7.79 7.79 0 0 1 3.4 4.66h-2.7a4.88 4.88 0 0 0-3.12-3.37v3.37z"></path>
+        </svg>
+      </button>
+
+      <button type="button" class="social-btn" aria-label="Войти через Apple ID">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="#fff" d="M16.36 1.43c0 1.14-.42 2.2-1.24 3.05-.99 1.03-2.24 1.63-3.5 1.53-.15-1.13.4-2.28 1.2-3.1.9-.93 2.35-1.61 3.54-1.48zM20.7 17.2c-.5 1.12-.83 1.7-1.51 2.7-.94 1.4-2.26 3.14-3.9 3.15-1.45.02-1.82-.94-3.79-.93-1.96 0-2.37.94-3.83.92-1.64-.02-2.89-1.6-3.83-3-2.64-3.9-2.92-8.48-1.28-10.92 1.16-1.73 2.98-2.75 4.7-2.75 1.75 0 2.85.96 4.3.96 1.4 0 2.26-.97 4.3-.97 1.5 0 3.1.82 4.24 2.23-3.73 2.04-3.12 7.34.6 8.6z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <p class="switch-line">Уже есть аккаунт? <a href="#">Войти</a></p>
+  </div>
+
+<script>
+  function togglePassword(id, btn) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  // Настройки для каждой темы: свой трек, своя картинка фона
+  // Замените имена файлов на свои, если они называются иначе.
+  const themes = {
+    blue:  { music: 'muz.mp3',       bg: 'omen2.jpg' },
+    pink:  { music: 'muz-pink.mp3',  bg: 'clove.jpeg' },
+    green: { music: 'muz-green.mp3', bg: 'sky.jpg' }
+  };
+
+  const music = document.getElementById('bg-music');
+  let currentTheme = null;
+
+  let layerA = document.getElementById('bg-layer-1');
+  let layerB = document.getElementById('bg-layer-2');
+
+  const cardEl = document.querySelector('.card');
+
+  // rgb-версии акцентных цветов тем — нужны для плавного цветного свечения (box-shadow)
+  const themeColors = {
+    blue:  '41, 197, 255',
+    pink:  '255, 79, 163',
+    green: '78, 224, 138'
+  };
+
+  // Создаём плавающие светящиеся частицы (бонусный красивый эффект)
+  const particlesContainer = document.getElementById('particles');
+  const PARTICLE_COUNT = 7;
+  const particleCores = [];
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'particle-wrap';
+    const size = 140 + Math.random() * 170;
+    wrap.style.left = Math.random() * 100 + '%';
+    wrap.style.top = Math.random() * 100 + '%';
+    wrap.style.width = size + 'px';
+    wrap.style.height = size + 'px';
+    wrap.style.animationDuration = (8 + Math.random() * 8).toFixed(1) + 's';
+    wrap.style.animationDelay = (-Math.random() * 10).toFixed(1) + 's';
+
+    const core = document.createElement('div');
+    core.className = 'particle-core';
+    wrap.appendChild(core);
+    particlesContainer.appendChild(wrap);
+    particleCores.push(core);
+  }
+
+  // Плавная смена картинки фона (кроссфейд между двумя слоями).
+  // Сначала предзагружаем картинку — если файл не найден (404) или
+  // назван иначе, фон не поменяется молча, а в консоли будет предупреждение.
+  function crossfadeBackground(url) {
+    const preload = new Image();
+    preload.onload = () => {
+      layerB.style.backgroundImage = `url('${url}')`;
+      // форсируем перерисовку, чтобы transition сработал
+      void layerB.offsetWidth;
+      layerB.style.opacity = '1';
+      layerA.style.opacity = '0';
+      const tmp = layerA;
+      layerA = layerB;
+      layerB = tmp;
+    };
+    preload.onerror = () => {
+      console.warn('Не удалось загрузить фон: "' + url + '". Проверьте, что файл лежит рядом с reg.html и имя совпадает (с учётом регистра).');
+    };
+    preload.src = url;
+  }
+
+  function setActiveButton(name) {
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    const btn = document.getElementById('btn-' + name);
+    if (btn) btn.classList.add('active');
+  }
+
+  function selectTheme(name) {
+    const t = themes[name];
+    if (!t) return;
+
+    document.body.classList.remove('theme-blue', 'theme-pink', 'theme-green');
+    document.body.classList.add('theme-' + name);
+
+    crossfadeBackground(t.bg);
+    setActiveButton(name);
+
+    if (currentTheme !== name) {
+      music.pause();
+      music.src = t.music;
+      music.currentTime = 0;
+      music.play().then(() => ensureAudioGraph()).catch(() => {});
+    } else if (music.paused) {
+      music.play().then(() => ensureAudioGraph()).catch(() => {});
+    } else {
+      ensureAudioGraph();
+    }
+
+    currentTheme = name;
+  }
+
+  // ---- Пульсация фона в такт музыке (Web Audio API) ----
+  // Анализируем громкость трека в реальном времени и мягко
+  // модулируем яркость и масштаб текущей картинки фона.
+  let audioCtx = null;
+  let analyser = null;
+  let freqData = null;
+  let smoothedLevel = 0;
+  let pulseLoopStarted = false;
+
+  function ensureAudioGraph() {
+    if (audioCtx) {
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      return;
+    }
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new Ctx();
+      const source = audioCtx.createMediaElementSource(music);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.6;
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) {
+      console.warn('Не удалось запустить аудио-анализ для пульсации фона:', e);
+      return;
+    }
+    if (!pulseLoopStarted) {
+      pulseLoopStarted = true;
+      requestAnimationFrame(pulseLoop);
+    }
+  }
+
+  function pulseLoop() {
+    requestAnimationFrame(pulseLoop);
+    if (!analyser) return;
+
+    analyser.getByteFrequencyData(freqData);
+
+    // Берём в основном низкие/средние частоты — там сильнее всего
+    // "бьётся" ритм (бас/бочка), это даёт красивую пульсацию.
+    const bassRange = Math.max(1, Math.floor(freqData.length * 0.25));
+    let sum = 0;
+    for (let i = 0; i < bassRange; i++) sum += freqData[i];
+    const rawLevel = sum / bassRange / 255; // 0..1
+
+    // Плавное сглаживание, чтобы не дёргалось резко каждый кадр
+    smoothedLevel += (rawLevel - smoothedLevel) * 0.18;
+
+    const brightness = 1 + smoothedLevel * 0.55;
+    const scale = 1 + smoothedLevel * 0.045;
+
+    layerA.style.filter = `brightness(${brightness.toFixed(3)})`;
+    layerA.style.transform = `scale(${scale.toFixed(4)})`;
+    layerB.style.filter = `brightness(${brightness.toFixed(3)})`;
+    layerB.style.transform = `scale(${scale.toFixed(4)})`;
+
+    // Неоновое свечение вокруг карточки в цвет текущей темы — сделано заметнее
+    const rgb = themeColors[currentTheme] || themeColors.blue;
+    const glowSize = (30 + smoothedLevel * 130).toFixed(1);
+    const glowSize2 = (10 + smoothedLevel * 50).toFixed(1);
+    const glowAlpha = (0.3 + smoothedLevel * 0.5).toFixed(3);
+    cardEl.style.boxShadow =
+      `0 20px 60px rgba(0, 0, 0, 0.45), 0 0 ${glowSize}px rgba(${rgb}, ${glowAlpha}), 0 0 ${glowSize2}px rgba(${rgb}, ${(glowAlpha * 0.8).toFixed(3)})`;
+
+    // Частицы: лёгкая индивидуальная "игра" фазами + общая реакция на бас,
+    // плюс собственная пульсирующая тень (свечение) у каждой частицы
+    const now = performance.now() / 1000;
+    const particleShadow = (12 + smoothedLevel * 70).toFixed(1);
+    const particleShadowAlpha = (0.35 + smoothedLevel * 0.45).toFixed(3);
+    particleCores.forEach((core, i) => {
+      const phase = Math.sin(now * 0.6 + i * 1.3) * 0.1;
+      const partScale = 1 + smoothedLevel * 0.85 + phase;
+      const opacity = 0.3 + smoothedLevel * 0.5;
+      core.style.transform = `scale(${partScale.toFixed(3)})`;
+      core.style.opacity = opacity.toFixed(3);
+      core.style.boxShadow = `0 0 ${particleShadow}px rgba(${rgb}, ${particleShadowAlpha})`;
+    });
+  }
+
+  // Музыка НЕ стартует автоматически — ждём выбора пользователя.
+</script>
+
+</body>
+</html>
