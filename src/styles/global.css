@@ -279,3 +279,18 @@ main {
     width: 130px;
   }
 }
+.brand__subtitle {
+  background: linear-gradient(
+    90deg,
+    #ff4655 0%,
+    #e63946 40%,
+    #9b1b54 70%,
+    #5a0b57 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  color: transparent;
+}
