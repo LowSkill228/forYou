@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+
+const { title = "GAMESENSE" } = Astro.props;
+---
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+  <a href="/" class="logo">
+    <span class="logo__mark">G</span>
+    <span class="logo__text">GAME<span>SENSE</span></span>
+  </a>
+
+  <nav class="main-nav">
+    <a href="/valorant" class="nav-item">
+      <img src="/images/valorant.png" alt="Valorant" class="nav-icon" />
+      <span>Valorant</span>
+    </a>
+  </nav>
+
+  <div class="auth">
+    <a href="/login" class="sign-in">
+      <span class="sign-in-icon">⏻</span>
+      <span>Sign In</span>
+    </a>
+  </div>
+</header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

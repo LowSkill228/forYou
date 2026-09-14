@@ -1,0 +1,347 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const games = [
+  {
+    name: "Valorant",
+    slug: "/valorant",
+    image: "/images/valorant.png",
+    tag: "Тактический шутер",
+    players: "23M"
+  }
+];
+
+const topPlayers = [
+  { name: "Esconardo", tag: "#1978", region: "Top EU Rating", rating: "1,119" },
+  { name: "twitch heartless", tag: "#655", region: "Top NA Rating", rating: "950" },
+  { name: "xero", tag: "#MIKUB", region: "Top APAC Rating", rating: "1,190" }
+];
+---
+<BaseLayout title="GAMESENSE — Главная">
+  <div class="layout">
+
+    <!-- ЛЕВАЯ КОЛОНКА: лого + карточка игры -->
+    <div class="col-left">
+      <header class="brand">
+        <h1 class="brand__title">GAME<span>SENSE</span></h1>
+        <p class="brand__subtitle">Check Detailed Valorant Stats and Leaderboards</p>
+      </header>
+
+      <div class="games-grid">
+        {games.map((game) => (
+          <a href={game.slug} class="game-card">
+            <div class="game-card__glow"></div>
+            <div class="game-card__image">
+              <img src={game.image} alt={game.name} />
+            </div>
+            <div class="game-card__body">
+              <span class="game-card__tag">{game.tag}</span>
+              <h3>{game.name}</h3>
+              <div class="game-card__meta">
+                <span>👥 {game.players}</span>
+                <span class="game-card__cta">Открыть →</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- ПРАВАЯ КОЛОНКА: промо + топ игроков -->
+    <div class="col-right">
+     <a href="#" class="promo">
+  <span class="promo__badge">GAMESENSE</span>
+  <h2 class="promo__title">
+    От первого выстрела до <span>Radiant</span>
+  </h2>
+  <p class="promo__lead">Учись. Играй. Побеждай.</p>
+  <p class="promo__tagline">Твой напарник по прокачке в Valorant.</p>
+  <span class="promo__cta">Learn More →</span>
+</a>
+
+      <div class="top-players">
+        {topPlayers.map((p) => (
+          <div class="player-card">
+            <span class="player-card__rank">#1</span>
+            <div class="player-card__avatar"></div>
+            <h3>{p.name} <span>{p.tag}</span></h3>
+            <p class="player-card__region">{p.region}</p>
+            <p class="player-card__rating">{p.rating}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* ---------- ЛЕВАЯ КОЛОНКА ---------- */
+  .brand {
+    text-align: center;
+    padding: 1rem 0 2.5rem;
+  }
+
+  .brand__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .brand__title span {
+    color: var(--accent);
+  }
+
+  .brand__subtitle {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .games-grid {
+    display: flex;
+    justify-content: center;
+  }
+
+  .game-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(180deg, #1a1a24 0%, #14141b 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+
+  .game-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+  }
+
+  .game-card__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(230, 57, 70, 0.25),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .game-card:hover .game-card__glow {
+    opacity: 1;
+  }
+
+  .game-card__image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem 2rem;
+    background: #0d0d12;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .game-card__image img {
+    max-width: 110px;
+    height: auto;
+    filter: drop-shadow(0 0 12px rgba(230, 57, 70, 0.4));
+    transition: transform 0.25s ease;
+  }
+
+  .game-card:hover .game-card__image img {
+    transform: scale(1.08);
+  }
+
+  .game-card__body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+
+  .game-card__tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.25rem 0.6rem;
+    background: rgba(230, 57, 70, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .game-card__body h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .game-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .game-card__cta {
+    color: var(--accent);
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+
+  .game-card:hover .game-card__cta {
+    transform: translateX(4px);
+  }
+
+  /* ---------- ПРАВАЯ КОЛОНКА ---------- */
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 1rem;
+  }
+
+  .promo {
+    display: block;
+    padding: 2rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #8b1a2b 0%, #3a0a3a 100%);
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s;
+  }
+
+  .promo:hover {
+    transform: translateY(-3px);
+  }
+
+  .promo__badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: var(--accent);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .promo h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .promo p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 1.25rem;
+    line-height: 1.55;
+  }
+
+  .promo__cta {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .top-players {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+  }
+
+  .player-card {
+    position: relative;
+    padding: 1rem;
+    background: #14141b;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .player-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .player-card__rank {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .player-card__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #6a1a2a);
+    margin-bottom: 0.75rem;
+  }
+
+  .player-card h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .player-card h3 span {
+    color: var(--text-dim);
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+
+  .player-card__region {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+  }
+
+  .player-card__rating {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #f5c542;
+  }
+
+  /* ---------- АДАПТИВ ---------- */
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .top-players {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
