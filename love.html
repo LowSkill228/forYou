@@ -603,7 +603,394 @@
       transform: translateY(-110vh) rotate(360deg);
       opacity: 0;
     }
+  }  /* ===== Мини-игра "Собери сердце" ===== */
+
+  .heart-purple {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    opacity: 0;
+    animation: kittenAppear 1.5s ease-out forwards;
+    animation-delay: 1.4s;
   }
+
+  .heart-purple .heart-shape {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 14px rgba(142, 45, 226, 0.55));
+    animation: heartBeat 1.4s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+
+  .heart-purple:active .heart-shape {
+    transform: scale(0.85);
+  }
+
+  .hg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 10, 20, 0.72);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .hg-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hg-panel {
+    background: linear-gradient(160deg, #2e2a3a, #1c1a24);
+    border-radius: 26px;
+    padding: 28px 22px;
+    width: min(92vw, 420px);
+    max-height: 88vh;
+    overflow: auto;
+    box-shadow:
+      0 24px 60px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,255,255,0.06) inset,
+      0 0 40px rgba(255, 105, 180, 0.15);
+    position: relative;
+    text-align: center;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .hg-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 26px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #ff5f6d, #a663ff, #4cc9f0, #ffd166, #ff5f6d);
+    background-size: 300% 300%;
+    animation: gradientFlow 6s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .hg-panel.hg-hidden {
+    display: none;
+  }
+
+  .hg-panel.hg-leaving {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  .hg-title {
+    position: relative;
+    color: #ffffff;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 800;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    background: linear-gradient(90deg, #fff, #ffd6e8, #fff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientFlow 4s ease infinite;
+  }
+
+  .hg-subtitle {
+    color: rgba(255,255,255,0.55);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-size: 0.75em;
+    margin-bottom: 18px;
+  }
+
+  .hg-progress-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 18px;
+  }
+
+  .hg-progress-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  .hg-progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ff5f6d, #ffd166, #06d6a0);
+    transition: width 0.4s ease;
+  }
+
+  .hg-progress-label {
+    margin-top: 6px;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-size: 0.72em;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hg-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    justify-items: center;
+  }
+
+  .hg-heart-pick {
+    width: 52px;
+    height: 52px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .hg-heart-pick svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45));
+    transition: transform 0.2s ease;
+  }
+
+  .hg-heart-pick:hover svg {
+    transform: scale(1.12);
+  }
+
+  .hg-heart-pick.wrong svg {
+    animation: hgShake 0.4s ease;
+  }
+
+  @keyframes hgShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  .hg-puzzle-area {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 320px;
+    margin: 0 auto;
+    background: radial-gradient(circle at 50% 40%, rgba(255,105,180,0.12), rgba(255,255,255,0.02) 70%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: visible;
+    touch-action: none;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.35);
+  }
+
+  .hg-heart-outline {
+    position: absolute;
+    inset: 4%;
+    width: 92%;
+    height: 92%;
+    opacity: 0.55;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px rgba(255,150,200,0.5));
+    animation: hgOutlinePulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes hgOutlinePulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.65; }
+  }
+
+  .hg-slot {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    margin-left: -23px;
+    margin-top: -23px;
+    pointer-events: none;
+    animation: hgSlotPulse 2s ease-in-out infinite;
+  }
+
+  .hg-slot svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hg-slot path {
+    fill: none;
+    stroke: rgba(255,255,255,0.5);
+    stroke-width: 3;
+    stroke-dasharray: 6 5;
+    transition: stroke 0.3s ease, filter 0.3s ease;
+  }
+
+  @keyframes hgSlotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+
+  .hg-slot.filled {
+    animation: none;
+  }
+
+  .hg-slot.filled path {
+    stroke: rgba(120, 255, 180, 0.9);
+    stroke-dasharray: none;
+    filter: drop-shadow(0 0 8px rgba(120, 255, 180, 0.6));
+  }
+
+  .hg-piece {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+    cursor: grab;
+    touch-action: none;
+    z-index: 2;
+  }
+
+  .hg-piece.placed {
+    cursor: default;
+    z-index: 1;
+    animation: heartBeat 1.6s ease-in-out infinite;
+  }
+
+  .hg-piece.dragging {
+    z-index: 10;
+    cursor: grabbing;
+  }
+
+  .hg-piece svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  }
+
+  .hg-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  .hg-wrong-flash {
+    animation: hgWrongFlash 1.1s ease;
+  }
+
+  @keyframes hgWrongFlash {
+    0%, 100% { color: transparent; }
+    20%, 60% { -webkit-text-fill-color: #ff5f6d; color: #ff5f6d; }
+  }
+
+  .hg-slot-center path {
+    stroke-width: 3.4;
+  }
+
+  .hg-hint {
+    color: rgba(255,255,255,0.6);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-size: 0.75em;
+    margin-top: 14px;
+  }
+
+  .finale-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(255,182,220,0.35), rgba(20,10,25,0.85));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .finale-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .finale-text {
+    max-width: 85vw;
+    text-align: center;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(1.3rem, 5.5vw, 2.1rem);
+    line-height: 1.5;
+    background: linear-gradient(120deg, #ffffff, #ffe1ec, #ffd6e8, #fff6a9, #ffffff);
+    background-size: 250% 250%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    animation: gradientFlow 5s ease infinite;
+  }
+
+  .finale-overlay.active .finale-text {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .finale-close {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 26px;
+    border-radius: 30px;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 0.85em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.6s;
+  }
+
+  .finale-overlay.active .finale-close {
+    opacity: 1;
+  }
+
 </style>
 </head>
 <body>
@@ -663,6 +1050,57 @@
 
   <div class="fx-background"></div>
   <div id="pinkSweep" class="pink-sweep"></div>
+
+  <button class="heart-purple" onclick="openHeartGame()">
+    <svg class="heart-shape" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="purpleHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a663ff"/>
+          <stop offset="50%" stop-color="#8e2de2"/>
+          <stop offset="100%" stop-color="#4a00e0"/>
+        </linearGradient>
+      </defs>
+      <path d="M50 88 C50 88 8 55 8 30 C8 14 20 3 34 3 C42 3 49 8 50 18 C51 8 58 3 66 3 C80 3 92 14 92 30 C92 55 50 88 50 88 Z" fill="url(#purpleHeartGrad)"/>
+    </svg>
+  </button>
+
+  <div id="hgOverlay" class="hg-overlay">
+    <div class="hg-panel" id="hgSelectPanel">
+      <button class="hg-close" onclick="closeHeartGame()">✕</button>
+      <div class="hg-title">Выбери одно сердце...</div>
+      <div class="hg-subtitle">только одно из них настоящее 🖤</div>
+      <div class="hg-grid" id="hgGrid"></div>
+    </div>
+
+    <div class="hg-panel hg-hidden" id="hgPuzzlePanel">
+      <button class="hg-close" onclick="closeHeartGame()">✕</button>
+      <div class="hg-title" id="hgPuzzleTitle">Собери осколки в сердце</div>
+      <div class="hg-subtitle">перетаскивай сердечки в пунктирные точки</div>
+      <div class="hg-progress-wrap">
+        <div class="hg-progress-track">
+          <div class="hg-progress-fill" id="hgProgressFill"></div>
+        </div>
+        <div class="hg-progress-label" id="hgProgressLabel">собрано 0 из 12</div>
+      </div>
+      <div class="hg-puzzle-area" id="hgPuzzleArea">
+        <svg class="hg-heart-outline" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="hgOutlineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff9fc7"/>
+              <stop offset="50%" stop-color="#ffd1e8"/>
+              <stop offset="100%" stop-color="#c9a7ff"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 88 C50 88 8 55 8 30 C8 14 20 3 34 3 C42 3 49 8 50 18 C51 8 58 3 66 3 C80 3 92 14 92 30 C92 55 50 88 50 88 Z" fill="none" stroke="url(#hgOutlineGrad)" stroke-width="2.2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div id="finaleOverlay" class="finale-overlay">
+    <div class="finale-text" id="finaleText"></div>
+    <button class="finale-close" onclick="closeFinale()">закрыть 💗</button>
+  </div>
 
 <script>
   const hearts = ['❤','💕','💖','💗','💓','💞'];
@@ -793,6 +1231,236 @@
         setTimeout(() => leaf.remove(), duration * 1000);
       }, i * 180);
     }
+  }
+  /* ===== Мини-игра "Собери сердце" ===== */
+
+  const HEART_PATH_D = "M50 88 C50 88 8 55 8 30 C8 14 20 3 34 3 C42 3 49 8 50 18 C51 8 58 3 66 3 C80 3 92 14 92 30 C92 55 50 88 50 88 Z";
+
+  const HG_COLORS = [
+    '#ff5f6d', '#ffb703', '#06d6a0', '#4cc9f0',
+    '#c77dff', '#f72585', '#ff9a3d', '#2979ff',
+    '#e63946', '#8ac926', '#ffd166', '#000000'
+  ];
+
+  // 11 точек по контуру сердца + 1 центральная (обязательно для чёрного сердца)
+  const HG_OUTLINE_SLOTS = [
+    { x: 66, y: 6 },
+    { x: 84, y: 14 },
+    { x: 93, y: 32 },
+    { x: 87, y: 50 },
+    { x: 73, y: 66 },
+    { x: 50, y: 90 },
+    { x: 27, y: 66 },
+    { x: 13, y: 50 },
+    { x: 7,  y: 32 },
+    { x: 16, y: 14 },
+    { x: 34, y: 6 }
+  ];
+  const HG_CENTER_SLOT = { x: 50, y: 50 };
+  const HG_SLOTS = [...HG_OUTLINE_SLOTS, { ...HG_CENTER_SLOT, center: true }];
+
+  const FINALE_MESSAGES = [
+    "Ты — самое тёплое, что есть в моей жизни 💗",
+    "Рядом с тобой даже обычный день становится особенным",
+    "Ты моё самое любимое чудо на свете 🌸",
+    "Спасибо, что ты просто есть — этого достаточно, чтобы я улыбался"
+  ];
+
+  let hgFilledCount = 0;
+
+  function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function heartSvg(color) {
+    return `<svg viewBox="0 0 100 100"><path d="${HEART_PATH_D}" fill="${color}"/></svg>`;
+  }
+
+  function openHeartGame() {
+    document.getElementById('hgOverlay').classList.add('active');
+    document.getElementById('hgSelectPanel').classList.remove('hg-hidden', 'hg-leaving');
+    document.getElementById('hgPuzzlePanel').classList.add('hg-hidden');
+    buildSelectGrid();
+  }
+
+  function closeHeartGame() {
+    document.getElementById('hgOverlay').classList.remove('active');
+  }
+
+  function buildSelectGrid() {
+    const grid = document.getElementById('hgGrid');
+    grid.innerHTML = '';
+    const colors = shuffleArray(HG_COLORS);
+    colors.forEach(color => {
+      const btn = document.createElement('button');
+      btn.className = 'hg-heart-pick';
+      btn.innerHTML = heartSvg(color);
+      btn.onclick = () => selectHeart(color, btn);
+      grid.appendChild(btn);
+    });
+  }
+
+  function selectHeart(color, btnEl) {
+    if (color === '#000000') {
+      transitionToPuzzle();
+    } else {
+      btnEl.classList.remove('wrong');
+      void btnEl.offsetWidth;
+      btnEl.classList.add('wrong');
+    }
+  }
+
+  function transitionToPuzzle() {
+    const selectPanel = document.getElementById('hgSelectPanel');
+    selectPanel.classList.add('hg-leaving');
+    setTimeout(() => {
+      selectPanel.classList.add('hg-hidden');
+      document.getElementById('hgPuzzlePanel').classList.remove('hg-hidden');
+      buildPuzzle();
+    }, 400);
+  }
+
+  function buildPuzzle() {
+    const area = document.getElementById('hgPuzzleArea');
+    area.querySelectorAll('.hg-slot, .hg-piece').forEach(el => el.remove());
+    hgFilledCount = 0;
+    updateHgProgress();
+
+    HG_SLOTS.forEach(slot => {
+      const s = document.createElement('div');
+      s.className = 'hg-slot' + (slot.center ? ' hg-slot-center' : '');
+      s.style.left = slot.x + '%';
+      s.style.top = slot.y + '%';
+      s.dataset.x = slot.x;
+      s.dataset.y = slot.y;
+      s.dataset.center = slot.center ? 'true' : 'false';
+      s.innerHTML = `<svg viewBox="0 0 100 100"><path d="${HEART_PATH_D}"/></svg>`;
+      area.appendChild(s);
+    });
+
+    const colors = shuffleArray(HG_COLORS);
+    colors.forEach((color, i) => {
+      const piece = document.createElement('div');
+      piece.className = 'hg-piece';
+      piece.dataset.color = color;
+      piece.innerHTML = heartSvg(color);
+      const rx = 8 + Math.random() * 84;
+      const ry = 8 + Math.random() * 84;
+      piece.style.left = rx + '%';
+      piece.style.top = ry + '%';
+      area.appendChild(piece);
+      makeDraggable(piece, area);
+    });
+  }
+
+  function makeDraggable(piece, area) {
+    let dragging = false;
+    let offsetX = 0, offsetY = 0;
+
+    piece.addEventListener('pointerdown', (e) => {
+      if (piece.classList.contains('placed')) return;
+      dragging = true;
+      piece.classList.add('dragging');
+      piece.setPointerCapture(e.pointerId);
+      const rect = area.getBoundingClientRect();
+      const pieceRect = piece.getBoundingClientRect();
+      offsetX = e.clientX - (pieceRect.left + pieceRect.width / 2);
+      offsetY = e.clientY - (pieceRect.top + pieceRect.height / 2);
+    });
+
+    piece.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const rect = area.getBoundingClientRect();
+      let px = ((e.clientX - offsetX - rect.left) / rect.width) * 100;
+      let py = ((e.clientY - offsetY - rect.top) / rect.height) * 100;
+      px = Math.max(0, Math.min(100, px));
+      py = Math.max(0, Math.min(100, py));
+      piece.style.left = px + '%';
+      piece.style.top = py + '%';
+    });
+
+    piece.addEventListener('pointerup', (e) => {
+      if (!dragging) return;
+      dragging = false;
+      piece.classList.remove('dragging');
+      snapToSlot(piece, area);
+    });
+  }
+
+  function snapToSlot(piece, area) {
+    const px = parseFloat(piece.style.left);
+    const py = parseFloat(piece.style.top);
+    let closestSlot = null;
+    let closestDist = Infinity;
+
+    area.querySelectorAll('.hg-slot').forEach(slot => {
+      if (slot.classList.contains('filled')) return;
+      const sx = parseFloat(slot.dataset.x);
+      const sy = parseFloat(slot.dataset.y);
+      const dist = Math.hypot(px - sx, py - sy);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestSlot = slot;
+      }
+    });
+
+    if (closestSlot && closestDist < 9) {
+      piece.style.left = closestSlot.dataset.x + '%';
+      piece.style.top = closestSlot.dataset.y + '%';
+      piece.classList.add('placed');
+      closestSlot.classList.add('filled');
+      closestSlot.dataset.filledColor = piece.dataset.color;
+      hgFilledCount++;
+      updateHgProgress();
+      if (hgFilledCount >= HG_SLOTS.length) {
+        setTimeout(checkPuzzleResult, 500);
+      }
+    }
+  }
+
+  function checkPuzzleResult() {
+    const area = document.getElementById('hgPuzzleArea');
+    const centerSlot = area.querySelector('.hg-slot[data-center="true"]');
+    const isCorrect = centerSlot && centerSlot.dataset.filledColor === '#000000';
+
+    if (isCorrect) {
+      showFinale();
+    } else {
+      const title = document.getElementById('hgPuzzleTitle');
+      if (title) {
+        title.textContent = 'не то... пробуй ещё раз';
+        title.classList.remove('hg-wrong-flash');
+        void title.offsetWidth;
+        title.classList.add('hg-wrong-flash');
+      }
+      setTimeout(() => {
+        if (title) title.textContent = 'Собери осколки в сердце';
+        buildPuzzle();
+      }, 1100);
+    }
+  }
+
+  function updateHgProgress() {
+    const fill = document.getElementById('hgProgressFill');
+    const label = document.getElementById('hgProgressLabel');
+    if (fill) fill.style.width = (hgFilledCount / HG_SLOTS.length * 100) + '%';
+    if (label) label.textContent = `собрано ${hgFilledCount} из ${HG_SLOTS.length}`;
+  }
+
+  function showFinale() {
+    closeHeartGame();
+    const message = FINALE_MESSAGES[Math.floor(Math.random() * FINALE_MESSAGES.length)];
+    document.getElementById('finaleText').textContent = message;
+    document.getElementById('finaleOverlay').classList.add('active');
+  }
+
+  function closeFinale() {
+    document.getElementById('finaleOverlay').classList.remove('active');
   }
 </script>
 
