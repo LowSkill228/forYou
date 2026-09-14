@@ -17,10 +17,10 @@ const { title = "GAMESENSE" } = Astro.props;
   </a>
 
   <nav class="main-nav">
-    <a href="/valorant" class="nav-item">
-      <img src="/images/valorant.png" alt="Valorant" class="nav-icon" />
-      <span>Valorant</span>
-    </a>
+   <a href={`${import.meta.env.BASE_URL}valorant`} class="nav-item">
+  <img src={`${import.meta.env.BASE_URL}images/valorant.svg`} alt="" class="nav-icon" />
+  <span>Valorant</span>
+</a>
   </nav>
 
   <div class="auth">
