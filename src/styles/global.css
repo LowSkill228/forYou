@@ -3,7 +3,7 @@
   --bg-header: #141418;
   --text: #e8e8e8;
   --text-dim: #8a8a95;
-  --accent: #e63946;   /* красный для Sign In */
+  --accent: #e63946;
   --border: #23232a;
 }
 
@@ -27,28 +27,32 @@ main {
 }
 
 /* ---------- Шапка ---------- */
+
 .topbar {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+
   padding: 0 1.25rem;
   height: 54px;
+
   background: var(--bg-header);
   border-bottom: 1px solid var(--border);
+
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-/* ---------- Картинка справа ---------- */
-
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
   font-weight: 900;
   font-size: 1.2rem;
   letter-spacing: 2px;
+
   color: var(--text);
   text-decoration: none;
   white-space: nowrap;
@@ -59,15 +63,21 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   width: 28px;
   height: 28px;
+
   background: var(--accent);
   color: #fff;
+
   border-radius: 6px;
+
   font-size: 1rem;
   font-weight: 900;
+
   box-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
 }
+
 .logo__text {
   color: var(--text);
 }
@@ -75,10 +85,12 @@ main {
 .logo__text span {
   color: var(--accent);
 }
+
 .main-nav {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+
   flex: 1;
 }
 
@@ -86,13 +98,20 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
   padding: 0.5rem 0.9rem;
+
   border-radius: 6px;
+
   color: var(--text-dim);
   text-decoration: none;
+
   font-weight: 600;
   font-size: 0.95rem;
-  transition: background 0.15s, color 0.15s;
+
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .nav-item:hover {
@@ -103,11 +122,14 @@ main {
 .nav-icon {
   width: 20px;
   height: 20px;
+
   object-fit: contain;
+
   filter: brightness(0) invert(1);
 }
 
-/* ---------- Кнопка Sign In ---------- */
+/* ---------- Sign In ---------- */
+
 .auth {
   margin-left: auto;
 }
@@ -116,13 +138,19 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
   background: var(--accent);
   color: #fff;
+
   padding: 0.55rem 1.1rem;
+
   border-radius: 6px;
+
   font-weight: 700;
   font-size: 0.95rem;
+
   text-decoration: none;
+
   transition: background 0.15s;
 }
 
@@ -133,40 +161,18 @@ main {
 .sign-in-icon {
   font-size: 1rem;
 }
-.game-card__image img {
-  max-width: 110px;
-  height: auto;
-  filter: drop-shadow(0 0 12px rgba(230, 57, 70, 0.4)) brightness(0) invert(1);
-  transition: transform 0.25s ease;
-}
-@media (max-width: 600px) {
-  .promo {
-    flex-direction: column-reverse;
-    text-align: center;
-    padding: 1.5rem;
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
-  .promo__content {
-    width: 100%;
-  }
-  .promo__cta {
-    justify-content: center;
-  }
-  .promo__image {
-    width: 130px;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-.brand__subtitle {
-  background: linear-gradient(
-    90deg,
-    #ff4655 0%,
-    #e63946 40%,
-    #9b1b54 70%,
-    #5a0b57 100%
-  );
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  color: transparent;
+.page-transition {
+  animation: pageIn 0.3s ease;
 }

@@ -1,0 +1,4436 @@
+---
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+
+  const agents = [
+
+      {
+
+        slug: "jett",
+
+        name: "JETT",
+
+        role: "DUELIST",
+
+        description: "Мобильный дуэлянт, который быстро занимает пространство и резко меняет позицию.",
+
+        image: "images/jett-riot.png",
+
+        attributes: ["МОБИЛЬНОСТЬ", "ENTRY", "АГРЕССИЯ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "cloudburst",
+
+            name: "CLOUDBURST",
+
+            icon: "images/jett-cloudburst.png",
+
+            video: "videos/jett-cloudburst.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "updraft",
+
+            name: "UPDRAFT",
+
+            icon: "images/jett-updraft.png",
+
+            video: "videos/jett-updraft.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "tailwind",
+
+            name: "TAILWIND",
+
+            icon: "images/jett-tailwind.png",
+
+            video: "videos/jett-tailwind.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "blade-storm",
+
+            name: "BLADE STORM",
+
+            icon: "images/jett-blade-storm.png",
+
+            video: "videos/jett-blade-storm.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "iso",
+
+        name: "ISO",
+
+        role: "DUELIST",
+
+        description: "Специалист по прямым перестрелкам, способный усиливать себя и изолировать противника.",
+
+        image: "images/iso-riot.png",
+
+        attributes: ["ДУЭЛИ", "ТОЧНОСТЬ", "ИЗОЛЯЦИЯ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "contingency",
+
+            name: "CONTINGENCY",
+
+            icon: "images/iso-contingency.png",
+
+            video: "videos/iso-contingency.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "undercut",
+
+            name: "UNDERCUT",
+
+            icon: "images/iso-undercut.png",
+
+            video: "videos/iso-undercut.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "double-tap",
+
+            name: "DOUBLE TAP",
+
+            icon: "images/iso-double-tap.png",
+
+            video: "videos/iso-double-tap.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "kill-contract",
+
+            name: "KILL CONTRACT",
+
+            icon: "images/iso-kill-contract.png",
+
+            video: "videos/iso-kill-contract.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "neon",
+
+        name: "NEON",
+
+        role: "DUELIST",
+
+        description: "Высокоскоростной дуэлянт, который быстро сокращает дистанцию и прорывает оборону.",
+
+        image: "images/neon-riot.png",
+
+        attributes: ["СКОРОСТЬ", "ENTRY", "ДАВЛЕНИЕ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "fast-lane",
+
+            name: "FAST LANE",
+
+            icon: "images/neon-fast-lane.png",
+
+            video: "videos/neon-fast-lane.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "relay-bolt",
+
+            name: "RELAY BOLT",
+
+            icon: "images/neon-relay-bolt.png",
+
+            video: "videos/neon-relay-bolt.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "high-gear",
+
+            name: "HIGH GEAR",
+
+            icon: "images/neon-high-gear.png",
+
+            video: "videos/neon-high-gear.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "overdrive",
+
+            name: "OVERDRIVE",
+
+            icon: "images/neon-overdrive.png",
+
+            video: "videos/neon-overdrive.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "phoenix",
+
+        name: "PHOENIX",
+
+        role: "DUELIST",
+
+        description: "Агрессивный боец, использующий огонь для атаки, лечения и контроля пространства.",
+
+        image: "images/phoenix-riot.png",
+
+        attributes: ["ФЛЕШКИ", "САМОЛЕЧЕНИЕ", "ENTRY"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "blaze",
+
+            name: "BLAZE",
+
+            icon: "images/phoenix-blaze.png",
+
+            video: "videos/phoenix-blaze.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "curveball",
+
+            name: "CURVEBALL",
+
+            icon: "images/phoenix-curveball.png",
+
+            video: "videos/phoenix-curveball.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "hot-hands",
+
+            name: "HOT HANDS",
+
+            icon: "images/phoenix-hot-hands.png",
+
+            video: "videos/phoenix-hot-hands.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "run-it-back",
+
+            name: "RUN IT BACK",
+
+            icon: "images/phoenix-run-it-back.png",
+
+            video: "videos/phoenix-run-it-back.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "raze",
+
+        name: "RAZE",
+
+        role: "DUELIST",
+
+        description: "Взрывной дуэлянт, специализирующийся на гранатах, мобильности и уроне по площади.",
+
+        image: "images/raze-riot.png",
+
+        attributes: ["ВЗРЫВЫ", "МОБИЛЬНОСТЬ", "УРОН ПО ПЛОЩАДИ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "boom-bot",
+
+            name: "BOOM BOT",
+
+            icon: "images/raze-boom-bot.png",
+
+            video: "videos/raze-boom-bot.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "blast-pack",
+
+            name: "BLAST PACK",
+
+            icon: "images/raze-blast-pack.png",
+
+            video: "videos/raze-blast-pack.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "paint-shells",
+
+            name: "PAINT SHELLS",
+
+            icon: "images/raze-paint-shells.png",
+
+            video: "videos/raze-paint-shells.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "showstopper",
+
+            name: "SHOWSTOPPER",
+
+            icon: "images/raze-showstopper.png",
+
+            video: "videos/raze-showstopper.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "reyna",
+
+        name: "REYNA",
+
+        role: "DUELIST",
+
+        description: "Дуэлянт, который становится сильнее после убийств и особенно опасен в одиночных боях.",
+
+        image: "images/reyna-riot.png",
+
+        attributes: ["ДУЭЛИ", "СНОУБОЛЛ", "САМОЛЕЧЕНИЕ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "leer",
+
+            name: "LEER",
+
+            icon: "images/reyna-leer.png",
+
+            video: "videos/reyna-leer.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "devour",
+
+            name: "DEVOUR",
+
+            icon: "images/reyna-devour.png",
+
+            video: "videos/reyna-devour.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "dismiss",
+
+            name: "DISMISS",
+
+            icon: "images/reyna-dismiss.png",
+
+            video: "videos/reyna-dismiss.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "empress",
+
+            name: "EMPRESS",
+
+            icon: "images/reyna-empress.png",
+
+            video: "videos/reyna-empress.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "waylay",
+
+        name: "WAYLAY",
+
+        role: "DUELIST",
+
+        description: "Молниеносно перемещается по полю боя и использует свет для агрессивных атак.",
+
+        image: "images/waylay-riot.png",
+
+        attributes: ["МОБИЛЬНОСТЬ", "ENTRY", "СДЕРЖИВАНИЕ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "saturate",
+
+            name: "SATURATE",
+
+            icon: "images/waylay-saturate.png",
+
+            video: "videos/waylay-saturate.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "lightspeed",
+
+            name: "LIGHTSPEED",
+
+            icon: "images/waylay-lightspeed.png",
+
+            video: "videos/waylay-lightspeed.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "refract",
+
+            name: "REFRACT",
+
+            icon: "images/waylay-refract.png",
+
+            video: "videos/waylay-refract.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "convergent-paths",
+
+            name: "CONVERGENT PATHS",
+
+            icon: "images/waylay-convergent-paths.png",
+
+            video: "videos/waylay-convergent-paths.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "yoru",
+
+        name: "YORU",
+
+        role: "DUELIST",
+
+        description: "Использует разрывы реальности, телепортацию и обман, чтобы заставать врагов врасплох.",
+
+        image: "images/yoru-riot.png",
+
+        attributes: ["ОБМАН", "ФЛАНГ", "ТЕЛЕПОРТ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "fakeout",
+
+            name: "FAKEOUT",
+
+            icon: "images/yoru-fakeout.png",
+
+            video: "videos/yoru-fakeout.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "blindside",
+
+            name: "BLINDSIDE",
+
+            icon: "images/yoru-blindside.png",
+
+            video: "videos/yoru-blindside.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "gatecrash",
+
+            name: "GATECRASH",
+
+            icon: "images/yoru-gatecrash.png",
+
+            video: "videos/yoru-gatecrash.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "dimensional-drift",
+
+            name: "DIMENSIONAL DRIFT",
+
+            icon: "images/yoru-dimensional-drift.png",
+
+            video: "videos/yoru-dimensional-drift.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "astra",
+
+        name: "ASTRA",
+
+        role: "CONTROLLER",
+
+        description: "Управляет полем боя на расстоянии с помощью звезд и космических способностей.",
+
+        image: "images/astra-riot.png",
+
+        attributes: ["КОНТРОЛЬ", "СЕТАПЫ", "КООРДИНАЦИЯ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "gravity-well",
+
+            name: "GRAVITY WELL",
+
+            icon: "images/astra-gravity-well.png",
+
+            video: "videos/astra-gravity-well.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "nova-pulse",
+
+            name: "NOVA PULSE",
+
+            icon: "images/astra-nova-pulse.png",
+
+            video: "videos/astra-nova-pulse.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "nebula",
+
+            name: "NEBULA",
+
+            icon: "images/astra-nebula.png",
+
+            video: "videos/astra-nebula.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "cosmic-divide",
+
+            name: "COSMIC DIVIDE",
+
+            icon: "images/astra-cosmic-divide.png",
+
+            video: "videos/astra-cosmic-divide.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "brimstone",
+
+        name: "BRIMSTONE",
+
+        role: "CONTROLLER",
+
+        description: "Тактический командир, который контролирует территории дымами и поддержкой с орбиты.",
+
+        image: "images/brimstone-riot.png",
+
+        attributes: ["ДЫМЫ", "ПОДДЕРЖКА", "ЗОН-КОНТРОЛЬ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "stim-beacon",
+
+            name: "STIM BEACON",
+
+            icon: "images/brimstone-stim-beacon.png",
+
+            video: "videos/brimstone-stim-beacon.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "incendiary",
+
+            name: "INCENDIARY",
+
+            icon: "images/brimstone-incendiary.png",
+
+            video: "videos/brimstone-incendiary.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "sky-smoke",
+
+            name: "SKY SMOKE",
+
+            icon: "images/brimstone-sky-smoke.png",
+
+            video: "videos/brimstone-sky-smoke.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "orbital-strike",
+
+            name: "ORBITAL STRIKE",
+
+            icon: "images/brimstone-orbital-strike.png",
+
+            video: "videos/brimstone-orbital-strike.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "clove",
+
+        name: "CLOVE",
+
+        role: "CONTROLLER",
+
+        description: "Контролирует обзор противника и способна влиять на раунд даже после своей смерти.",
+
+        image: "images/clove-riot.png",
+
+        attributes: ["ДЫМЫ", "АГРЕССИЯ", "САМОЛЕЧЕНИЕ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "pick-me-up",
+
+            name: "PICK-ME-UP",
+
+            icon: "images/clove-pick-me-up.png",
+
+            video: "videos/clove-pick-me-up.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "meddle",
+
+            name: "MEDDLE",
+
+            icon: "images/clove-meddle.png",
+
+            video: "videos/clove-meddle.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "ruse",
+
+            name: "RUSE",
+
+            icon: "images/clove-ruse.png",
+
+            video: "videos/clove-ruse.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "not-dead-yet",
+
+            name: "NOT DEAD YET",
+
+            icon: "images/clove-not-dead-yet.png",
+
+            video: "videos/clove-not-dead-yet.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "harbor",
+
+        name: "HARBOR",
+
+        role: "CONTROLLER",
+
+        description: "Использует воду для создания стен, дымов и контроля пространства при захвате территории.",
+
+        image: "images/harbor-riot.png",
+
+        attributes: ["СТЕНЫ", "ДЫМЫ", "ПОДДЕРЖКА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "storm-surge",
+
+            name: "STORM SURGE",
+
+            icon: "images/harbor-storm-surge.png",
+
+            video: "videos/harbor-storm-surge.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "high-tide",
+
+            name: "HIGH TIDE",
+
+            icon: "images/harbor-high-tide.png",
+
+            video: "videos/harbor-high-tide.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "cove",
+
+            name: "COVE",
+
+            icon: "images/harbor-cove.png",
+
+            video: "videos/harbor-cove.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "reckoning",
+
+            name: "RECKONING",
+
+            icon: "images/harbor-reckoning.png",
+
+            video: "videos/harbor-reckoning.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "miks",
+
+        name: "MIKS",
+
+        role: "CONTROLLER",
+
+        description: "Управляет звуковой энергией, поддерживает союзников и помогает контролировать темп боя.",
+
+        image: "images/miks-riot.png",
+
+        attributes: ["ДЫМЫ", "ПОДДЕРЖКА", "ТЕМП"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "m-pulse",
+
+            name: "M-PULSE",
+
+            icon: "images/miks-m-pulse.png",
+
+            video: "videos/miks-m-pulse.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "harmonize",
+
+            name: "HARMONIZE",
+
+            icon: "images/miks-harmonize.png",
+
+            video: "videos/miks-harmonize.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "waveform",
+
+            name: "WAVEFORM",
+
+            icon: "images/miks-waveform.png",
+
+            video: "videos/miks-waveform.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "bassquake",
+
+            name: "BASSQUAKE",
+
+            icon: "images/miks-bassquake.png",
+
+            video: "videos/miks-bassquake.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "omen",
+
+        name: "OMEN",
+
+        role: "CONTROLLER",
+
+        description: "Создает дымовые завесы и использует телепортацию, чтобы оказывать давление из тени.",
+
+        image: "images/omen-riot.png",
+
+        attributes: ["ДЫМЫ", "ТЕЛЕПОРТ", "ОБМАН"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "shrouded-step",
+
+            name: "SHROUDED STEP",
+
+            icon: "images/omen-shrouded-step.png",
+
+            video: "videos/omen-shrouded-step.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "paranoia",
+
+            name: "PARANOIA",
+
+            icon: "images/omen-paranoia.png",
+
+            video: "videos/omen-paranoia.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "dark-cover",
+
+            name: "DARK COVER",
+
+            icon: "images/omen-dark-cover.png",
+
+            video: "videos/omen-dark-cover.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "from-the-shadows",
+
+            name: "FROM THE SHADOWS",
+
+            icon: "images/omen-from-the-shadows.png",
+
+            video: "videos/omen-from-the-shadows.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "viper",
+
+        name: "VIPER",
+
+        role: "CONTROLLER",
+
+        description: "Использует токсичные устройства и газ, чтобы перекрывать территории и ослаблять врагов.",
+
+        image: "images/viper-riot.png",
+
+        attributes: ["ТОКСИНЫ", "ЗОН-КОНТРОЛЬ", "POST-PLANT"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "snake-bite",
+
+            name: "SNAKE BITE",
+
+            icon: "images/viper-snake-bite.png",
+
+            video: "videos/viper-snake-bite.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "poison-cloud",
+
+            name: "POISON CLOUD",
+
+            icon: "images/viper-poison-cloud.png",
+
+            video: "videos/viper-poison-cloud.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "toxic-screen",
+
+            name: "TOXIC SCREEN",
+
+            icon: "images/viper-toxic-screen.png",
+
+            video: "videos/viper-toxic-screen.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "vipers-pit",
+
+            name: "VIPER'S PIT",
+
+            icon: "images/viper-vipers-pit.png",
+
+            video: "videos/viper-vipers-pit.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "breach",
+
+        name: "BREACH",
+
+        role: "INITIATOR",
+
+        description: "Пробивает оборону мощными импульсами и создает возможности для входа команды.",
+
+        image: "images/breach-riot.png",
+
+        attributes: ["ОГЛУШЕНИЕ", "ФЛЕШКИ", "ENTRY"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "aftershock",
+
+            name: "AFTERSHOCK",
+
+            icon: "images/breach-aftershock.png",
+
+            video: "videos/breach-aftershock.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "flashpoint",
+
+            name: "FLASHPOINT",
+
+            icon: "images/breach-flashpoint.png",
+
+            video: "videos/breach-flashpoint.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "fault-line",
+
+            name: "FAULT LINE",
+
+            icon: "images/breach-fault-line.png",
+
+            video: "videos/breach-fault-line.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "rolling-thunder",
+
+            name: "ROLLING THUNDER",
+
+            icon: "images/breach-rolling-thunder.png",
+
+            video: "videos/breach-rolling-thunder.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "fade",
+
+        name: "FADE",
+
+        role: "INITIATOR",
+
+        description: "Выслеживает противников и раскрывает их позиции с помощью кошмарной энергии.",
+
+        image: "images/fade-riot.png",
+
+        attributes: ["РАЗВЕДКА", "КОНТРОЛЬ", "ОХОТА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "prowler",
+
+            name: "PROWLER",
+
+            icon: "images/fade-prowler.png",
+
+            video: "videos/fade-prowler.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "seize",
+
+            name: "SEIZE",
+
+            icon: "images/fade-seize.png",
+
+            video: "videos/fade-seize.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "haunt",
+
+            name: "HAUNT",
+
+            icon: "images/fade-haunt.png",
+
+            video: "videos/fade-haunt.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "nightfall",
+
+            name: "NIGHTFALL",
+
+            icon: "images/fade-nightfall.png",
+
+            video: "videos/fade-nightfall.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "gekko",
+
+        name: "GEKKO",
+
+        role: "INITIATOR",
+
+        description: "Отправляет своих существ вперед, чтобы искать, оглушать и контролировать противников.",
+
+        image: "images/gekko-riot.png",
+
+        attributes: ["УТИЛИТИ", "SPIKE", "ПОДДЕРЖКА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "mosh-pit",
+
+            name: "MOSH PIT",
+
+            icon: "images/gekko-mosh-pit.png",
+
+            video: "videos/gekko-mosh-pit.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "wingman",
+
+            name: "WINGMAN",
+
+            icon: "images/gekko-wingman.png",
+
+            video: "videos/gekko-wingman.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "dizzy",
+
+            name: "DIZZY",
+
+            icon: "images/gekko-dizzy.png",
+
+            video: "videos/gekko-dizzy.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "thrash",
+
+            name: "THRASH",
+
+            icon: "images/gekko-thrash.png",
+
+            video: "videos/gekko-thrash.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "kay-o",
+
+        name: "KAY/O",
+
+        role: "INITIATOR",
+
+        description: "Подавляет способности врагов и помогает команде безопаснее начинать атаку.",
+
+        image: "images/kay-o-riot.png",
+
+        attributes: ["ПОДАВЛЕНИЕ", "ФЛЕШКИ", "ENTRY"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "frag-ment",
+
+            name: "FRAG/MENT",
+
+            icon: "images/kay-o-frag-ment.png",
+
+            video: "videos/kay-o-frag-ment.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "flash-drive",
+
+            name: "FLASH/DRIVE",
+
+            icon: "images/kay-o-flash-drive.png",
+
+            video: "videos/kay-o-flash-drive.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "zero-point",
+
+            name: "ZERO/POINT",
+
+            icon: "images/kay-o-zero-point.png",
+
+            video: "videos/kay-o-zero-point.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "null-cmd",
+
+            name: "NULL/CMD",
+
+            icon: "images/kay-o-null-cmd.png",
+
+            video: "videos/kay-o-null-cmd.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "skye",
+
+        name: "SKYE",
+
+        role: "INITIATOR",
+
+        description: "Разведывает территорию, ослепляет противников и способна поддерживать союзников.",
+
+        image: "images/skye-riot.png",
+
+        attributes: ["РАЗВЕДКА", "ФЛЕШКИ", "ПОДДЕРЖКА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "regrowth",
+
+            name: "REGROWTH",
+
+            icon: "images/skye-regrowth.png",
+
+            video: "videos/skye-regrowth.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "trailblazer",
+
+            name: "TRAILBLAZER",
+
+            icon: "images/skye-trailblazer.png",
+
+            video: "videos/skye-trailblazer.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "guiding-light",
+
+            name: "GUIDING LIGHT",
+
+            icon: "images/skye-guiding-light.png",
+
+            video: "videos/skye-guiding-light.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "seekers",
+
+            name: "SEEKERS",
+
+            icon: "images/skye-seekers.png",
+
+            video: "videos/skye-seekers.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "sova",
+
+        name: "SOVA",
+
+        role: "INITIATOR",
+
+        description: "Разведывает позиции противников и помогает команде получать информацию.",
+
+        image: "images/sova-riot.png",
+
+        attributes: ["РАЗВЕДКА", "ИНФОРМАЦИЯ", "ЛАЙНАПЫ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "owl-drone",
+
+            name: "OWL DRONE",
+
+            icon: "images/sova-owl-drone.png",
+
+            video: "videos/sova-owl-drone.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "shock-bolt",
+
+            name: "SHOCK BOLT",
+
+            icon: "images/sova-shock-bolt.png",
+
+            video: "videos/sova-shock-bolt.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "recon-bolt",
+
+            name: "RECON BOLT",
+
+            icon: "images/sova-recon-bolt.png",
+
+            video: "videos/sova-recon-bolt.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "hunters-fury",
+
+            name: "HUNTER'S FURY",
+
+            icon: "images/sova-hunters-fury.png",
+
+            video: "videos/sova-hunters-fury.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "tejo",
+
+        name: "TEJO",
+
+        role: "INITIATOR",
+
+        description: "Использует современную технику и удары по площади, чтобы вытеснять врагов с позиций.",
+
+        image: "images/tejo-riot.png",
+
+        attributes: ["ДАВЛЕНИЕ", "ВЗРЫВЫ", "ЗОН-КОНТРОЛЬ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "stealth-drone",
+
+            name: "STEALTH DRONE",
+
+            icon: "images/tejo-stealth-drone.png",
+
+            video: "videos/tejo-stealth-drone.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "special-delivery",
+
+            name: "SPECIAL DELIVERY",
+
+            icon: "images/tejo-special-delivery.png",
+
+            video: "videos/tejo-special-delivery.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "guided-salvo",
+
+            name: "GUIDED SALVO",
+
+            icon: "images/tejo-guided-salvo.png",
+
+            video: "videos/tejo-guided-salvo.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "armageddon",
+
+            name: "ARMAGEDDON",
+
+            icon: "images/tejo-armageddon.png",
+
+            video: "videos/tejo-armageddon.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "chamber",
+
+        name: "CHAMBER",
+
+        role: "SENTINEL",
+
+        description: "Удерживает позиции с помощью высокоточного оружия, ловушек и мобильности.",
+
+        image: "images/chamber-riot.png",
+
+        attributes: ["ТОЧНОСТЬ", "ЛОВУШКИ", "МОБИЛЬНОСТЬ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "trademark",
+
+            name: "TRADEMARK",
+
+            icon: "images/chamber-trademark.png",
+
+            video: "videos/chamber-trademark.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "headhunter",
+
+            name: "HEADHUNTER",
+
+            icon: "images/chamber-headhunter.png",
+
+            video: "videos/chamber-headhunter.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "rendezvous",
+
+            name: "RENDEZVOUS",
+
+            icon: "images/chamber-rendezvous.png",
+
+            video: "videos/chamber-rendezvous.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "tour-de-force",
+
+            name: "TOUR DE FORCE",
+
+            icon: "images/chamber-tour-de-force.png",
+
+            video: "videos/chamber-tour-de-force.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "cypher",
+
+        name: "CYPHER",
+
+        role: "SENTINEL",
+
+        description: "Собирает информацию с помощью камер и ловушек и контролирует действия противника.",
+
+        image: "images/cypher-riot.png",
+
+        attributes: ["ИНФОРМАЦИЯ", "ЛОВУШКИ", "ФЛАНГ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "trapwire",
+
+            name: "TRAPWIRE",
+
+            icon: "images/cypher-trapwire.png",
+
+            video: "videos/cypher-trapwire.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "cyber-cage",
+
+            name: "CYBER CAGE",
+
+            icon: "images/cypher-cyber-cage.png",
+
+            video: "videos/cypher-cyber-cage.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "spycam",
+
+            name: "SPYCAM",
+
+            icon: "images/cypher-spycam.png",
+
+            video: "videos/cypher-spycam.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "neural-theft",
+
+            name: "NEURAL THEFT",
+
+            icon: "images/cypher-neural-theft.png",
+
+            video: "videos/cypher-neural-theft.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "deadlock",
+
+        name: "DEADLOCK",
+
+        role: "SENTINEL",
+
+        description: "Использует нанотехнологии и ловушки, чтобы блокировать и удерживать противников.",
+
+        image: "images/deadlock-riot.png",
+
+        attributes: ["ЛОВУШКИ", "КОНТРОЛЬ", "ОБОРОНА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "barrier-mesh",
+
+            name: "BARRIER MESH",
+
+            icon: "images/deadlock-barrier-mesh.png",
+
+            video: "videos/deadlock-barrier-mesh.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "sonic-sensor",
+
+            name: "SONIC SENSOR",
+
+            icon: "images/deadlock-sonic-sensor.png",
+
+            video: "videos/deadlock-sonic-sensor.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "gravnet",
+
+            name: "GRAVNET",
+
+            icon: "images/deadlock-gravnet.png",
+
+            video: "videos/deadlock-gravnet.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "annihilation",
+
+            name: "ANNIHILATION",
+
+            icon: "images/deadlock-annihilation.png",
+
+            video: "videos/deadlock-annihilation.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "killjoy",
+
+        name: "KILLJOY",
+
+        role: "SENTINEL",
+
+        description: "Защищает территорию с помощью турелей, роботов и других технических устройств.",
+
+        image: "images/killjoy-riot.png",
+
+        attributes: ["ГАДЖЕТЫ", "ОБОРОНА", "ИНФОРМАЦИЯ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "nanoswarm",
+
+            name: "NANOSWARM",
+
+            icon: "images/killjoy-nanoswarm.png",
+
+            video: "videos/killjoy-nanoswarm.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "alarmbot",
+
+            name: "ALARMBOT",
+
+            icon: "images/killjoy-alarmbot.png",
+
+            video: "videos/killjoy-alarmbot.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "turret",
+
+            name: "TURRET",
+
+            icon: "images/killjoy-turret.png",
+
+            video: "videos/killjoy-turret.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "lockdown",
+
+            name: "LOCKDOWN",
+
+            icon: "images/killjoy-lockdown.png",
+
+            video: "videos/killjoy-lockdown.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "sage",
+
+        name: "SAGE",
+
+        role: "SENTINEL",
+
+        description: "Поддерживает команду, лечит союзников и контролирует пространство.",
+
+        image: "images/sage-riot.png",
+
+        attributes: ["ПОДДЕРЖКА", "ЛЕЧЕНИЕ", "КОНТРОЛЬ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "barrier-orb",
+
+            name: "BARRIER ORB",
+
+            icon: "images/sage-barrier-orb.png",
+
+            video: "videos/sage-barrier-orb.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "slow-orb",
+
+            name: "SLOW ORB",
+
+            icon: "images/sage-slow-orb.png",
+
+            video: "videos/sage-slow-orb.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "healing-orb",
+
+            name: "HEALING ORB",
+
+            icon: "images/sage-healing-orb.png",
+
+            video: "videos/sage-healing-orb.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "resurrection",
+
+            name: "RESURRECTION",
+
+            icon: "images/sage-resurrection.png",
+
+            video: "videos/sage-resurrection.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "veto",
+
+        name: "VETO",
+
+        role: "SENTINEL",
+
+        description: "Нейтрализует вражеские способности и устройства, усиливая контроль территории.",
+
+        image: "images/veto-riot.png",
+
+        attributes: ["ANTI-UTILITY", "КОНТРОЛЬ", "ОБОРОНА"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "crosscut",
+
+            name: "CROSSCUT",
+
+            icon: "images/veto-crosscut.png",
+
+            video: "videos/veto-crosscut.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "chokehold",
+
+            name: "CHOKEHOLD",
+
+            icon: "images/veto-chokehold.png",
+
+            video: "videos/veto-chokehold.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "interceptor",
+
+            name: "INTERCEPTOR",
+
+            icon: "images/veto-interceptor.png",
+
+            video: "videos/veto-interceptor.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "evolution",
+
+            name: "EVOLUTION",
+
+            icon: "images/veto-evolution.png",
+
+            video: "videos/veto-evolution.mp4"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        slug: "vyse",
+
+        name: "VYSE",
+
+        role: "SENTINEL",
+
+        description: "Использует жидкий металл для установки ловушек и разделения атакующей команды.",
+
+        image: "images/vyse-riot.png",
+
+        attributes: ["ЛОВУШКИ", "КОНТРОЛЬ", "ИЗОЛЯЦИЯ"],
+
+        abilities: [
+
+          {
+
+            key: "C",
+
+            id: "razorvine",
+
+            name: "RAZORVINE",
+
+            icon: "images/vyse-razorvine.png",
+
+            video: "videos/vyse-razorvine.mp4"
+
+          },
+
+          {
+
+            key: "Q",
+
+            id: "shear",
+
+            name: "SHEAR",
+
+            icon: "images/vyse-shear.png",
+
+            video: "videos/vyse-shear.mp4"
+
+          },
+
+          {
+
+            key: "E",
+
+            id: "arc-rose",
+
+            name: "ARC ROSE",
+
+            icon: "images/vyse-arc-rose.png",
+
+            video: "videos/vyse-arc-rose.mp4"
+
+          },
+
+          {
+
+            key: "X",
+
+            id: "steel-garden",
+
+            name: "STEEL GARDEN",
+
+            icon: "images/vyse-steel-garden.png",
+
+            video: "videos/vyse-steel-garden.mp4"
+
+          }
+
+        ]
+
+      }
+
+  ];
+
+  return agents.map((agent) => ({
+
+    params: {
+
+      slug: agent.slug
+
+    },
+
+    props: {
+
+      agent
+
+    }
+
+  }));
+
+}
+
+const agent = Astro.props.agent;
+
+const roleIcons = {
+
+  DUELIST: "images/duel.png",
+
+  CONTROLLER: "images/cont.png",
+
+  INITIATOR: "images/int.png",
+
+  SENTINEL: "images/sent.png"
+
+};
+
+const roleIcon =
+
+  roleIcons[agent.role as keyof typeof roleIcons];
+
+const firstAbility =
+
+  agent.abilities[0];
+
+---
+
+<BaseLayout title={`GAMESENSE — ${agent.name}`}>
+
+  <main class="agent-page">
+
+    <a
+
+      href={`${import.meta.env.BASE_URL}valorant/`}
+
+      class="agent-page__back"
+
+    id="back-to-agents"
+    >
+
+      ← НАЗАД К АГЕНТАМ
+
+    </a>
+
+
+
+    <section class="agent-hero">
+
+      <div class="agent-hero__visual">
+
+        <div class="agent-hero__ambient"></div>
+
+        <div
+
+          class="agent-hero__ambient
+
+          agent-hero__ambient--blue"
+
+        ></div>
+
+        <div class="agent-hero__wind agent-hero__wind--one"></div>
+
+        <div class="agent-hero__wind agent-hero__wind--two"></div>
+
+        <div class="agent-hero__wind agent-hero__wind--three"></div>
+
+        <img
+
+          src={`${import.meta.env.BASE_URL}${agent.image}`}
+
+          alt={agent.name}
+
+          class="agent-hero__image"
+
+        />
+
+        <span class="agent-hero__watermark">
+
+          {agent.name}
+
+        </span>
+
+      </div>
+
+
+
+      <div class="agent-hero__content">
+
+        <span class="agent-hero__eyebrow">
+
+          VALORANT AGENT
+
+        </span>
+
+        <div class="agent-hero__role-badge">
+
+          <img
+
+            src={`${import.meta.env.BASE_URL}${roleIcon}`}
+
+            alt=""
+
+            class="agent-hero__role-icon"
+
+          />
+
+          <span>
+
+            {agent.role}
+
+          </span>
+
+        </div>
+
+
+
+        <h1>
+
+          {agent.name}
+
+        </h1>
+
+
+
+        <p class="agent-hero__description">
+
+          {agent.description}
+
+        </p>
+
+
+
+        <div class="agent-hero__attributes">
+
+          <span class="agent-hero__attributes-title">
+
+            АТРИБУТЫ
+
+          </span>
+
+          <div class="agent-hero__tags">
+
+            {agent.attributes.map((attribute: string) => (
+
+              <span>{attribute}</span>
+
+            ))}
+
+          </div>
+
+        </div>
+
+
+
+        <div class="agent-hero__abilities">
+
+          <span class="agent-hero__abilities-title">
+
+            СПОСОБНОСТИ
+
+          </span>
+
+          <div class="agent-hero__abilities-list">
+
+            {agent.abilities.map((ability: any) => (
+
+              <button
+
+                class="agent-hero__ability"
+
+                type="button"
+
+                data-ability={ability.id}
+
+                data-key={ability.key}
+
+                data-name={ability.name}
+
+                data-description={`Демонстрация способности ${ability.name} агента ${agent.name}.`}
+
+                data-video={`${import.meta.env.BASE_URL}${ability.video}`}
+
+                aria-label={ability.name}
+
+                title={ability.name}
+
+              >
+
+                <span class="agent-hero__ability-key">
+
+                  {ability.key}
+
+                </span>
+
+                <img
+
+                  src={`${import.meta.env.BASE_URL}${ability.icon}`}
+
+                  alt={ability.name}
+
+                />
+
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <div
+
+        class="ability-preview"
+
+        id="ability-preview"
+
+        aria-hidden="true"
+
+      >
+
+        <button
+
+          class="ability-preview__close"
+
+          id="ability-preview-close"
+
+          type="button"
+
+          aria-label="Закрыть"
+
+        >
+
+          ×
+
+        </button>
+
+
+
+        <div class="ability-preview__media">
+
+          <video
+
+            id="ability-preview-video"
+
+            muted
+
+            loop
+
+            playsinline
+
+            preload="metadata"
+
+          >
+
+            <source
+
+              id="ability-preview-source"
+
+              src=""
+
+              type="video/mp4"
+
+            />
+
+          </video>
+
+        </div>
+
+
+
+        <div class="ability-preview__info">
+
+          <span id="ability-preview-key">
+
+            {firstAbility.key}
+
+          </span>
+
+          <div>
+
+            <h3 id="ability-preview-name">
+
+              {firstAbility.name}
+
+            </h3>
+
+            <p id="ability-preview-description">
+
+              Нажми на способность, чтобы посмотреть её в действии.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <script>
+
+    const preview =
+
+      document.getElementById(
+
+        "ability-preview"
+
+      );
+
+    const video =
+
+      document.getElementById(
+
+        "ability-preview-video"
+
+      ) as HTMLVideoElement | null;
+
+    const source =
+
+      document.getElementById(
+
+        "ability-preview-source"
+
+      ) as HTMLSourceElement | null;
+
+    const previewKey =
+
+      document.getElementById(
+
+        "ability-preview-key"
+
+      );
+
+    const previewName =
+
+      document.getElementById(
+
+        "ability-preview-name"
+
+      );
+
+    const previewDescription =
+
+      document.getElementById(
+
+        "ability-preview-description"
+
+      );
+
+    const closeButton =
+
+      document.getElementById(
+
+        "ability-preview-close"
+
+      );
+
+    const abilityButtons =
+
+      document.querySelectorAll<HTMLButtonElement>(
+
+        ".agent-hero__ability[data-ability]"
+
+      );
+
+    let activeAbility:
+
+      string | null = null;
+
+
+
+    function closePreview() {
+
+      activeAbility = null;
+
+      preview?.classList.remove(
+
+        "is-open"
+
+      );
+
+      preview?.setAttribute(
+
+        "aria-hidden",
+
+        "true"
+
+      );
+
+      abilityButtons.forEach(
+
+        (button) => {
+
+          button.classList.remove(
+
+            "is-active"
+
+          );
+
+        }
+
+      );
+
+      if (video) {
+
+        video.pause();
+
+        video.currentTime = 0;
+
+      }
+
+    }
+
+
+
+    function openPreview(
+
+      button: HTMLButtonElement
+
+    ) {
+
+      const abilityId =
+
+        button.dataset.ability;
+
+      if (!abilityId) {
+
+        return;
+
+      }
+
+      activeAbility =
+
+        abilityId;
+
+      abilityButtons.forEach(
+
+        (item) => {
+
+          item.classList.remove(
+
+            "is-active"
+
+          );
+
+        }
+
+      );
+
+      button.classList.add(
+
+        "is-active"
+
+      );
+
+      if (previewKey) {
+
+        previewKey.textContent =
+
+          button.dataset.key ?? "";
+
+      }
+
+      if (previewName) {
+
+        previewName.textContent =
+
+          button.dataset.name ?? "";
+
+      }
+
+      if (previewDescription) {
+
+        previewDescription.textContent =
+
+          button.dataset.description ?? "";
+
+      }
+
+      preview?.classList.add(
+
+        "is-open"
+
+      );
+
+      preview?.setAttribute(
+
+        "aria-hidden",
+
+        "false"
+
+      );
+
+      if (
+
+        video &&
+
+        source
+
+      ) {
+
+        video.pause();
+
+        source.src =
+
+          button.dataset.video ?? "";
+
+        video.load();
+
+        video
+
+          .play()
+
+          .catch(() => {});
+
+      }
+
+    }
+
+
+
+    abilityButtons.forEach(
+
+      (button) => {
+
+        button.addEventListener(
+
+          "click",
+
+          () => {
+
+            const abilityId =
+
+              button.dataset.ability;
+
+            if (!abilityId) {
+
+              return;
+
+            }
+
+            if (
+
+              activeAbility === abilityId &&
+
+              preview?.classList.contains(
+
+                "is-open"
+
+              )
+
+            ) {
+
+              closePreview();
+
+              return;
+
+            }
+
+            openPreview(
+
+              button
+
+            );
+
+          }
+
+        );
+
+      }
+
+    );
+
+
+
+    closeButton?.addEventListener(
+
+      "click",
+
+      closePreview
+
+    );
+
+  
+
+    /* ==================================================
+       FAST RETURN TO VALORANT
+       ================================================== */
+
+    const backToAgents =
+      document.getElementById(
+        "back-to-agents"
+      );
+
+
+    backToAgents?.addEventListener(
+      "click",
+      (event) => {
+
+        const cameFromValorant =
+          sessionStorage.getItem(
+            "gamesense:cameFromValorant"
+          ) === "1";
+
+
+        /*
+          Если страницу агента открыли из нашей галереи,
+          возвращаемся через browser history.
+          Так Valorant-страница может восстановиться из BFCache
+          уже полностью готовой: без повторной отрисовки кусками,
+          без ручного scrollTo и без пересборки каруселей.
+        */
+        if (
+          cameFromValorant &&
+          window.history.length > 1
+        ) {
+
+          event.preventDefault();
+
+          sessionStorage.removeItem(
+            "gamesense:cameFromValorant"
+          );
+
+          if (video) {
+            video.pause();
+          }
+
+          window.history.back();
+
+          return;
+        }
+
+
+        /*
+          Если агент открыт напрямую или в новой вкладке —
+          оставляем обычный href как безопасный fallback.
+        */
+        sessionStorage.setItem(
+          "gamesense:returnToValorant",
+          "1"
+        );
+
+      }
+    );
+
+</script>
+
+</BaseLayout>
+
+
+
+<style>
+
+.agent-page {
+
+  position: relative;
+
+  width: min(
+
+    1460px,
+
+    calc(100vw - 40px)
+
+  );
+
+  margin: 0 auto;
+
+  padding:
+
+    90px 0 70px;
+
+}
+
+
+
+/* ==============================
+
+   BACK BUTTON
+
+   ============================== */
+
+.agent-page__back {
+
+  position: absolute;
+
+  top: 30px;
+
+  left: 0;
+
+  z-index: 40;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  color:
+
+    rgba(255, 255, 255, 0.52);
+
+  text-decoration: none;
+
+  font-size: 0.6rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  transition:
+
+    color 0.22s ease,
+
+    transform 0.22s ease;
+
+}
+
+
+
+.agent-page__back:hover {
+
+  color: #ff6874;
+
+  transform:
+
+    translateX(-3px);
+
+}
+
+
+
+/* ==============================
+
+   HERO
+
+   ============================== */
+
+.agent-hero {
+
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+
+    minmax(620px, 1.18fr)
+
+    minmax(420px, 0.82fr);
+
+  align-items: center;
+
+  gap: 50px;
+
+  min-height: 720px;
+
+}
+
+
+
+/* ==============================
+
+   LEFT VISUAL
+
+   ============================== */
+
+.agent-hero__visual {
+
+  position: relative;
+
+  min-height: 720px;
+
+  overflow: visible;
+
+}
+
+
+
+.agent-hero__ambient {
+
+  position: absolute;
+
+  left: 45%;
+
+  top: 44%;
+
+  width: 560px;
+
+  height: 560px;
+
+  transform:
+
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+
+    radial-gradient(
+
+      circle,
+
+      rgba(230, 57, 70, 0.18),
+
+      rgba(230, 57, 70, 0.075) 38%,
+
+      transparent 72%
+
+    );
+
+  filter:
+
+    blur(34px);
+
+  z-index: 0;
+
+  pointer-events: none;
+
+}
+
+
+
+.agent-hero__ambient--blue {
+
+  left: 58%;
+
+  top: 60%;
+
+  width: 440px;
+
+  height: 440px;
+
+  background:
+
+    radial-gradient(
+
+      circle,
+
+      rgba(63, 164, 255, 0.15),
+
+      rgba(63, 164, 255, 0.05) 42%,
+
+      transparent 74%
+
+    );
+
+}
+
+
+
+/* ==============================
+
+   WIND
+
+   ============================== */
+
+.agent-hero__wind {
+
+  position: absolute;
+
+  z-index: 1;
+
+  height: 1px;
+
+  border-radius: 999px;
+
+  opacity: 0.32;
+
+  pointer-events: none;
+
+  background:
+
+    linear-gradient(
+
+      90deg,
+
+      transparent,
+
+      rgba(130, 210, 255, 0.72),
+
+      transparent
+
+    );
+
+}
+
+
+
+.agent-hero__wind--one {
+
+  width: 380px;
+
+  left: 3%;
+
+  top: 32%;
+
+  transform:
+
+    rotate(-12deg);
+
+}
+
+
+
+.agent-hero__wind--two {
+
+  width: 430px;
+
+  left: 13%;
+
+  top: 52%;
+
+  opacity: 0.2;
+
+  transform:
+
+    rotate(-8deg);
+
+}
+
+
+
+.agent-hero__wind--three {
+
+  width: 320px;
+
+  left: 22%;
+
+  top: 69%;
+
+  opacity: 0.16;
+
+  transform:
+
+    rotate(-14deg);
+
+}
+
+
+
+/* ==============================
+
+   JETT IMAGE
+
+   ============================== */
+
+.agent-page
+
+.agent-hero
+
+.agent-hero__visual
+
+.agent-hero__image {
+
+  position: absolute;
+
+  z-index: 5;
+
+  width: 920px;
+
+  max-width: none;
+
+  max-height: none;
+
+  left: -400px;
+
+  top: -100px;
+
+  transform: none;
+
+  object-fit: contain;
+
+  object-position: center bottom;
+
+  filter:
+
+    drop-shadow(
+
+      0 38px 58px rgba(0, 0, 0, 0.46)
+
+    );
+
+  transition:
+
+    transform 0.45s ease,
+
+    filter 0.45s ease;
+
+}
+
+
+
+
+
+
+
+
+
+/* ==============================
+
+   WATERMARK
+
+   ============================== */
+
+.agent-hero__watermark {
+
+  position: absolute;
+
+  left: -10px;
+
+  bottom: 18px;
+
+  z-index: 0;
+
+  color:
+
+    rgba(255, 255, 255, 0.025);
+
+  font-size:
+
+    clamp(7rem, 14vw, 12rem);
+
+  font-weight: 900;
+
+  letter-spacing: -0.07em;
+
+  user-select: none;
+
+  pointer-events: none;
+
+}
+
+
+
+/* ==============================
+
+   RIGHT INFO CARD
+
+   ============================== */
+
+/* ==============================
+
+    карточка контекта джет
+
+   ============================== */
+
+.agent-hero__content {
+
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+
+  padding:
+
+    46px 44px;
+
+  border-radius: 24px;
+
+  background:
+
+    radial-gradient(
+
+      circle at 12% 12%,
+
+      rgba(230, 57, 70, 0.09),
+
+      transparent 40%
+
+    ),
+
+    linear-gradient(
+
+      145deg,
+
+      rgba(23, 20, 28, 0.97),
+
+      rgba(11, 10, 14, 0.985)
+
+    );
+
+  border:
+
+    1px solid rgba(255, 255, 255, 0.065);
+
+  box-shadow:
+
+    0 24px 60px rgba(0, 0, 0, 0.28);
+
+  transform:
+
+    translate(-350px, -50px);
+
+}
+
+
+
+.agent-hero__content::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 30px;
+
+  right: 30px;
+
+  height: 1px;
+
+  background:
+
+    linear-gradient(
+
+      90deg,
+
+      transparent,
+
+      rgba(255, 91, 104, 0.48),
+
+      transparent
+
+    );
+
+}
+
+
+
+.agent-hero__content::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 24px;
+
+  right: 24px;
+
+  bottom: 0;
+
+  height: 1px;
+
+  opacity: 0.45;
+
+  background:
+
+    linear-gradient(
+
+      90deg,
+
+      transparent,
+
+      rgba(255, 91, 104, 0.42),
+
+      transparent
+
+    );
+
+}
+
+
+
+/* ==============================
+
+   TEXT
+
+   ============================== */
+
+.agent-hero__eyebrow {
+
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #ff5b68;
+
+  font-size: 0.58rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.2em;
+
+}
+
+
+
+/* ==============================
+
+   ROLE BADGE
+
+   ============================== */
+
+.agent-hero__role-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  width: fit-content;
+
+  margin-bottom: 14px;
+
+  padding:
+
+    9px 14px;
+
+  border-radius: 10px;
+
+  color: #ff7a86;
+
+  font-size: 0.68rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+
+  background:
+
+    rgba(230, 57, 70, 0.08);
+
+  border:
+
+    1px solid rgba(230, 57, 70, 0.22);
+
+}
+
+
+
+.agent-hero__role-icon {
+
+  width: 22px;
+
+  height: 22px;
+
+  object-fit: contain;
+
+  opacity: 0.95;
+
+}
+
+
+
+/* ==============================
+
+   TITLE / DESCRIPTION
+
+   ============================== */
+
+.agent-hero h1 {
+
+  margin:
+
+    0 0 18px;
+
+  color: #fff;
+
+  font-size:
+
+    clamp(4.4rem, 6vw, 6.4rem);
+
+  font-weight: 900;
+
+  letter-spacing: -0.045em;
+
+  line-height: 0.92;
+
+  text-shadow:
+
+    0 8px 28px rgba(0, 0, 0, 0.28);
+
+}
+
+
+
+.agent-hero__description {
+
+  max-width: 470px;
+
+  margin:
+
+    0 0 24px;
+
+  color:
+
+    rgba(255, 255, 255, 0.62);
+
+  font-size: 0.84rem;
+
+  line-height: 1.7;
+
+}
+
+
+
+/* ==============================
+
+   ATTRIBUTES
+
+   ============================== */
+
+.agent-hero__attributes {
+
+  margin-top: 6px;
+
+}
+
+
+
+.agent-hero__attributes-title {
+
+  display: block;
+
+  margin-bottom: 10px;
+
+  color:
+
+    rgba(255, 255, 255, 0.42);
+
+  font-size: 0.54rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+}
+
+
+
+.agent-hero__tags {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  flex-wrap: wrap;
+
+  margin-top: 0;
+
+}
+
+
+
+.agent-hero__tags span {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 30px;
+
+  padding:
+
+    7px 10px;
+
+  border-radius: 7px;
+
+  color:
+
+    rgba(255, 255, 255, 0.64);
+
+  font-size: 0.48rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  background:
+
+    rgba(255, 255, 255, 0.035);
+
+  border:
+
+    1px solid rgba(255, 255, 255, 0.065);
+
+  transition:
+
+    color 0.22s ease,
+
+    *background* 0.22s ease,
+
+    border-color 0.22s ease,
+
+    transform 0.22s ease;
+
+}
+
+
+
+.agent-hero__tags span:hover {
+
+  color: #fff;
+
+  transform:
+
+    translateY(-2px);
+
+  background:
+
+    rgba(230, 57, 70, 0.08);
+
+  border-color:
+
+    rgba(230, 57, 70, 0.22);
+
+}
+
+
+
+/* ==============================
+
+   ABILITIES
+
+   ============================== */
+
+.agent-hero__abilities {
+
+  margin-top: 28px;
+
+  padding-top: 22px;
+
+  border-top:
+
+    1px solid rgba(255, 255, 255, 0.055);
+
+}
+
+
+
+.agent-hero__abilities-title {
+
+  display: block;
+
+  margin-bottom: 14px;
+
+  color:
+
+    rgba(255, 255, 255, 0.42);
+
+  font-size: 0.58rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+}
+
+
+
+.agent-hero__abilities-list {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+}
+
+
+
+.agent-hero__ability {
+
+  position: relative;
+
+  width: 72px;
+
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  background:
+
+    rgba(255, 255, 255, 0.035);
+
+  border:
+
+    1px solid rgba(255, 255, 255, 0.08);
+
+  transition:
+
+    transform 0.22s ease,
+
+    *background* 0.22s ease,
+
+    border-color 0.22s ease,
+
+    box-shadow 0.22s ease;
+
+}
+
+
+
+.agent-hero__ability img {
+
+  width: 40px;
+
+  height: 40px;
+
+  object-fit: contain;
+
+  opacity: 0.86;
+
+  transition:
+
+    opacity 0.22s ease,
+
+    transform 0.22s ease;
+
+}
+
+
+
+.agent-hero__ability-key {
+
+  position: absolute;
+
+  top: 7px;
+
+  left: 8px;
+
+  z-index: 2;
+
+  color:
+
+    rgba(255, 255, 255, 0.34);
+
+  font-size: 0.48rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+}
+
+
+
+.agent-hero__ability:hover,
+
+.agent-hero__ability.is-active {
+
+  transform:
+
+    translateY(-3px);
+
+  background:
+
+    rgba(230, 57, 70, 0.08);
+
+  border-color:
+
+    rgba(230, 57, 70, 0.3);
+
+  box-shadow:
+
+    0 8px 20px rgba(0, 0, 0, 0.22),
+
+    0 0 18px rgba(230, 57, 70, 0.08);
+
+}
+
+
+
+.agent-hero__ability:hover img,
+
+.agent-hero__ability.is-active img {
+
+  opacity: 1;
+
+  transform:
+
+    scale(1.08);
+
+}
+
+/* ==============================
+
+   видео способности
+
+   ============================== */
+
+.ability-preview {
+
+  position: absolute;
+
+  z-index: 50;
+
+  top: 42%;
+
+  left: calc(100% - 340px);
+
+  width: 650px;
+
+  padding: 12px;
+
+  border-radius: 22px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform:
+
+    translateY(-50%)
+
+    translateX(20px);
+
+  pointer-events: none;
+
+  background:
+
+    linear-gradient(
+
+      145deg,
+
+      rgba(22, 19, 27, 0.99),
+
+      rgba(10, 9, 14, 0.995)
+
+    );
+
+  border:
+
+    1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+
+    0 28px 75px rgba(0, 0, 0, 0.55);
+
+  transition:
+
+    opacity 0.25s ease,
+
+    transform 0.25s ease,
+
+    visibility 0.25s ease;
+
+}
+
+.ability-preview.is-open {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+
+    translateY(-50%)
+
+    translateX(0);
+
+  pointer-events: auto;
+
+}
+
+
+
+.ability-preview__media {
+
+  overflow: hidden;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  border-radius: 14px;
+
+  background: #08080b;
+
+}
+
+
+
+.ability-preview__media video {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.ability-preview__info {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding:
+
+    15px 6px 5px;
+
+}
+
+
+
+.ability-preview__info > span {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 38px;
+
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  color:
+
+    #ff7a86;
+
+  font-size: 0.7rem;
+
+  font-weight: 900;
+
+  background:
+
+    rgba(230, 57, 70, 0.08);
+
+  border:
+
+    1px solid rgba(230, 57, 70, 0.18);
+
+}
+
+
+
+.ability-preview__info h3 {
+
+  margin:
+
+    0 0 4px;
+
+  color: #fff;
+
+  font-size: 0.76rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+}
+
+
+
+.ability-preview__info p {
+
+  margin: 0;
+
+  color:
+
+    rgba(255, 255, 255, 0.5);
+
+  font-size: 0.62rem;
+
+  line-height: 1.5;
+
+}
+
+
+
+.ability-preview__close {
+
+  position: absolute;
+
+  top: 8px;
+
+  right: 8px;
+
+  z-index: 5;
+
+  width: 30px;
+
+  height: 30px;
+
+  border:
+
+    1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  color:
+
+    rgba(255, 255, 255, 0.72);
+
+  background:
+
+    rgba(8, 8, 12, 0.78);
+
+  font-size: 1rem;
+
+  transition:
+
+    color 0.2s ease,
+
+    *background* 0.2s ease,
+
+    border-color 0.2s ease;
+
+}
+
+
+
+.ability-preview__close:hover {
+
+  color: #fff;
+
+  background:
+
+    rgba(230, 57, 70, 0.16);
+
+  border-color:
+
+    rgba(230, 57, 70, 0.28);
+
+}
+
+
+
+/* ==============================
+
+   RESPONSIVE
+
+   ============================== */
+
+@media (max-width: 600px) {
+
+  .ability-preview {
+
+    top: auto;
+
+    right: 12px;
+
+    bottom: 12px;
+
+    left: 12px;
+
+    width: auto;
+
+    transform:
+
+      translateY(20px);
+
+  }
+
+
+
+  .ability-preview.is-open {
+
+    transform:
+
+      translateY(0);
+
+  }
+
+}
+
+
+
+@media (max-width: 1000px) {
+
+  .agent-hero {
+
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+
+    min-height: auto;
+
+  }
+
+
+
+  .agent-hero__visual {
+
+    min-height: 560px;
+
+  }
+
+
+
+  .agent-page
+
+  .agent-hero
+
+  .agent-hero__visual
+
+  .agent-hero__image {
+
+    width: 620px;
+
+    left: 50%;
+
+    top: -40px;
+
+    transform:
+
+      translateX(-50%);
+
+  }
+
+
+
+  .agent-page
+
+  .agent-hero:hover
+
+  .agent-hero__visual
+
+  .agent-hero__image {
+
+    transform:
+
+      translateX(-50%)
+
+      scale(1.01);
+
+  }
+
+
+
+  .agent-hero__content {
+
+    max-width: 720px;
+
+    margin:
+
+      0 auto;
+
+    transform: none;
+
+  }
+
+
+
+  .agent-hero__watermark {
+
+    left: 50%;
+
+    transform:
+
+      translateX(-50%);
+
+  }
+
+
+
+  .ability-preview {
+
+    position: relative;
+
+    top: auto;
+
+    right: auto;
+
+    left: auto;
+
+    width:
+
+      min(720px, 100%);
+
+    margin:
+
+      -4px auto 0;
+
+    transform:
+
+      translateY(10px);
+
+  }
+
+
+
+  .ability-preview.is-open {
+
+    transform:
+
+      translateY(0);
+
+  }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+  .agent-page {
+
+    width:
+
+      calc(100vw - 24px);
+
+    padding:
+
+      80px 0 40px;
+
+  }
+
+
+
+  .agent-page__back {
+
+    top: 24px;
+
+  }
+
+
+
+  .agent-hero {
+
+    gap: 12px;
+
+  }
+
+
+
+  .agent-hero__visual {
+
+    min-height: 430px;
+
+  }
+
+
+
+  .agent-page
+
+  .agent-hero
+
+  .agent-hero__visual
+
+  .agent-hero__image {
+
+    width: 500px;
+
+    left: 50%;
+
+    top: -10px;
+
+    transform:
+
+      translateX(-50%);
+
+  }
+
+
+
+  .agent-page
+
+  .agent-hero:hover
+
+  .agent-hero__visual
+
+  .agent-hero__image {
+
+    transform:
+
+      translateX(-50%)
+
+      scale(1.01);
+
+  }
+
+
+
+  .agent-hero__content {
+
+    padding:
+
+      30px 22px;
+
+    transform: none;
+
+  }
+
+
+
+  .agent-hero h1 {
+
+    font-size:
+
+      3.6rem;
+
+  }
+
+
+
+  .agent-hero__description {
+
+    font-size:
+
+      0.76rem;
+
+  }
+
+
+
+  .agent-hero__tags {
+
+    gap: 7px;
+
+  }
+
+
+
+  .agent-hero__tags span {
+
+    padding:
+
+      7px 9px;
+
+    font-size:
+
+      0.46rem;
+
+  }
+
+
+
+  .agent-hero__ability {
+
+    width: 64px;
+
+    height: 64px;
+
+  }
+
+
+
+  .agent-hero__ability img {
+
+    width: 36px;
+
+    height: 36px;
+
+  }
+
+
+
+  .agent-hero__wind {
+
+    display: none;
+
+  }
+
+
+
+  .ability-preview {
+
+    padding: 10px;
+
+    border-radius: 16px;
+
+  }
+
+
+
+  .ability-preview__media {
+
+    border-radius: 11px;
+
+  }
+
+}
+
+</style>

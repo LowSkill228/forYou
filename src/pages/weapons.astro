@@ -1,0 +1,749 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL;
+
+const weaponGroups = [
+  {
+    title: "ПИСТОЛЕТЫ",
+    eyebrow: "SIDEARMS",
+    description: "Быстрый выбор для экономических раундов и точных первых выстрелов.",
+    weapons: [
+      { name: "CLASSIC", slug: "classic", image: `${BASE}images/weapons/classic.png` },
+      { name: "SHORTY", slug: "shorty", image: `${BASE}images/weapons/shorty.png` },
+      { name: "FRENZY", slug: "frenzy", image: `${BASE}images/weapons/frenzy.png` },
+      { name: "GHOST", slug: "ghost", image: `${BASE}images/weapons/ghost.png` },
+      { name: "SHERIFF", slug: "sheriff", image: `${BASE}images/weapons/sheriff.png` }
+    ]
+  },
+
+  {
+    title: "ПИСТОЛЕТЫ-ПУЛЕМЁТЫ",
+    eyebrow: "SMGS",
+    description: "Высокий темп стрельбы и мобильность на ближней и средней дистанции.",
+    weapons: [
+      { name: "STINGER", slug: "stinger", image: `${BASE}images/weapons/stinger.png` },
+      { name: "SPECTRE", slug: "spectre", image: `${BASE}images/weapons/spectre.png` }
+    ]
+  },
+
+  {
+    title: "ДРОБОВИКИ",
+    eyebrow: "SHOTGUNS",
+    description: "Максимальная эффективность на коротких дистанциях и в узких проходах.",
+    weapons: [
+      { name: "BUCKY", slug: "bucky", image: `${BASE}images/weapons/bucky.png` },
+      { name: "JUDGE", slug: "judge", image: `${BASE}images/weapons/judge.png` }
+    ]
+  },
+
+  {
+    title: "ВИНТОВКИ",
+    eyebrow: "RIFLES",
+    description: "Основное оружие для универсальной игры и контроля средней дистанции.",
+    weapons: [
+      { name: "BULLDOG", slug: "bulldog", image: `${BASE}images/weapons/bulldog.png` },
+      { name: "GUARDIAN", slug: "guardian", image: `${BASE}images/weapons/guardian.png` },
+      { name: "PHANTOM", slug: "phantom", image: `${BASE}images/weapons/phantom.png` },
+      { name: "VANDAL", slug: "vandal", image: `${BASE}images/weapons/vandal.png` }
+    ]
+  },
+
+  {
+    title: "СНАЙПЕРСКИЕ ВИНТОВКИ",
+    eyebrow: "SNIPERS",
+    description: "Точный выбор для удержания длинных линий и наказания за каждый пик.",
+    weapons: [
+      { name: "MARSHAL", slug: "marshal", image: `${BASE}images/weapons/marshal.png` },
+      { name: "OUTLAW", slug: "outlaw", image: `${BASE}images/weapons/outlaw.png` },
+      { name: "OPERATOR", slug: "operator", image: `${BASE}images/weapons/operator.png` }
+    ]
+  },
+
+  {
+    title: "ПУЛЕМЁТЫ",
+    eyebrow: "MACHINE GUNS",
+    description: "Большой магазин, мощный прострел и высокий темп подавления.",
+    weapons: [
+      { name: "ARES", slug: "ares", image: `${BASE}images/weapons/ares.png` },
+      { name: "ODIN", slug: "odin", image: `${BASE}images/weapons/odin.png` }
+    ]
+  }
+];
+---
+
+<BaseLayout title="GAMESENSE — Оружие Valorant">
+
+  <main class="weapons-page">
+
+    <header class="weapons-hero">
+
+      <span class="weapons-hero__eyebrow">
+        VALORANT ARMORY
+      </span>
+
+      <h1>
+        ОРУЖИЕ
+      </h1>
+
+      <p>
+        Выбери категорию и оружие.
+        Каждая плитка готова под твою картинку и будущую страницу с подробной информацией.
+      </p>
+
+    </header>
+
+
+    <div class="weapons-groups">
+
+      {weaponGroups.map((group, groupIndex) => (
+
+        <section
+          class="weapon-group"
+          style={`--group-index:${groupIndex};`}
+        >
+
+          <div class="weapon-group__head">
+
+            <div>
+              <span class="weapon-group__eyebrow">
+                {group.eyebrow}
+              </span>
+
+              <h2>
+                {group.title}
+              </h2>
+            </div>
+
+            <p>
+              {group.description}
+            </p>
+
+          </div>
+
+
+          <div class="weapon-grid">
+
+            {group.weapons.map((weapon, index) => (
+
+              <a
+                href={`${BASE}weapons/${weapon.slug}/`}
+                class="weapon-card"
+                style={`--card-index:${index};`}
+              >
+
+                <div class="weapon-card__visual">
+
+                  <span class="weapon-card__number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <img
+                    src={weapon.image}
+                    alt={weapon.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
+
+                  <div class="weapon-card__glow"></div>
+
+                </div>
+
+
+                <div class="weapon-card__footer">
+
+                  <div>
+                    <span class="weapon-card__type">
+                      {group.eyebrow}
+                    </span>
+
+                    <h3>
+                      {weapon.name}
+                    </h3>
+                  </div>
+
+                  <span class="weapon-card__arrow">
+                    →
+                  </span>
+
+                </div>
+
+              </a>
+
+            ))}
+
+          </div>
+
+        </section>
+
+      ))}
+
+    </div>
+
+  </main>
+
+</BaseLayout>
+
+
+<style>
+
+  .weapons-page {
+    width:
+      min(1460px, calc(100vw - 30px));
+
+    margin: 0 auto;
+
+    padding:
+      34px 0 80px;
+  }
+
+
+  /* ==================================================
+     HERO
+     ================================================== */
+
+  .weapons-hero {
+    position: relative;
+
+    max-width: 780px;
+
+    margin:
+      0 auto 42px;
+
+    text-align: center;
+  }
+
+
+  .weapons-hero__eyebrow {
+    display: inline-block;
+
+    margin-bottom: 9px;
+
+    color: #ff4655;
+
+    font-size: 0.64rem;
+    font-weight: 900;
+
+    letter-spacing: 0.22em;
+  }
+
+
+  .weapons-hero h1 {
+    margin:
+      0 0 12px;
+
+    color: #fff;
+
+    font-size:
+      clamp(2.2rem, 5vw, 4.4rem);
+
+    font-weight: 950;
+
+    letter-spacing: 0.08em;
+
+    line-height: 1;
+  }
+
+
+  .weapons-hero p {
+    max-width: 620px;
+
+    margin: 0 auto;
+
+    color:
+      rgba(255,255,255,0.48);
+
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+
+  /* ==================================================
+     GROUPS
+     ================================================== */
+
+  .weapons-groups {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 38px;
+  }
+
+
+  .weapon-group {
+    position: relative;
+
+    padding:
+      24px;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    background:
+      radial-gradient(
+        circle at 50% -25%,
+        rgba(255,70,85,0.055),
+        transparent 42%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(20,18,24,0.96),
+        rgba(10,9,13,0.99)
+      );
+
+    border:
+      1px solid rgba(255,255,255,0.05);
+
+    box-shadow:
+      0 18px 46px rgba(0,0,0,0.18);
+  }
+
+
+  .weapon-group::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 32px;
+    right: 32px;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,70,85,0.24),
+        transparent
+      );
+  }
+
+
+  .weapon-group__head {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 20px;
+  }
+
+
+  .weapon-group__eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+      rgba(255,70,85,0.78);
+
+    font-size: 0.54rem;
+    font-weight: 900;
+
+    letter-spacing: 0.18em;
+  }
+
+
+  .weapon-group__head h2 {
+    margin: 0;
+
+    color: #fff;
+
+    font-size:
+      clamp(1.2rem, 2vw, 1.65rem);
+
+    font-weight: 900;
+
+    letter-spacing: 0.07em;
+  }
+
+
+  .weapon-group__head p {
+    max-width: 520px;
+
+    margin: 0;
+
+    color:
+      rgba(255,255,255,0.37);
+
+    font-size: 0.67rem;
+    line-height: 1.55;
+
+    text-align: right;
+  }
+
+
+  /* ==================================================
+     GRID
+     ================================================== */
+
+  .weapon-grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 13px;
+  }
+
+
+  /* ==================================================
+     CARD
+     ================================================== */
+
+  .weapon-card {
+    position: relative;
+
+    display: flex;
+
+    min-width: 0;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    color: inherit;
+    text-decoration: none;
+
+    background:
+      linear-gradient(
+        180deg,
+        #17151c,
+        #0f0e13
+      );
+
+    border:
+      1px solid rgba(255,255,255,0.055);
+
+    box-shadow:
+      0 10px 26px rgba(0,0,0,0.18);
+
+    transition:
+      transform 0.24s cubic-bezier(.22,.75,.18,1),
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+
+  .weapon-card:hover {
+    transform:
+      translateY(-5px);
+
+    border-color:
+      rgba(255,70,85,0.28);
+
+    box-shadow:
+      0 18px 34px rgba(0,0,0,0.3),
+      0 0 18px rgba(255,70,85,0.05);
+  }
+
+
+  .weapon-card__visual {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 205px;
+
+    padding:
+      26px 24px 20px;
+
+    overflow: hidden;
+
+    background:
+      radial-gradient(
+        circle at 50% 46%,
+        rgba(255,255,255,0.032),
+        transparent 52%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.018),
+        rgba(255,255,255,0)
+      );
+  }
+
+
+  .weapon-card__visual::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.06),
+        transparent
+      );
+  }
+
+
+  .weapon-card__visual img {
+    position: relative;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 88%;
+    height: 150px;
+
+    object-fit: contain;
+
+    filter:
+      drop-shadow(
+        0 14px 18px rgba(0,0,0,0.32)
+      );
+
+    transition:
+      transform 0.26s cubic-bezier(.22,.75,.18,1);
+  }
+
+
+  .weapon-card:hover
+  .weapon-card__visual img {
+    transform:
+      scale(1.045)
+      translateY(-2px);
+  }
+
+
+  .weapon-card__number {
+    position: absolute;
+
+    top: 13px;
+    left: 15px;
+
+    z-index: 3;
+
+    color:
+      rgba(255,255,255,0.17);
+
+    font-size: 0.54rem;
+    font-weight: 900;
+
+    letter-spacing: 0.12em;
+  }
+
+
+  .weapon-card__glow {
+    position: absolute;
+
+    left: 50%;
+    bottom: 12px;
+
+    width: 60%;
+    height: 60px;
+
+    transform:
+      translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        ellipse,
+        rgba(255,70,85,0.08),
+        transparent 68%
+      );
+
+    filter:
+      blur(12px);
+
+    opacity: 0;
+
+    transition:
+      opacity 0.24s ease;
+  }
+
+
+  .weapon-card:hover
+  .weapon-card__glow {
+    opacity: 1;
+  }
+
+
+  /* ==================================================
+     FOOTER
+     ================================================== */
+
+  .weapon-card__footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding:
+      15px 17px 16px;
+  }
+
+
+  .weapon-card__type {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+      rgba(255,70,85,0.56);
+
+    font-size: 0.44rem;
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+  }
+
+
+  .weapon-card__footer h3 {
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 0.94rem;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+  }
+
+
+  .weapon-card__arrow {
+    display: grid;
+
+    width: 31px;
+    height: 31px;
+
+    place-items: center;
+
+    flex: 0 0 31px;
+
+    border-radius: 50%;
+
+    color:
+      rgba(255,255,255,0.68);
+
+    background:
+      rgba(255,255,255,0.035);
+
+    border:
+      1px solid rgba(255,255,255,0.06);
+
+    transition:
+      color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+
+  .weapon-card:hover
+  .weapon-card__arrow {
+    color: #fff;
+
+    background:
+      rgba(255,70,85,0.15);
+
+    transform:
+      translateX(3px);
+  }
+
+
+  /* ==================================================
+     RESPONSIVE
+     ================================================== */
+
+  @media (max-width: 1040px) {
+
+    .weapon-grid {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+  }
+
+
+  @media (max-width: 720px) {
+
+    .weapons-page {
+      width:
+        calc(100vw - 18px);
+
+      padding-top: 24px;
+    }
+
+
+    .weapons-hero {
+      margin-bottom: 28px;
+    }
+
+
+    .weapon-group {
+      padding:
+        18px 12px 14px;
+
+      border-radius: 20px;
+    }
+
+
+    .weapon-group__head {
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      gap: 8px;
+    }
+
+
+    .weapon-group__head p {
+      max-width: none;
+
+      text-align: left;
+    }
+
+
+    .weapon-grid {
+      grid-template-columns: 1fr;
+
+      gap: 10px;
+    }
+
+
+    .weapon-card__visual {
+      min-height: 180px;
+    }
+
+
+    .weapon-card__visual img {
+      height: 132px;
+    }
+
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .weapon-card,
+    .weapon-card__visual img,
+    .weapon-card__arrow {
+      transition: none;
+    }
+
+  }
+
+</style>

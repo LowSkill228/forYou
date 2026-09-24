@@ -1,0 +1,7727 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const games = [
+  {
+    name: "Valorant",
+    image: `${import.meta.env.BASE_URL}images/logo_main_left.png`
+  }
+];
+
+const agents = [
+
+  /* ==================================================
+     DUELISTS
+     ================================================== */
+
+  {
+    name: "JETT",
+    accent: "#71c7e3",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/jett-agents.png`,
+    description: "Мобильный дуэлянт, который быстро занимает пространство и резко меняет позицию."
+  },
+
+  {
+    name: "ISO",
+    accent: "#8a6cff",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/iso-agents.png`,
+    description: "Специалист по прямым перестрелкам, способный усиливать себя и изолировать противника."
+  },
+
+  {
+    name: "NEON",
+    accent: "#49a8ff",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/neon-agents.png`,
+    description: "Высокоскоростной дуэлянт, который быстро сокращает дистанцию и прорывает оборону."
+  },
+
+  {
+    name: "PHOENIX",
+    accent: "#f08a4b",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/phoenix-agents.png`,
+    description: "Агрессивный боец, использующий огонь для атаки, лечения и контроля пространства."
+  },
+
+  {
+    name: "RAZE",
+    accent: "#f2b24b",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/raze-agents.png`,
+    description: "Взрывной дуэлянт, специализирующийся на гранатах, мобильности и уроне по площади."
+  },
+
+  {
+    name: "REYNA",
+    accent: "#c55ac7",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/reyna-agents.png`,
+    description: "Дуэлянт, который становится сильнее после убийств и особенно опасен в одиночных боях."
+  },
+
+  {
+    name: "WAYLAY",
+    accent: "#ff76b7",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/waylay-agents.png`,
+    description: "Молниеносно перемещается по полю боя и использует свет для агрессивных атак."
+  },
+
+  {
+    name: "YORU",
+    accent: "#5776e8",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/yoru-agents.png`,
+    description: "Использует разрывы реальности, телепортацию и обман, чтобы заставать врагов врасплох."
+  },
+
+
+  /* ==================================================
+     CONTROLLERS
+     ================================================== */
+
+  {
+    name: "ASTRA",
+    accent: "#9c63d8",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/astra-agents.png`,
+    description: "Управляет полем боя на расстоянии с помощью звезд и космических способностей."
+  },
+
+  {
+    name: "BRIMSTONE",
+    accent: "#d06b4f",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/brim-agents.png`,
+    description: "Тактический командир, который контролирует территории дымами и поддержкой с орбиты."
+  },
+
+  {
+    name: "CLOVE",
+    accent: "#d873c9",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/clove-agents.png`,
+    description: "Контролирует обзор противника и способна влиять на раунд даже после своей смерти."
+  },
+
+  {
+    name: "HARBOR",
+    accent: "#4eb6c6",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/harbor-agents.png`,
+    description: "Использует воду для создания стен и защиты союзников при захвате территории."
+  },
+
+  {
+    name: "MIKS",
+    accent: "#6c8fdc",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/miks-agents.png`,
+    description: "Управляет звуковой энергией, поддерживает союзников и помогает контролировать темп боя."
+  },
+
+  {
+    name: "OMEN",
+    accent: "#6a5bb8",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/omen-agents.png`,
+    description: "Создает дымовые завесы и использует телепортацию, чтобы оказывать давление из тени."
+  },
+
+  {
+    name: "VIPER",
+    accent: "#71a95a",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/viper-agents.png`,
+    description: "Использует токсичные устройства и газ, чтобы перекрывать территории и ослаблять врагов."
+  },
+
+
+  /* ==================================================
+     INITIATORS
+     ================================================== */
+
+  {
+    name: "BREACH",
+    accent: "#d98f43",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/breach-agents.png`,
+    description: "Пробивает оборону мощными импульсами и создает возможности для входа команды."
+  },
+
+  {
+    name: "FADE",
+    accent: "#6d6f95",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/fade-agents.png`,
+    description: "Выслеживает противников и раскрывает их позиции с помощью кошмарной энергии."
+  },
+
+  {
+    name: "GEKKO",
+    accent: "#8fcf58",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/gekko-agents.png`,
+    description: "Отправляет своих существ вперед, чтобы искать, оглушать и контролировать противников."
+  },
+
+  {
+    name: "KAY/O",
+    accent: "#6e89d8",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/kayo-agents.png`,
+    description: "Подавляет способности врагов и помогает команде безопаснее начинать атаку."
+  },
+
+  {
+    name: "SKYE",
+    accent: "#78a85b",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/skye-agents.png`,
+    description: "Разведывает территорию, ослепляет противников и способна поддерживать союзников."
+  },
+
+  {
+    name: "SOVA",
+    accent: "#5f8fb8",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/sova-agents.png`,
+    description: "Разведывает позиции противников и помогает команде получать информацию."
+  },
+
+  {
+    name: "TEJO",
+    accent: "#c77a52",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/tejo-agents.png`,
+    description: "Использует современную технику и удары по площади, чтобы вытеснять врагов с позиций."
+  },
+
+
+  /* ==================================================
+     SENTINELS
+     ================================================== */
+
+  {
+    name: "CHAMBER",
+    accent: "#d2a15f",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/chamber-agents.png`,
+    description: "Удерживает позиции с помощью высокоточного оружия, ловушек и мобильности."
+  },
+
+  {
+    name: "CYPHER",
+    accent: "#87a0b5",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/cypher-agents.png`,
+    description: "Собирает информацию с помощью камер и ловушек и контролирует действия противника."
+  },
+
+  {
+    name: "DEADLOCK",
+    accent: "#7a9fb0",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/deadlock-agents.png`,
+    description: "Использует нанотехнологии и ловушки, чтобы блокировать и удерживать противников."
+  },
+
+  {
+    name: "KILLJOY",
+    accent: "#d6c74f",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/killjoy-agents.png`,
+    description: "Защищает территорию с помощью турелей, роботов и других технических устройств."
+  },
+
+  {
+    name: "SAGE",
+    accent: "#5dbfa8",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/sage-agents.png`,
+    description: "Поддерживает команду, лечит союзников и контролирует пространство."
+  },
+
+  {
+    name: "VETO",
+    accent: "#6a8f72",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/veto-agents.png`,
+    description: "Нейтрализует вражеские способности и устройства, усиливая контроль территории."
+  },
+
+  {
+    name: "VYSE",
+    accent: "#8b7cbf",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/vyse-agents.png`,
+    description: "Использует жидкий металл для установки ловушек и разделения атакующей команды."
+  }
+
+];
+
+const getAgentSlug = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/\//g, "-")
+    .replace(/\s+/g, "-");
+
+const agentClasses = [
+  {
+    title: "ДУЭЛИСТЫ",
+    role: "DUELIST",
+    image: `${import.meta.env.BASE_URL}images/duel.png`,
+    description:
+      "Агрессивные агенты, которые первыми входят в бой, создают пространство для команды и специализируются на убийствах."
+  },
+  {
+    title: "КОНТРОЛЛЕРЫ",
+    role: "CONTROLLER",
+    image: `${import.meta.env.BASE_URL}images/cont.png`,
+    description:
+      "Контролируют поле боя с помощью дымов, стен и других способностей, ограничивая обзор и передвижение противника."
+  },
+  {
+    title: "ИНИЦИАТОРЫ",
+    role: "INITIATOR",
+    image: `${import.meta.env.BASE_URL}images/int.png`,
+    description:
+      "Помогают команде начинать атаку, находят противников и создают возможности для безопасного входа на позицию."
+  },
+  {
+    title: "СТРАЖИ",
+    role: "SENTINEL",
+    image: `${import.meta.env.BASE_URL}images/sent.png`,
+    description:
+      "Защищают позиции, контролируют фланги и используют ловушки или вспомогательные способности для поддержки команды."
+  }
+];
+
+const weaponGroups = [
+  {
+    title: "ПИСТОЛЕТЫ",
+    eyebrow: "SIDEARMS",
+    weapons: [
+      { name: "CLASSIC", slug: "classic", image: `${import.meta.env.BASE_URL}images/weapons/classic.png`, icon: `${import.meta.env.BASE_URL}images/weapons/classic-icon.png`, type: "ЛИЧНОЕ ОРУЖИЕ", description: "Лёгкий и универсальный стандартный пистолет, подходящий для самых разных ситуаций." },
+      { name: "SHORTY", slug: "shorty", image: `${import.meta.env.BASE_URL}images/weapons/shorty.png`, icon: `${import.meta.env.BASE_URL}images/weapons/shorty-icon.png`, type: "ЛИЧНОЕ ОРУЖИЕ", description: "Компактное оружие для внезапной атаки и максимально близкой дистанции." },
+      { name: "FRENZY", slug: "frenzy", image: `${import.meta.env.BASE_URL}images/weapons/frenzy.png`, icon: `${import.meta.env.BASE_URL}images/weapons/frenzy-icon.png`, type: "ЛИЧНОЕ ОРУЖИЕ", description: "Скорострельный пистолет, особенно эффективный в ближнем бою." },
+      { name: "GHOST", slug: "ghost", image: `${import.meta.env.BASE_URL}images/weapons/ghost.png`, icon: `${import.meta.env.BASE_URL}images/weapons/ghost-icon.png`, type: "ЛИЧНОЕ ОРУЖИЕ", description: "Тихий и точный пистолет, уверенно работающий на разных дистанциях." },
+      { name: "SHERIFF", slug: "sheriff", image: `${import.meta.env.BASE_URL}images/weapons/sheriff.png`, icon: `${import.meta.env.BASE_URL}images/weapons/sheriff-icon.png`, type: "ЛИЧНОЕ ОРУЖИЕ", description: "Мощный шестизарядный револьвер для точных выстрелов и попаданий в голову." }
+    ]
+  },
+  {
+    title: "ПИСТОЛЕТЫ-ПУЛЕМЁТЫ",
+    eyebrow: "SMGS",
+    weapons: [
+      { name: "STINGER", slug: "stinger", image: `${import.meta.env.BASE_URL}images/weapons/stinger.png`, icon: `${import.meta.env.BASE_URL}images/weapons/stinger-icon.png`, type: "ПИСТОЛЕТЫ-ПУЛЕМЁТЫ", description: "Компактный ПП с высоким темпом стрельбы для агрессивной игры вблизи." },
+      { name: "SPECTRE", slug: "spectre", image: `${import.meta.env.BASE_URL}images/weapons/spectre.png`, icon: `${import.meta.env.BASE_URL}images/weapons/spectre-icon.png`, type: "ПИСТОЛЕТЫ-ПУЛЕМЁТЫ", description: "Универсальный ПП для мобильной игры на ближней и средней дистанции." }
+    ]
+  },
+  {
+    title: "ДРОБОВИКИ",
+    eyebrow: "SHOTGUNS",
+    weapons: [
+      { name: "BUCKY", slug: "bucky", image: `${import.meta.env.BASE_URL}images/weapons/bucky.png`, icon: `${import.meta.env.BASE_URL}images/weapons/bucky-icon.png`, type: "ДРОБОВИКИ", description: "Помповый дробовик, наиболее опасный в тесных проходах и на короткой дистанции." },
+      { name: "JUDGE", slug: "judge", image: `${import.meta.env.BASE_URL}images/weapons/judge.png`, icon: `${import.meta.env.BASE_URL}images/weapons/judge-icon.png`, type: "ДРОБОВИКИ", description: "Автоматический дробовик с высокой скорострельностью и серьёзным уроном вблизи." }
+    ]
+  },
+  {
+    title: "ВИНТОВКИ",
+    eyebrow: "RIFLES",
+    weapons: [
+      { name: "BULLDOG", slug: "bulldog", image: `${import.meta.env.BASE_URL}images/weapons/bulldog.png`, icon: `${import.meta.env.BASE_URL}images/weapons/bulldog-icon.png`, type: "АВТОМАТЫ", description: "Сбалансированный автомат для уверенной стрельбы на средней дистанции." },
+      { name: "GUARDIAN", slug: "guardian", image: `${import.meta.env.BASE_URL}images/weapons/guardian.png`, icon: `${import.meta.env.BASE_URL}images/weapons/guardian-icon.png`, type: "АВТОМАТЫ", description: "Полуавтоматическая винтовка для игроков, которые ценят терпение и точность." },
+      { name: "PHANTOM", slug: "phantom", image: `${import.meta.env.BASE_URL}images/weapons/phantom.png`, icon: `${import.meta.env.BASE_URL}images/weapons/phantom-icon.png`, type: "АВТОМАТЫ", description: "Стабильный автомат, хорошо подходящий для контролируемых продолжительных очередей." },
+      { name: "VANDAL", slug: "vandal", image: `${import.meta.env.BASE_URL}images/weapons/vandal.png`, icon: `${import.meta.env.BASE_URL}images/weapons/vandal-icon.png`, type: "АВТОМАТЫ", description: "Мощный и точный автомат, особенно эффективный при коротких контролируемых очередях." }
+    ]
+  },
+  {
+    title: "СНАЙПЕРСКИЕ ВИНТОВКИ",
+    eyebrow: "SNIPERS",
+    weapons: [
+      { name: "MARSHAL", slug: "marshal", image: `${import.meta.env.BASE_URL}images/weapons/marshal.png`, icon: `${import.meta.env.BASE_URL}images/weapons/marshal-icon.png`, type: "СНАЙПЕРСКИЕ ВИНТОВКИ", description: "Лёгкая снайперская винтовка для удержания дальних линий и точных пиков." },
+      { name: "OUTLAW", slug: "outlaw", image: `${import.meta.env.BASE_URL}images/weapons/outlaw.png`, icon: `${import.meta.env.BASE_URL}images/weapons/outlaw-icon.png`, type: "СНАЙПЕРСКИЕ ВИНТОВКИ", description: "Двуствольная снайперская винтовка для быстрых и решительных разменов." },
+      { name: "OPERATOR", slug: "operator", image: `${import.meta.env.BASE_URL}images/weapons/operator.png`, icon: `${import.meta.env.BASE_URL}images/weapons/operator-icon.png`, type: "СНАЙПЕРСКИЕ ВИНТОВКИ", description: "Тяжёлая снайперская винтовка для контроля ключевых позиций и длинных углов." }
+    ]
+  },
+  {
+    title: "ПУЛЕМЁТЫ",
+    eyebrow: "MACHINE GUNS",
+    weapons: [
+      { name: "ARES", slug: "ares", image: `${import.meta.env.BASE_URL}images/weapons/ares.png`, icon: `${import.meta.env.BASE_URL}images/weapons/ares-icon.png`, type: "ТЯЖЕЛОЕ ОРУЖИЕ", description: "Скорострельный пулемёт с большим магазином для длительного подавляющего огня." },
+      { name: "ODIN", slug: "odin", image: `${import.meta.env.BASE_URL}images/weapons/odin.png`, icon: `${import.meta.env.BASE_URL}images/weapons/odin-icon.png`, type: "ТЯЖЕЛОЕ ОРУЖИЕ", description: "Тяжёлый пулемёт с высокой огневой мощью и большим запасом патронов." }
+    ]
+  }
+];
+
+// Add map photos to public/images/maps/<slug>.png.
+const valorantMaps = [
+  {
+    "name": "SUMMIT",
+    "slug": "summit",
+        "description": "Академия радиантов в Китае. Опускающиеся стены меняют доступные маршруты прямо во время раунда."
+  },
+  {
+    "name": "CORRODE",
+    "slug": "corrode",
+        "description": "Французский замок и промышленный комплекс: древние улицы, укрытия и три линии для тактической игры."
+  },
+  {
+    "name": "ABYSS",
+    "slug": "abyss",
+        "description": "Секретная база над бездонной пропастью. Опасные края и смелые перемещения открывают новые возможности."
+  },
+  {
+    "name": "SUNSET",
+    "slug": "sunset",
+        "description": "Городские кварталы, три линии и борьба за центр карты возле объекта Kingdom."
+  },
+  {
+    "name": "LOTUS",
+    "slug": "lotus",
+        "description": "Древние руины, вращающиеся каменные двери и три точки установки Spike."
+  },
+  {
+    "name": "PEARL",
+    "slug": "pearl",
+        "description": "Подводный город с двумя точками. Узкий центр и длинные боковые проходы задают темп боя."
+  },
+  {
+    "name": "FRACTURE",
+    "slug": "fracture",
+        "description": "Исследовательский комплекс, расколотый экспериментом. Атака с разных направлений требует слаженной защиты."
+  },
+  {
+    "name": "BREEZE",
+    "slug": "breeze",
+        "description": "Тропические руины и открытые пространства. Дальние перестрелки и контроль флангов решают исход раунда."
+  },
+  {
+    "name": "ICEBOX",
+    "slug": "icebox",
+        "description": "Арктическая база Kingdom: контейнеры, высоты и тросы для неожиданных перемещений."
+  },
+  {
+    "name": "ASCENT",
+    "slug": "ascent",
+        "description": "Открытый центр и две точки с закрывающимися дверьми. Контроль пространства помогает управлять ходом раунда."
+  },
+  {
+    "name": "SPLIT",
+    "slug": "split",
+        "description": "Городская карта с перепадами высот. Верёвки и высокие позиции связывают центр с двумя точками."
+  },
+  {
+    "name": "HAVEN",
+    "slug": "haven",
+        "description": "Монастырский комплекс с тремя точками установки Spike. Защите приходится быстро менять позиции."
+  },
+  {
+    "name": "BIND",
+    "slug": "bind",
+        "description": "Две точки без центральной линии. Односторонние телепорты позволяют быстро менять направление атаки."
+  }
+].map((map) => ({ ...map, image: `${import.meta.env.BASE_URL}images/maps/${map.slug}.png` }));
+
+---
+
+<BaseLayout title="GAMESENSE — Valorant">
+
+  <div class="page-transition">
+
+    <div class="layout">
+
+      <!-- ============================================
+           BRAND
+           ============================================ -->
+
+      <header class="brand">
+
+        <h1 class="brand__title">
+          GAME<span>SENSE</span>
+        </h1>
+
+        <p class="brand__subtitle">
+          Check Detailed Valorant Stats and Leaderboards
+        </p>
+
+      </header>
+
+
+      <!-- ============================================
+           MAIN GAME SECTION
+           ============================================ -->
+
+      <section class="game-section">
+
+        <div class="game-row">
+
+
+          <!-- ============================================
+               VALORANT
+               ============================================ -->
+
+          <div class="games-grid">
+
+            {games.map((game) => (
+
+              <div
+                class="game-card"
+                style={`--game-bg: url("${game.image}")`}
+              >
+
+                <div class="game-card__art"></div>
+
+                <div class="game-card__content">
+
+                  <span class="game-card__eyebrow">
+                    GAMESENSE GUIDE
+                  </span>
+
+                  <h3>
+                    VALORANT
+                  </h3>
+
+                  <div class="game-card__intro">
+
+                    <strong>
+                      Не знаешь с чего начать?
+                    </strong>
+
+                    <p>
+                      Начинай с разделов и изучай по полной!
+                    </p>
+
+                  </div>
+
+                  <div class="game-card__features">
+
+                    <span
+                      class="game-card__feature"
+                      data-highlight="agents"
+                    >
+                      АГЕНТЫ
+                    </span>
+
+                    <span
+                      class="game-card__feature"
+                      data-highlight="weapons"
+                    >
+                      ОРУЖИЕ
+                    </span>
+
+                    <span
+                      class="game-card__feature"
+                      data-highlight="maps"
+                    >
+                      КАРТЫ
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
+
+          <!-- ============================================
+               INFO CARDS
+               ============================================ -->
+
+          <div class="info-cards">
+
+            <a
+              href="#agent-roles"
+              class="info-card"
+              id="agents-toggle"
+              data-section="agents"
+            >
+
+              <img
+                src={`${import.meta.env.BASE_URL}images/agents-logo.png`}
+                alt="Агенты"
+                class="info-card__image"
+              />
+
+            </a>
+
+
+            <a
+              href="#weapons-content"
+              class="info-card"
+              id="weapons-toggle"
+              data-section="weapons"
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/weapons-card-v1.png`}
+                alt="Оружие"
+                class="info-card__artwork"
+              />
+            </a>
+
+
+            <a
+              href="#maps-content"
+              class="info-card"
+              id="maps-toggle"
+              aria-controls="maps-content"
+              aria-expanded="false"
+              data-section="maps"
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/maps-card-v1.png`}
+                alt="Карты"
+                class="info-card__artwork"
+              />
+            </a>
+
+          </div>
+
+
+          <!-- ============================================
+               PROMO
+               ============================================ -->
+
+          <a
+            href="#guide-content"
+            class="promo"
+            id="guide-toggle"
+            aria-controls="guide-content"
+            aria-expanded="false"
+          >
+
+            <div class="promo__art">
+
+              <img
+                src={`${import.meta.env.BASE_URL}images/logo_main_right2.png`}
+                alt="Valorant promo art"
+              />
+
+            </div>
+
+
+            <div class="promo__inner">
+
+              <span class="promo__badge">
+                GAMESENSE
+              </span>
+
+              <h2 class="promo__title">
+                От первого выстрела до
+                <span> Radiant</span>
+              </h2>
+
+              <p class="promo__lead">
+                Учись. Играй. Побеждай.
+              </p>
+
+              <p class="promo__tagline">
+                Твой напарник по прокачке в Valorant.
+              </p>
+
+
+              <span class="promo__cta">
+
+                <span class="promo__cta-back">
+                  Узнай больше
+                </span>
+
+                <span class="promo__cta-front">
+                  Learn More
+                </span>
+
+              </span>
+
+            </div>
+
+          </a>
+
+
+        </div>
+
+      </section>
+
+<!-- ============================================
+     AGENT CONTENT
+     Hidden until the main "АГЕНТЫ" button is pressed
+     ============================================ -->
+
+<div
+  class="agents-content"
+  id="agents-content"
+  hidden
+>
+
+  <!-- ============================================
+       AGENT ROLES — HYBRID
+       ============================================ -->
+
+  <section
+    class="roles-carousel"
+    id="agent-roles"
+    aria-label="Классы агентов"
+  >
+
+    <div class="roles-carousel__head">
+
+      <span class="roles-carousel__eyebrow">
+        VALORANT
+      </span>
+
+      <h2>
+        КЛАССЫ АГЕНТОВ
+      </h2>
+
+      <p>
+        Листай классы и выбери свой стиль игры.
+      </p>
+
+    </div>
+
+
+    <div
+      class="roles-carousel__stage"
+      data-roles-carousel
+    >
+
+      <button
+        class="roles-carousel__nav roles-carousel__nav--prev"
+        type="button"
+        aria-label="Предыдущий класс"
+        data-carousel-prev
+      >
+        <span></span>
+      </button>
+
+
+      <div
+        class="roles-carousel__viewport"
+      >
+
+        <div
+          class="roles-carousel__track"
+          data-carousel-track
+        >
+
+          {agentClasses.map((agentClass, index) => {
+
+            const agentCount =
+              agents.filter(
+                (agent) =>
+                  agent.role === agentClass.role
+              ).length;
+
+            return (
+
+              <a
+                href={`#${agentClass.role.toLowerCase()}`}
+                class={`roles-carousel__card roles-carousel__card--${agentClass.role.toLowerCase()}`}
+                data-carousel-card
+                data-carousel-index={index}
+              >
+
+                <div class="roles-carousel__glow"></div>
+
+                <div class="roles-carousel__icon">
+
+                  <img
+                    src={agentClass.image}
+                    alt={agentClass.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+
+                </div>
+
+                <div class="roles-carousel__content">
+
+                  <span class="roles-carousel__role">
+                    {agentClass.role}
+                  </span>
+
+                  <h3>
+                    {agentClass.title}
+                  </h3>
+
+                  <p>
+                    {agentClass.description}
+                  </p>
+
+                  <div class="roles-carousel__meta">
+
+                    <span>
+                      {agentCount} AGENTS
+                    </span>
+
+                    <span class="roles-carousel__cta">
+                      Открыть класс
+                      <b>→</b>
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </a>
+
+            );
+
+          })}
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="roles-carousel__nav roles-carousel__nav--next"
+        type="button"
+        aria-label="Следующий класс"
+        data-carousel-next
+      >
+        <span></span>
+      </button>
+
+    </div>
+
+
+    <div
+      class="roles-carousel__dots"
+      data-carousel-dots
+      aria-label="Навигация по классам"
+    >
+      {agentClasses.map((agentClass, index) => (
+        <button
+          type="button"
+          aria-label={`Показать ${agentClass.title}`}
+          data-carousel-dot
+          data-carousel-index={index}
+        ></button>
+      ))}
+    </div>
+
+  </section>
+
+<!-- ============================================
+     ACTIVE AGENT CLASS
+     One shared area — panels replace each other
+     ============================================ -->
+
+  <section
+    class="agent-class-switcher"
+    id="agent-showcase-stage"
+    aria-live="polite"
+  >
+
+    {agentClasses.map((agentClass, classIndex) => {
+
+      const classAgents =
+        agents.filter(
+          (agent) =>
+            agent.role === agentClass.role
+        );
+
+      return (
+
+        <div
+          class={`agent-class-panel ${classIndex === 0 ? "is-active" : ""}`}
+          data-agent-class-panel
+          data-class-index={classIndex}
+          data-class-role={agentClass.role}
+          hidden={classIndex !== 0}
+        >
+
+          <div class="agents-section__head">
+
+            <div class="agents-section__title">
+
+              <img
+                src={agentClass.image}
+                alt={agentClass.title}
+                class="agents-section__icon"
+                loading="lazy"
+                decoding="async"
+              />
+
+              <div>
+                <span class="agent-class-panel__eyebrow">
+                  {agentClass.role}
+                </span>
+
+                <h2>
+                  {agentClass.title}
+                </h2>
+              </div>
+
+            </div>
+
+            <span class="agents-section__count">
+              {classAgents.length}
+            </span>
+
+          </div>
+
+
+          <div
+            class={`agent-showcase agent-showcase--${agentClass.role.toLowerCase()}`}
+            data-agent-showcase
+            data-role-label={agentClass.title}
+          >
+
+            <button
+              class="agent-showcase__nav agent-showcase__nav--prev"
+              type="button"
+              aria-label="Предыдущий агент"
+              data-agent-prev
+            >
+              <span></span>
+            </button>
+
+
+            <div class="agent-showcase__viewport">
+
+              <div
+                class="agent-showcase__track"
+                data-agent-track
+              >
+
+                {classAgents.map((agent, index) => (
+
+                  <article
+                    class="agent-showcase__card"
+                    data-agent-card
+                    data-agent-index={index}
+                    style={`--agent-accent: ${agent.accent ?? "#d14f9d"};`}
+                  >
+
+                    <div class="agent-showcase__media">
+
+                      <img
+                        src={agent.image}
+                        alt={agent.name}
+                        class="agent-showcase__image"
+                        loading="lazy"
+                        decoding="async"
+                      />
+
+                    </div>
+
+
+                    <div class="agent-showcase__overlay"></div>
+
+
+                    <div class="agent-showcase__content">
+
+                      <span class="agent-showcase__role">
+                        {agent.role}
+                      </span>
+
+                      <h3>
+                        {agent.name}
+                      </h3>
+
+                      <p>
+                        {agent.description}
+                      </p>
+
+                      <a
+                        href={`${import.meta.env.BASE_URL}agents/${getAgentSlug(agent.name)}/`}
+                        class="agent-showcase__profile"
+                      >
+                        <span>ПОДРОБНЕЕ</span>
+                        <span>→</span>
+                      </a>
+
+                    </div>
+
+                  </article>
+
+                ))}
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="agent-showcase__nav agent-showcase__nav--next"
+              type="button"
+              aria-label="Следующий агент"
+              data-agent-next
+            >
+              <span></span>
+            </button>
+
+          </div>
+
+        </div>
+
+      );
+
+    })}
+
+  </section>
+
+
+</div>
+
+
+
+<!-- ============================================
+     WEAPONS CONTENT
+     Featured weapon + mini cards
+     ============================================ -->
+
+<div
+  class="weapons-content"
+  id="weapons-content"
+  hidden
+>
+
+  <section
+    class="weapons-showcase"
+    id="valorant-weapons"
+    aria-label="Оружие Valorant"
+  >
+
+    <div class="weapons-showcase__head">
+
+      <div class="weapons-showcase__title">
+        <span class="weapons-showcase__eyebrow">
+          VALORANT ARMORY
+        </span>
+
+        <h2>
+          ОРУЖИЕ
+        </h2>
+
+      </div>
+
+      <div
+        class="weapon-tabs"
+        role="tablist"
+        aria-label="Категории оружия"
+      >
+        {weaponGroups.map((group, index) => (
+          <button
+            type="button"
+            class:list={[
+              "weapon-tab",
+              index === 0 && "is-active"
+            ]}
+            data-weapon-tab={index}
+            id={`weapon-tab-${index}`}
+            aria-controls={`weapon-panel-${index}`}
+            tabindex={index === 0 ? 0 : -1}
+            role="tab"
+            aria-selected={index === 0 ? "true" : "false"}
+          >
+            <span class="weapon-tab__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <span class="weapon-tab__eyebrow">
+              {group.eyebrow}
+            </span>
+
+            <strong>
+              {group.title}
+            </strong>
+          </button>
+        ))}
+      </div>
+
+    </div>
+
+
+    <div class="weapon-panels">
+
+      {weaponGroups.map((group, groupIndex) => (
+
+        <div
+          class:list={[
+            "weapon-panel",
+            groupIndex === 0 && "is-active"
+          ]}
+          data-weapon-panel={groupIndex}
+          id={`weapon-panel-${groupIndex}`}
+          role="tabpanel"
+          aria-labelledby={`weapon-tab-${groupIndex}`}
+          tabindex="0"
+          hidden={groupIndex !== 0}
+        >
+
+          <div class="weapon-feature">
+
+            <div class="weapon-feature__visual">
+              <span class="weapon-feature__category">
+                {group.eyebrow}
+              </span>
+
+              <img
+                src={group.weapons[0].image}
+                alt={group.weapons[0].name}
+                data-featured-image
+              />
+
+              <div class="weapon-feature__glow"></div>
+            </div>
+
+            <div class="weapon-feature__info">
+
+              <span class="weapon-feature__label">
+                ВЫБРАННОЕ ОРУЖИЕ
+              </span>
+
+              <h3 data-featured-name>
+                {group.weapons[0].name}
+              </h3>
+
+              <div class="weapon-feature__type">
+                <span>ТИП ОРУЖИЯ</span>
+
+                <strong data-featured-type>
+                  {group.title}
+                </strong>
+              </div>
+
+              <p data-featured-description>
+                {group.weapons[0].description}
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="weapon-mini-list">
+
+            {group.weapons.map((weapon, weaponIndex) => (
+
+              <button
+                type="button"
+                class:list={[
+                  "weapon-mini-card",
+                  weaponIndex === 0 && "is-active"
+                ]}
+                data-weapon-choice
+                data-weapon-name={weapon.name}
+                data-weapon-image={weapon.image}
+                data-weapon-icon={weapon.icon}
+                data-weapon-type={group.title}
+                data-weapon-description={weapon.description}
+                aria-pressed={weaponIndex === 0 ? "true" : "false"}
+              >
+
+                <div class="weapon-mini-card__visual">
+                  <img
+                    src={weapon.icon}
+                    alt={`${weapon.name} icon`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+
+                <div class="weapon-mini-card__name">
+                  <span>{String(weaponIndex + 1).padStart(2, "0")}</span>
+                  <strong>{weapon.name}</strong>
+                </div>
+
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+</div>
+
+
+
+
+<section id="guide-content" class="site-guide" aria-labelledby="guide-heading" hidden>
+  <header class="site-guide__head">
+    <span>GAMESENSE / ПЕРВЫЕ ШАГИ</span>
+    <h2 id="guide-heading" tabindex="-1">Как пользоваться сайтом</h2>
+    <p>Начни с нужного раздела. Эти четыре шага помогут разобраться, где искать агентов, оружие и карты.</p>
+  </header>
+  <ol class="site-guide__steps">
+    {[
+      { title: 'Выбери, что хочешь изучить', image: 'step-01.png', caption: 'Главная страница и кнопки разделов', text: 'На странице Valorant найди кнопки «Агенты», «Оружие» и «Карты». Нажми на нужную — соответствующий блок откроется ниже, и страница прокрутится к нему.' },
+      { title: 'Познакомься с агентами', image: 'step-02.png', caption: 'Выбор класса и карточка агента', text: 'Открой «Агенты», выбери класс и переключай персонажей стрелками. Кнопка «Подробнее» на карточке агента открывает его страницу. Вернуться можно кнопкой «Назад» в браузере.' },
+      { title: 'Сравни оружие', image: 'step-03.png', caption: 'Категории оружия и выбор модели', text: 'Открой «Оружие». Сначала выбери категорию сверху, затем нажми на модель в списке. Основная карточка покажет изображение, название и краткое описание выбранного оружия.' },
+      { title: 'Изучи карты', image: 'step-04.png', caption: 'Панорама карты и переключатели', text: 'Открой «Карты». Используй стрелки над панорамой или нажми на название карты под ней. Вместе с изображением меняется описание — так можно быстро познакомиться с каждой локацией.' }
+    ].map((step, index) => (
+      <li class="site-guide__step">
+        <div class="site-guide__text">
+          <span class="site-guide__number">{String(index + 1).padStart(2, '0')}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </div>
+        <figure class="site-guide__figure">
+          <div class="site-guide__screen">
+            <span class="site-guide__placeholder" aria-hidden="true">ШАГ {index + 1}<small>{step.caption}</small></span>
+            <img data-guide-image src={`${import.meta.env.BASE_URL}images/guide/${step.image}`} alt={step.caption} decoding="async" hidden />
+          </div>
+          <figcaption>{step.caption}</figcaption>
+        </figure>
+      </li>
+    ))}
+  </ol>
+  <p class="site-guide__hint">Разделы можно изучать в любом порядке. Чтобы сменить тему, вернись к кнопкам «Агенты», «Оружие» и «Карты» выше.</p>
+</section>
+
+<div id="maps-content" class="maps-content" hidden>
+  <section class="maps-gallery" id="valorant-maps" aria-labelledby="maps-heading">
+    <header class="maps-heading">
+      <div><span>VALORANT / ЛОКАЦИИ</span><h2 id="maps-heading">КАРТЫ</h2></div>
+      <div class="maps-controls">
+        <span data-map-counter aria-live="polite">01 / {String(valorantMaps.length).padStart(2, '0')}</span>
+        <button type="button" data-map-prev aria-label="Предыдущая карта">←</button>
+        <button type="button" data-map-next aria-label="Следующая карта">→</button>
+      </div>
+    </header>
+    <div class="maps-stage">
+      {valorantMaps.map((map, index) => (
+        <article class="map-scene" id={'map-scene-' + map.slug} data-map-scene hidden={index !== 0} aria-labelledby={'map-name-' + map.slug}>
+          <div class="map-scene__photo" data-map-image={map.image} style={'background-image: url("' + map.image + '")'}></div>
+          <span class="map-scene__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <div class="map-scene__info">
+            <h3 id={'map-name-' + map.slug}>{map.name}</h3>
+            <p>{map.description}</p>
+            <button class="map-scene__details" type="button" aria-label={'Подробнее о карте ' + map.name}>
+              Подробнее
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="maps-nav" role="group" aria-label="Выбрать карту">
+      {valorantMaps.map((map, index) => (
+        <button type="button" data-map-select={index} aria-controls={'map-scene-' + map.slug} aria-pressed={index === 0 ? 'true' : 'false'}>
+          <span>{String(index + 1).padStart(2, '0')}</span><strong class="maps-nav__name">{map.name}</strong>
+        </button>
+      ))}
+    </div>
+  </section>
+</div>
+
+    </div>
+
+  </div>
+
+
+<script>
+  // @ts-nocheck
+  const guideToggle = document.getElementById('guide-toggle');
+  const guideContent = document.getElementById('guide-content');
+  const hideGuide = () => {
+    guideContent.hidden = true;
+    guideToggle.setAttribute('aria-expanded', 'false');
+  };
+  guideToggle.addEventListener('click', (event) => {
+    event.preventDefault();
+    agentsContent.hidden = true;
+    weaponsContent.hidden = true;
+    hideMaps();
+    guideContent.hidden = false;
+    guideToggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => {
+      document.getElementById('guide-heading').focus({ preventScroll: true });
+      guideContent.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start'
+      });
+    });
+  });
+  document.querySelectorAll('[data-guide-image]').forEach((image) => {
+    const reveal = () => { if (image.naturalWidth > 0) image.hidden = false; };
+    image.addEventListener('load', reveal);
+    if (image.complete) reveal();
+  });
+  const mapsToggle = document.getElementById('maps-toggle');
+  const mapsContent = document.getElementById('maps-content');
+  const hideMaps = () => {
+    mapsContent.hidden = true;
+    mapsToggle.setAttribute('aria-expanded', 'false');
+  };
+  const agentsToggle =
+    document.getElementById("agents-toggle");
+
+  const agentsContent =
+    document.getElementById("agents-content");
+
+  const agentRoles =
+    document.getElementById("agent-roles");
+
+  agentsToggle?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    weaponsContent?.setAttribute("hidden", "");
+    hideGuide();
+    hideMaps();
+
+    const wasHidden =
+      agentsContent?.hasAttribute(
+        "hidden"
+      );
+
+    if (wasHidden) {
+      agentsContent.removeAttribute(
+        "hidden"
+      );
+    }
+
+    /*
+      Не анимируем весь огромный agents-content.
+      Сначала браузер получает один кадр на layout,
+      затем прокручиваем только к верхнему блоку классов.
+    */
+    requestAnimationFrame(() => {
+
+      agentRoles?.classList.add(
+        "is-entering"
+      );
+
+      document.documentElement.classList.add(
+        "agents-scrolling"
+      );
+
+      agentRoles?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      window.setTimeout(() => {
+        agentRoles?.classList.remove(
+          "is-entering"
+        );
+
+        document.documentElement.classList.remove(
+          "agents-scrolling"
+        );
+      }, 420);
+
+    });
+  });
+
+
+  const featureLinks =
+    document.querySelectorAll(
+      ".game-card__feature[data-highlight]"
+    );
+
+  featureLinks.forEach((feature) => {
+
+    const targetName =
+      feature.getAttribute("data-highlight");
+
+    const targetCard =
+      document.querySelector(
+        `.info-card[data-section="${targetName}"]`
+      );
+
+
+    feature.addEventListener(
+      "mouseenter",
+      () => {
+
+        feature.classList.add(
+          "is-active"
+        );
+
+        targetCard?.classList.add(
+          "is-linked-highlight"
+        );
+
+      }
+    );
+
+
+    feature.addEventListener(
+      "mouseleave",
+      () => {
+
+        feature.classList.remove(
+          "is-active"
+        );
+
+        targetCard?.classList.remove(
+          "is-linked-highlight"
+        );
+
+      }
+    );
+
+  });
+
+
+
+
+
+  /* ==================================================
+     ACTIVE AGENT CLASS SWITCHER
+     ================================================== */
+
+  const agentShowcaseStage =
+    document.getElementById(
+      "agent-showcase-stage"
+    );
+
+  const agentClassPanels =
+    Array.from(
+      document.querySelectorAll(
+        "[data-agent-class-panel]"
+      )
+    );
+
+
+  function setActiveAgentClass(
+    index
+  ) {
+
+    agentClassPanels.forEach(
+      (panel, panelIndex) => {
+
+        const isActive =
+          panelIndex === index;
+
+        panel.hidden =
+          !isActive;
+
+        panel.classList.toggle(
+          "is-active",
+          isActive
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ==================================================
+     AGENT CLASSES CAROUSEL
+     ================================================== */
+
+  const rolesCarousel =
+    document.querySelector(
+      "[data-roles-carousel]"
+    );
+
+  if (rolesCarousel) {
+
+    const carouselCards =
+      Array.from(
+        rolesCarousel.querySelectorAll(
+          "[data-carousel-card]"
+        )
+      );
+
+    const prevButton =
+      rolesCarousel.querySelector(
+        "[data-carousel-prev]"
+      );
+
+    const nextButton =
+      rolesCarousel.querySelector(
+        "[data-carousel-next]"
+      );
+
+    const carouselDots =
+      Array.from(
+        document.querySelectorAll(
+          "[data-carousel-dot]"
+        )
+      );
+
+    let activeIndex = 0;
+    let carouselLocked = false;
+
+
+    function normalizeCarouselIndex(index) {
+
+      const count =
+        carouselCards.length;
+
+      return (
+        (
+          index % count
+        ) + count
+      ) % count;
+
+    }
+
+
+    function shortestCarouselOffset(cardIndex) {
+
+      const count =
+        carouselCards.length;
+
+      let offset =
+        cardIndex - activeIndex;
+
+      if (
+        offset >
+        count / 2
+      ) {
+        offset -= count;
+      }
+
+      if (
+        offset <
+        -count / 2
+      ) {
+        offset += count;
+      }
+
+      return offset;
+
+    }
+
+
+    function updateRolesCarousel(withLock = false) {
+
+      carouselCards.forEach(
+        (card, index) => {
+
+          const offset =
+            shortestCarouselOffset(index);
+
+          card.setAttribute(
+            "data-carousel-offset",
+            String(offset)
+          );
+
+          card.classList.toggle(
+            "is-active",
+            offset === 0
+          );
+
+          card.setAttribute(
+            "aria-hidden",
+            Math.abs(offset) > 1
+              ? "true"
+              : "false"
+          );
+
+          card.tabIndex =
+            offset === 0
+              ? 0
+              : -1;
+
+        }
+      );
+
+
+      setActiveAgentClass(
+        activeIndex
+      );
+
+
+      carouselDots.forEach(
+        (dot, index) => {
+
+          const isActive =
+            index === activeIndex;
+
+          dot.classList.toggle(
+            "is-active",
+            isActive
+          );
+
+          dot.setAttribute(
+            "aria-current",
+            isActive
+              ? "true"
+              : "false"
+          );
+
+        }
+      );
+
+
+      if (withLock) {
+
+        carouselLocked = true;
+
+        window.setTimeout(
+          () => {
+            carouselLocked = false;
+          },
+          430
+        );
+
+      }
+
+    }
+
+
+    function goToCarouselIndex(index) {
+
+      if (
+        carouselLocked ||
+        !carouselCards.length
+      ) {
+        return;
+      }
+
+      activeIndex =
+        normalizeCarouselIndex(index);
+
+      updateRolesCarousel(true);
+
+    }
+
+
+    prevButton?.addEventListener(
+      "click",
+      () => {
+        goToCarouselIndex(
+          activeIndex - 1
+        );
+      }
+    );
+
+
+    nextButton?.addEventListener(
+      "click",
+      () => {
+        goToCarouselIndex(
+          activeIndex + 1
+        );
+      }
+    );
+
+
+    carouselDots.forEach(
+      (dot) => {
+
+        dot.addEventListener(
+          "click",
+          () => {
+
+            const index =
+              Number(
+                dot.getAttribute(
+                  "data-carousel-index"
+                )
+              );
+
+            goToCarouselIndex(index);
+
+          }
+        );
+
+      }
+    );
+
+
+    carouselCards.forEach(
+      (card, index) => {
+
+        card.addEventListener(
+          "click",
+          (event) => {
+
+            if (
+              index !== activeIndex
+            ) {
+              event.preventDefault();
+
+              goToCarouselIndex(index);
+              return;
+            }
+
+            event.preventDefault();
+
+            agentShowcaseStage?.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+
+          }
+        );
+
+      }
+    );
+
+
+    rolesCarousel.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key === "ArrowLeft"
+        ) {
+          event.preventDefault();
+
+          goToCarouselIndex(
+            activeIndex - 1
+          );
+        }
+
+        if (
+          event.key === "ArrowRight"
+        ) {
+          event.preventDefault();
+
+          goToCarouselIndex(
+            activeIndex + 1
+          );
+        }
+
+      }
+    );
+
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+
+    rolesCarousel.addEventListener(
+      "touchstart",
+      (event) => {
+
+        touchStartX =
+          event.touches[0]?.clientX ??
+          0;
+        touchStartY = event.touches[0]?.clientY ?? 0;
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    rolesCarousel.addEventListener(
+      "touchend",
+      (event) => {
+
+        const touchEndX =
+          event.changedTouches[0]?.clientX ??
+          touchStartX;
+
+        const deltaX =
+          touchEndX -
+          touchStartX;
+
+        if (
+          Math.abs(deltaX) < 45 ||
+          Math.abs(deltaX) <= Math.abs((event.changedTouches[0]?.clientY ?? touchStartY) - touchStartY)
+        ) {
+          return;
+        }
+
+        goToCarouselIndex(
+          activeIndex +
+          (
+            deltaX < 0
+              ? 1
+              : -1
+          )
+        );
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    updateRolesCarousel();
+
+  }
+
+
+  /* ==================================================
+     FAST RETURN FROM AGENT PAGE
+     ================================================== */
+
+  const agentProfileLinks =
+    document.querySelectorAll(
+      ".agent-showcase__profile"
+    );
+
+
+  agentProfileLinks.forEach(
+    (link) => {
+
+      link.addEventListener(
+        "click",
+        () => {
+
+          /*
+            Метка нужна странице агента, чтобы понимать:
+            сюда пришли именно из Valorant showcase.
+            Саму позицию и состояние каруселей при возврате
+            сохраняет browser history / BFCache.
+          */
+          sessionStorage.setItem(
+            "gamesense:cameFromValorant",
+            "1"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  /* ==================================================
+     AGENT GRID — STABLE INDEPENDENT COLUMNS
+     ================================================== */
+
+  function agentColumnCount() {
+
+    if (window.innerWidth <= 650) {
+      return 1;
+    }
+
+    if (window.innerWidth <= 950) {
+      return 2;
+    }
+
+    if (window.innerWidth <= 1250) {
+      return 4;
+    }
+
+    return 5;
+  }
+
+
+  function restoreAgentCards(grid) {
+
+    const columns =
+      Array.from(
+        grid.children
+      ).filter(
+        (element) =>
+          element.classList.contains(
+            "agent-grid-column"
+          )
+      );
+
+
+    if (!columns.length) {
+      return;
+    }
+
+
+    const cards = [];
+
+    columns.forEach(
+      (column) => {
+
+        Array.from(
+          column.children
+        ).forEach(
+          (card) => {
+
+            if (
+              card.classList.contains(
+                "agent-card"
+              )
+            ) {
+              cards.push(
+                card
+              );
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    cards
+      .sort(
+        (first, second) =>
+          Number(
+            first.getAttribute(
+              "data-agent-order"
+            )
+          ) -
+          Number(
+            second.getAttribute(
+              "data-agent-order"
+            )
+          )
+      )
+      .forEach(
+        (card) => {
+
+          grid.appendChild(
+            card
+          );
+
+        }
+      );
+
+
+    columns.forEach(
+      (column) => {
+        column.remove();
+      }
+    );
+
+  }
+
+
+  function buildAgentGridColumns(grid) {
+
+    restoreAgentCards(
+      grid
+    );
+
+
+    const cards =
+      Array.from(
+        grid.children
+      ).filter(
+        (element) =>
+          element.classList.contains(
+            "agent-card"
+          )
+      );
+
+
+    if (!cards.length) {
+      return;
+    }
+
+
+    const count =
+      Math.min(
+        agentColumnCount(),
+        cards.length
+      );
+
+
+    const columns = [];
+
+
+    for (
+      let columnIndex = 0;
+      columnIndex < count;
+      columnIndex++
+    ) {
+
+      const column =
+        document.createElement(
+          "div"
+        );
+
+      column.className =
+        "agent-grid-column";
+
+      grid.appendChild(
+        column
+      );
+
+      columns.push(
+        column
+      );
+
+    }
+
+
+    cards.forEach(
+      (card, index) => {
+
+        card.setAttribute(
+          "data-agent-order",
+          String(index)
+        );
+
+        columns[
+          index % count
+        ].appendChild(
+          card
+        );
+
+      }
+    );
+
+
+    grid.classList.add(
+      "agents-grid--stable-columns"
+    );
+
+  }
+
+
+  function buildAllAgentGridColumns() {
+
+    document
+      .querySelectorAll(
+        ".agents-grid"
+      )
+      .forEach(
+        (grid) => {
+
+          buildAgentGridColumns(
+            grid
+          );
+
+        }
+      );
+
+  }
+
+
+  let currentAgentColumnCount =
+    agentColumnCount();
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      const nextColumnCount =
+        agentColumnCount();
+
+      if (
+        nextColumnCount ===
+        currentAgentColumnCount
+      ) {
+        return;
+      }
+
+      currentAgentColumnCount =
+        nextColumnCount;
+
+      buildAllAgentGridColumns();
+
+    }
+  );
+
+
+  requestAnimationFrame(
+    () => {
+
+      buildAllAgentGridColumns();
+
+    }
+  );
+
+
+
+
+  /* ==================================================
+     DUELIST AGENT SHOWCASE
+     ================================================== */
+
+  document
+    .querySelectorAll(
+      "[data-agent-showcase]"
+    )
+    .forEach(
+      (showcase) => {
+
+        const cards =
+          Array.from(
+            showcase.querySelectorAll(
+              "[data-agent-card]"
+            )
+          );
+
+        const prev =
+          showcase.querySelector(
+            "[data-agent-prev]"
+          );
+
+        const next =
+          showcase.querySelector(
+            "[data-agent-next]"
+          );
+
+        let activeIndex = 0;
+        let locked = false;
+
+
+        function normalizeIndex(index) {
+
+          const count =
+            cards.length;
+
+          return (
+            (
+              index % count
+            ) + count
+          ) % count;
+
+        }
+
+
+        function shortestOffset(
+          index
+        ) {
+
+          const count =
+            cards.length;
+
+          let offset =
+            index - activeIndex;
+
+          if (
+            offset > count / 2
+          ) {
+            offset -= count;
+          }
+
+          if (
+            offset < -count / 2
+          ) {
+            offset += count;
+          }
+
+          return offset;
+
+        }
+
+
+        function updateShowcase(
+          lock = false
+        ) {
+
+          cards.forEach(
+            (card, index) => {
+
+              const offset =
+                shortestOffset(
+                  index
+                );
+
+              card.setAttribute(
+                "data-agent-offset",
+                String(offset)
+              );
+
+              card.classList.toggle(
+                "is-active",
+                offset === 0
+              );
+
+              card.setAttribute(
+                "aria-hidden",
+                Math.abs(offset) > 2
+                  ? "true"
+                  : "false"
+              );
+              card.inert = Math.abs(offset) > 2;
+
+            }
+          );
+
+
+          if (lock) {
+
+            locked = true;
+
+            window.setTimeout(
+              () => {
+                locked = false;
+              },
+              300
+            );
+
+          }
+
+        }
+
+
+        function goToAgent(
+          index
+        ) {
+
+          if (
+            locked ||
+            !cards.length
+          ) {
+            return;
+          }
+
+          activeIndex =
+            normalizeIndex(
+              index
+            );
+
+          updateShowcase(
+            true
+          );
+
+        }
+
+
+        prev?.addEventListener(
+          "click",
+          () => {
+            goToAgent(
+              activeIndex - 1
+            );
+          }
+        );
+
+
+        next?.addEventListener(
+          "click",
+          () => {
+            goToAgent(
+              activeIndex + 1
+            );
+          }
+        );
+
+
+        cards.forEach(
+          (card, index) => {
+
+            card.addEventListener(
+              "click",
+              (event) => {
+
+                if (
+                  index === activeIndex
+                ) {
+                  return;
+                }
+
+                if (
+                  event.target.closest(
+                    ".agent-showcase__profile"
+                  )
+                ) {
+                  return;
+                }
+
+                event.preventDefault();
+
+                goToAgent(
+                  index
+                );
+
+              }
+            );
+
+          }
+        );
+
+
+        let startX = 0;
+        let startY = 0;
+
+
+        showcase.addEventListener(
+          "touchstart",
+          (event) => {
+
+            startX =
+              event.touches[0]?.clientX ??
+              0;
+            startY = event.touches[0]?.clientY ?? 0;
+
+          },
+          {
+            passive: true
+          }
+        );
+
+
+        showcase.addEventListener(
+          "touchend",
+          (event) => {
+
+            const endX =
+              event.changedTouches[0]?.clientX ??
+              startX;
+
+            const delta =
+              endX - startX;
+
+            if (
+              Math.abs(delta) < 40 ||
+              Math.abs(delta) <= Math.abs((event.changedTouches[0]?.clientY ?? startY) - startY)
+            ) {
+              return;
+            }
+
+            goToAgent(
+              activeIndex +
+              (
+                delta < 0
+                  ? 1
+                  : -1
+              )
+            );
+
+          },
+          {
+            passive: true
+          }
+        );
+
+
+        updateShowcase();
+
+      }
+    );
+
+
+
+
+
+  window.addEventListener(
+    "pageshow",
+    (event) => {
+
+      if (event.persisted) {
+        sessionStorage.removeItem(
+          "gamesense:returnToValorant"
+        );
+      }
+
+    }
+  );
+
+
+  const weaponsToggle =
+    document.getElementById("weapons-toggle");
+
+  const weaponsContent =
+    document.getElementById("weapons-content");
+
+  const weaponsShowcase =
+    document.getElementById("valorant-weapons");
+
+  weaponsToggle?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    agentsContent?.setAttribute("hidden", "");
+    hideGuide();
+    hideMaps();
+
+    const wasHidden =
+      weaponsContent?.hasAttribute("hidden");
+
+    if (wasHidden) {
+      weaponsContent?.removeAttribute("hidden");
+    }
+
+    requestAnimationFrame(() => {
+      weaponsShowcase?.classList.add("is-entering");
+
+      weaponsShowcase?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      window.setTimeout(() => {
+        weaponsShowcase?.classList.remove("is-entering");
+      }, 420);
+    });
+  });
+
+
+  const weaponTabs =
+    Array.from(
+      document.querySelectorAll("[data-weapon-tab]")
+    );
+
+  const weaponPanels =
+    Array.from(
+      document.querySelectorAll("[data-weapon-panel]")
+    );
+
+  const activateWeaponChoice = (panel, button) => {
+    if (!panel || !button) return;
+
+    const buttons =
+      Array.from(
+        panel.querySelectorAll("[data-weapon-choice]")
+      );
+
+    const featuredImage =
+      panel.querySelector("[data-featured-image]");
+
+    const featuredName =
+      panel.querySelector("[data-featured-name]");
+
+    const featuredType =
+      panel.querySelector("[data-featured-type]");
+
+    const featuredDescription =
+      panel.querySelector("[data-featured-description]");
+
+    buttons.forEach((item) => {
+      const active =
+        item === button;
+
+      item.classList.toggle(
+        "is-active",
+        active
+      );
+
+      item.setAttribute(
+        "aria-pressed",
+        active ? "true" : "false"
+      );
+    });
+
+    const nextImage =
+      button.dataset.weaponImage;
+
+    const nextName =
+      button.dataset.weaponName;
+
+    const nextType =
+      button.dataset.weaponType;
+
+    const nextDescription =
+      button.dataset.weaponDescription;
+
+    if (featuredImage && nextImage) {
+      featuredImage.src = nextImage;
+      featuredImage.alt = nextName ?? "";
+    }
+
+    if (featuredName && nextName) {
+      featuredName.textContent = nextName;
+    }
+
+    if (featuredType && nextType) {
+      featuredType.textContent = nextType;
+    }
+
+    if (featuredDescription && nextDescription) {
+      featuredDescription.textContent = nextDescription;
+    }
+  };
+
+  const setWeaponCategory = (index) => {
+    if (!Number.isInteger(index) || !weaponTabs[index] || !weaponPanels[index]) return;
+
+    weaponTabs.forEach((tab, tabIndex) => {
+      const isActive =
+        tabIndex === index;
+
+      tab.classList.toggle(
+        "is-active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    weaponPanels.forEach((panel, panelIndex) => {
+      const isActive =
+        panelIndex === index;
+
+      panel.hidden = !isActive;
+
+      panel.classList.toggle(
+        "is-active",
+        isActive
+      );
+    });
+  };
+
+  weaponTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+      setWeaponCategory(index);
+    });
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex;
+      switch (event.key) {
+        case "ArrowRight":
+          nextIndex = (index + 1) % weaponTabs.length;
+          break;
+        case "ArrowLeft":
+          nextIndex = (index - 1 + weaponTabs.length) % weaponTabs.length;
+          break;
+        case "Home":
+          nextIndex = 0;
+          break;
+        case "End":
+          nextIndex = weaponTabs.length - 1;
+          break;
+        default:
+          return;
+      }
+      event.preventDefault();
+      setWeaponCategory(nextIndex);
+      weaponTabs[nextIndex].focus();
+    });
+  });
+
+  weaponPanels.forEach((panel) => {
+    const buttons =
+      Array.from(
+        panel.querySelectorAll("[data-weapon-choice]")
+      );
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activateWeaponChoice(
+          panel,
+          button
+        );
+      });
+    });
+  });
+
+
+  mapsToggle.addEventListener('click', (event) => {
+    event.preventDefault();
+    hideGuide();
+    agentsContent.hidden = true;
+    weaponsContent.hidden = true;
+    mapsContent.hidden = false;
+    warmMapImages();
+    mapsToggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => document.getElementById('valorant-maps').scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'start'
+    }));
+  });
+
+  const mapScenes = Array.from(document.querySelectorAll('[data-map-scene]'));
+  const mapSelectors = Array.from(document.querySelectorAll('[data-map-select]'));
+  let currentMap = 0;
+  let displayedMap = 0;
+  let mapRequest = 0;
+  let mapAnimation;
+  const mapImageCache = new Map();
+  const mapStage = document.querySelector('.maps-stage');
+  function loadMapImage(index) {
+    if (!mapImageCache.has(index)) {
+      const image = new Image();
+      const ready = new Promise((resolve) => {
+        image.onload = async () => {
+          try { await image.decode(); } catch {}
+          resolve();
+        };
+        // Missing local photos should still allow the map description to open.
+        image.onerror = () => resolve();
+      });
+      image.src = mapScenes[index].querySelector('[data-map-image]').dataset.mapImage;
+      mapImageCache.set(index, { image, ready });
+    }
+    return mapImageCache.get(index).ready;
+  }
+  let warmingMaps = false;
+  function warmMapImages() {
+    if (warmingMaps) return;
+    warmingMaps = true;
+    let next = 0;
+    const worker = async () => {
+      while (next < mapScenes.length) await loadMapImage(next++);
+    };
+    void worker();
+    void worker();
+  }
+  mapsToggle.addEventListener('pointerenter', warmMapImages, { once: true });
+  mapsToggle.addEventListener('focus', warmMapImages, { once: true });
+  async function showMap(index) {
+    currentMap = (index + mapScenes.length) % mapScenes.length;
+    const target = currentMap;
+    const request = ++mapRequest;
+    mapStage.setAttribute('aria-busy', 'true');
+    await loadMapImage(target);
+    if (request !== mapRequest) return;
+    mapStage.setAttribute('aria-busy', 'false');
+    mapAnimation?.cancel();
+    const previous = displayedMap;
+    displayedMap = target;
+    mapScenes.forEach((scene, i) => {
+      scene.hidden = i !== target && i !== previous;
+      scene.style.zIndex = i === target ? '2' : '1';
+      scene.setAttribute('aria-hidden', String(i !== target));
+    });
+    mapSelectors.forEach((button, i) => button.setAttribute('aria-pressed', String(i === currentMap)));
+    document.querySelector('[data-map-counter]').textContent =
+      String(currentMap + 1).padStart(2, '0') + ' / ' + String(mapScenes.length).padStart(2, '0');
+    const finish = () => mapScenes.forEach((scene, i) => { scene.hidden = i !== target; });
+    if (previous === target || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finish();
+    } else {
+      mapAnimation = mapScenes[target].animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 300, easing: 'ease-out'
+      });
+      mapAnimation.onfinish = finish;
+    }
+  }
+  document.querySelector('[data-map-prev]').addEventListener('click', () => showMap(currentMap - 1));
+  document.querySelector('[data-map-next]').addEventListener('click', () => showMap(currentMap + 1));
+  mapSelectors.forEach((button, i) => {
+    button.addEventListener('click', () => showMap(i));
+    button.addEventListener('pointerenter', () => loadMapImage(i));
+    button.addEventListener('focus', () => loadMapImage(i));
+  });
+  document.querySelector('.maps-nav').addEventListener('keydown', (event) => {
+    const index = mapSelectors.indexOf(event.target);
+    if (index < 0) return;
+    let next;
+    if (event.key === 'ArrowRight') next = (index + 1) % mapSelectors.length;
+    else if (event.key === 'ArrowLeft') next = (index - 1 + mapSelectors.length) % mapSelectors.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = mapSelectors.length - 1;
+    else return;
+    event.preventDefault();
+    showMap(next);
+    mapSelectors[next].focus();
+  });
+
+</script>
+
+</BaseLayout>
+
+
+<style>
+  html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+#agent-roles {
+  scroll-margin-top: 90px;
+}
+
+  /* ==================================================
+     BASE
+     ================================================== */
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    width: 100%;
+  }
+
+
+  /* ==================================================
+     BRAND
+     ================================================== */
+
+  .brand {
+    text-align: center;
+    padding: 0.5rem 0 1rem;
+  }
+
+  .brand__title {
+    margin: 0 0 0.5rem;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    color: var(--text);
+
+    line-height: 1;
+  }
+
+  .brand__title span {
+    color: var(--accent);
+  }
+
+  .brand__subtitle {
+    margin: 0;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ff4655 0%,
+        #e63946 40%,
+        #9b1b54 72%,
+        #6d185f 100%
+      );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    color: transparent;
+  }
+
+
+  /* ==================================================
+     GAME SECTION
+     ================================================== */
+
+  .game-section {
+    position: relative;
+
+    width: min(
+      1460px,
+      calc(100vw - 30px)
+    );
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 28px;
+
+    border-radius: 28px;
+
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(230, 57, 70, 0.08),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 50% 100%,
+        rgba(150, 70, 220, 0.06),
+        transparent 40%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(22, 20, 27, 0.92) 0%,
+        rgba(14, 13, 17, 0.96) 100%
+      );
+
+    border:
+      1px solid rgba(255, 255, 255, 0.06);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 24px 60px rgba(0, 0, 0, 0.28);
+
+    overflow: hidden;
+  }
+
+
+  .game-section::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(230, 57, 70, 0.03) 25%,
+        rgba(160, 80, 220, 0.03) 75%,
+        transparent 100%
+      );
+
+    pointer-events: none;
+  }
+
+
+  .game-section::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 280px;
+    height: 2px;
+
+    transform: translateX(-50%);
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(230, 57, 70, 0.8),
+        rgba(170, 80, 220, 0.75),
+        transparent
+      );
+
+    box-shadow:
+      0 0 18px rgba(230, 57, 70, 0.2);
+
+    pointer-events: none;
+  }
+
+
+  /* ==================================================
+     GAME ROW
+     ================================================== */
+
+  .game-row {
+    position: relative;
+
+    z-index: 1;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      185px
+      minmax(0, 1fr);
+
+    gap: 1rem;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    margin: 0 auto;
+  }
+
+
+  /* ==================================================
+     VALORANT CARD
+     ================================================== */
+
+  .games-grid {
+    display: flex;
+    width: 100%;
+  }
+
+
+  .game-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 360px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    color: #fff;
+
+    background:
+      linear-gradient(
+        180deg,
+        #21101f 0%,
+        #171019 22%,
+        #120d16 55%,
+        #0f0c13 100%
+      );
+
+    border:
+      1px solid rgba(230, 57, 70, 0.35);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .game-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+      rgba(230, 57, 70, 0.65);
+
+    box-shadow:
+      0 14px 35px rgba(0, 0, 0, 0.26),
+      0 0 24px rgba(230, 57, 70, 0.07);
+  }
+
+
+  .game-card__art {
+    position: relative;
+
+    width: 100%;
+    height: 150px;
+
+    background-image: var(--game-bg);
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+  }
+
+
+  .game-card__art::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 90px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(150, 35, 80, 0) 0%,
+        rgba(120, 30, 80, 0.14) 25%,
+        rgba(110, 42, 115, 0.42) 48%,
+        rgba(55, 18, 45, 0.72) 72%,
+        #16111a 100%
+      );
+  }
+
+
+  .game-card__content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+      1.5rem
+      1.7rem
+      1.7rem;
+
+    text-align: center;
+  }
+
+
+  .game-card__eyebrow {
+    margin-bottom: 7px;
+
+    color: #ff5b68;
+
+    font-size: 0.55rem;
+    font-weight: 900;
+
+    letter-spacing: 0.2em;
+  }
+
+
+  .game-card__content h3 {
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 2.2rem;
+    font-weight: 900;
+
+    letter-spacing: 0.03em;
+
+    text-transform: uppercase;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #f7f7f7 55%,
+        #ff7b87 82%,
+        #c86bff 100%
+      );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    filter:
+      drop-shadow(
+        0 4px 12px rgba(0, 0, 0, 0.35)
+      );
+  }
+
+
+  .game-card__intro {
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
+
+
+  .game-card__intro strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+      rgba(255, 255, 255, 0.92);
+
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+
+  .game-card__intro p {
+    margin: 0;
+
+    color:
+      rgba(255, 255, 255, 0.5);
+
+    font-size: 0.72rem;
+
+    line-height: 1.5;
+  }
+
+
+  .game-card__features {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    flex-wrap: wrap;
+  }
+
+
+  .game-card__feature {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+      8px 11px;
+
+    border-radius: 7px;
+
+    color:
+      rgba(255, 255, 255, 0.58);
+
+    font-size: 0.64rem;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    background:
+      rgba(255, 255, 255, 0.035);
+
+    border:
+      1px solid rgba(255, 255, 255, 0.065);
+
+    cursor: default;
+
+    transition:
+      color 0.22s ease,
+      background 0.22s ease,
+      border-color 0.22s ease,
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+
+  .game-card__feature:hover,
+  .game-card__feature.is-active {
+    color: #fff;
+
+    background:
+      rgba(230, 57, 70, 0.12);
+
+    border-color:
+      rgba(255, 70, 85, 0.4);
+
+    transform:
+      translateY(-2px);
+
+    box-shadow:
+      0 0 18px rgba(230, 57, 70, 0.12);
+  }
+
+
+  .info-card.is-linked-highlight {
+    transform:
+      translateY(-4px)
+      scale(1.025);
+
+    border-color:
+      rgba(255, 70, 85, 0.58);
+
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 70, 85, 0.14),
+        transparent 70%
+      ),
+      linear-gradient(
+        145deg,
+        rgba(28, 23, 31, 0.98),
+        rgba(14, 13, 18, 0.98)
+      );
+
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.32),
+      0 0 26px rgba(230, 57, 70, 0.14);
+  }
+
+
+  /* ==================================================
+     INFO CARDS
+     ================================================== */
+
+  .info-cards {
+    display: grid;
+
+    grid-template-rows:
+      repeat(3, 1fr);
+
+    gap: 0.65rem;
+
+    width: 185px;
+    height: 100%;
+  }
+
+
+  .info-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.8rem;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 70, 85, 0.08),
+        transparent 68%
+      ),
+      linear-gradient(
+        145deg,
+        rgba(24, 22, 29, 0.98),
+        rgba(14, 13, 18, 0.98)
+      );
+
+    border:
+      1px solid rgba(255, 255, 255, 0.07);
+
+    transition:
+      transform 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+
+  .info-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+      rgba(230, 57, 70, 0.42);
+
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.28),
+      0 0 20px rgba(230, 57, 70, 0.06);
+  }
+
+
+  .info-card h3 {
+    margin: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    color:
+      rgba(255, 255, 255, 0.9);
+
+    font-size: 0.95rem;
+    font-weight: 800;
+
+    letter-spacing: 0.11em;
+  }
+
+
+  .info-card__image {
+    display: block;
+
+    width: 100%;
+
+    max-width: 130px;
+    max-height: 80px;
+
+    height: auto;
+
+    object-fit: contain;
+
+    transition:
+      transform 0.22s ease,
+      filter 0.22s ease;
+  }
+
+  .info-card__artwork {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  .info-card:hover
+  .info-card__image {
+
+    transform: scale(1.04);
+  }
+
+
+  /* ==================================================
+     PROMO
+     ================================================== */
+
+  .promo {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 360px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    text-decoration: none;
+
+    color: #fff;
+
+    background:
+      linear-gradient(
+        180deg,
+        #21101f 0%,
+        #171019 22%,
+        #120d16 55%,
+        #0f0c13 100%
+      );
+
+    border:
+      1px solid rgba(230, 57, 70, 0.35);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .promo:hover {
+    transform: translateY(-3px);
+
+    border-color:
+      rgba(230, 57, 70, 0.65);
+
+    box-shadow:
+      0 14px 35px rgba(0, 0, 0, 0.26),
+      0 0 24px rgba(230, 57, 70, 0.07);
+  }
+
+
+  .promo__art {
+    position: relative;
+
+    width: 100%;
+    height: 140px;
+
+    overflow: hidden;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(15, 10, 18, 0.15),
+        rgba(15, 10, 18, 0.35)
+      );
+  }
+
+
+  .promo__art img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    filter:
+      saturate(1.02)
+      contrast(1.03);
+  }
+
+
+  .promo__art::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 95px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(150, 35, 80, 0) 0%,
+        rgba(120, 30, 80, 0.15) 25%,
+        rgba(110, 42, 115, 0.45) 48%,
+        rgba(55, 18, 45, 0.72) 72%,
+        #16111a 100%
+      );
+
+    pointer-events: none;
+  }
+
+
+  .promo__inner {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    align-items: flex-start;
+
+    padding:
+      1.35rem
+      1.8rem
+      1.55rem;
+  }
+
+
+  .promo__badge {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+
+    padding:
+      0.25rem
+      0.55rem;
+
+    border-radius: 4px;
+
+    background:
+      var(--accent);
+
+    color: #fff;
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+  }
+
+
+  .promo__title {
+    max-width: 440px;
+
+    margin:
+      0 0 8px;
+
+    color: #fff;
+
+    font-size: 1.55rem;
+    font-weight: 800;
+
+    line-height: 1.12;
+
+    text-shadow:
+      0 3px 12px rgba(0, 0, 0, 0.5);
+  }
+
+
+  .promo__title span {
+    background:
+      linear-gradient(
+        90deg,
+        #e39bff 0%,
+        #bd69ff 45%,
+        #9655ff 100%
+      );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    color: #bd69ff;
+  }
+
+
+  .promo__lead {
+    margin: 0;
+
+    color:
+      rgba(255, 255, 255, 0.97);
+
+    font-size: 0.9rem;
+    font-weight: 650;
+
+    line-height: 1.35;
+  }
+
+
+  .promo__tagline {
+    margin:
+      2px 0 0;
+
+    color:
+      rgba(255, 255, 255, 0.72);
+
+    font-size: 0.9rem;
+
+    line-height: 1.35;
+  }
+
+
+  .promo__cta {
+    position: relative;
+
+    display: inline-block;
+
+    width: 155px;
+    height: 44px;
+
+    margin-top: auto;
+    margin-bottom: 0.15rem;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+  }
+
+
+  .promo__cta-back,
+  .promo__cta-front {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 155px;
+    height: 44px;
+
+    border-radius: 9px;
+
+    white-space: nowrap;
+
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+
+  .promo__cta-back {
+    color:
+      rgba(255, 255, 255, 0.92);
+
+    background:
+      rgba(15, 12, 20, 0.62);
+
+    border:
+      1px solid rgba(210, 135, 255, 0.48);
+
+    backdrop-filter:
+      blur(7px);
+
+    opacity: 0;
+
+    transition:
+      opacity 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .promo__cta-front {
+    z-index: 2;
+
+    color: #fff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #ff4d5d 0%,
+        #e63946 55%,
+        #ba2038 100%
+      );
+
+    border:
+      1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+      0 7px 20px rgba(230, 57, 70, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    opacity: 1;
+
+    transform: scale(1);
+
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease,
+      filter 0.28s ease;
+  }
+
+
+  .promo__cta:hover
+  .promo__cta-front {
+
+    opacity: 0;
+
+    transform: scale(0.88);
+
+    filter: blur(3px);
+  }
+
+
+  .promo__cta:hover
+  .promo__cta-back {
+
+    opacity: 1;
+
+    border-color:
+      rgba(213, 132, 255, 0.7);
+
+    box-shadow:
+      0 0 18px rgba(182, 96, 255, 0.18);
+  }
+
+
+  /* ==================================================
+     AGENT CLASSES
+     ================================================== */
+
+  .agent-classes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.75rem;
+
+    width: 100%;
+  }
+/* ==================================================
+   AGENT CONTENT
+   ================================================== */
+
+.agents-content[hidden] {
+  display: none;
+}
+
+.agents-content.is-open {
+  animation: none;
+}
+
+/*
+  Анимируем только компактный блок классов,
+  а не весь список агентов.
+*/
+.roles-hybrid.is-entering {
+  animation:
+    rolesEnter 0.22s ease-out;
+}
+
+@keyframes rolesEnter {
+  from {
+    opacity: 0.72;
+    transform:
+      translateX(-50%)
+      translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+}
+
+
+/* ==================================================
+   AGENT CLASSES — LOOP CAROUSEL
+   ================================================== */
+
+.roles-carousel {
+  position: relative;
+
+  width: min(
+    1460px,
+    calc(100vw - 30px)
+  );
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding:
+    30px 18px 26px;
+
+  border-radius: 26px;
+
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgba(230, 57, 70, 0.08),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(18, 16, 22, 0.98),
+      rgba(9, 8, 12, 0.995)
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.22);
+
+  overflow: hidden;
+}
+
+
+.roles-carousel__head {
+  max-width: 700px;
+
+  margin:
+    0 auto 22px;
+
+  text-align: center;
+}
+
+
+.roles-carousel__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 7px;
+
+  color: #ff4655;
+
+  font-size: 0.63rem;
+  font-weight: 900;
+
+  letter-spacing: 0.22em;
+}
+
+
+.roles-carousel__head h2 {
+  margin:
+    0 0 8px;
+
+  color: #fff;
+
+  font-size:
+    clamp(1.65rem, 2.4vw, 2rem);
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+}
+
+
+.roles-carousel__head p {
+  margin: 0;
+
+  color:
+    rgba(255, 255, 255, 0.46);
+
+  font-size: 0.8rem;
+}
+
+
+/* STAGE */
+
+.roles-carousel__stage {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 430px;
+}
+
+
+.roles-carousel__viewport {
+  position: relative;
+
+  width:
+    min(1120px, calc(100% - 120px));
+
+  height: 400px;
+
+  overflow: hidden;
+}
+
+
+.roles-carousel__track {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* CARD */
+
+.roles-carousel__card {
+  --role-color: #ff4655;
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width:
+    min(430px, 43vw);
+
+  height: 360px;
+
+  display: flex;
+
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding:
+    24px 24px 22px;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  color: inherit;
+  text-decoration: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 14%,
+      color-mix(
+        in srgb,
+        var(--role-color) 15%,
+        transparent
+      ),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        var(--role-color) 7%,
+        #18151d
+      ) 0%,
+      #121019 52%,
+      #0b0a0f 100%
+    );
+
+  border:
+    1px solid
+      color-mix(
+        in srgb,
+        var(--role-color) 20%,
+        rgba(255,255,255,0.07)
+      );
+
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255,255,255,0.025);
+
+  transform:
+    translate(-50%, -50%)
+    translateX(
+      calc(
+        var(--carousel-offset, 0)
+        * 315px
+      )
+    )
+    scale(
+      var(--carousel-scale, 1)
+    );
+
+  opacity:
+    var(--carousel-opacity, 1);
+
+  z-index:
+    var(--carousel-z, 1);
+
+  pointer-events:
+    var(--carousel-pointer, auto);
+
+  transition:
+    transform 0.42s cubic-bezier(.2, .8, .2, 1),
+    opacity 0.34s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+
+.roles-carousel__card[data-carousel-offset="0"] {
+  --carousel-offset: 0;
+  --carousel-scale: 1;
+  --carousel-opacity: 1;
+  --carousel-z: 4;
+  --carousel-pointer: auto;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--role-color) 46%,
+      rgba(255,255,255,0.13)
+    );
+
+  box-shadow:
+    0 22px 52px rgba(0,0,0,0.4),
+    0 0 24px
+      color-mix(
+        in srgb,
+        var(--role-color) 8%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.035);
+}
+
+
+.roles-carousel__card[data-carousel-offset="-1"] {
+  --carousel-offset: -1;
+  --carousel-scale: 0.82;
+  --carousel-opacity: 0.56;
+  --carousel-z: 2;
+  --carousel-pointer: auto;
+}
+
+
+.roles-carousel__card[data-carousel-offset="1"] {
+  --carousel-offset: 1;
+  --carousel-scale: 0.82;
+  --carousel-opacity: 0.56;
+  --carousel-z: 2;
+  --carousel-pointer: auto;
+}
+
+
+.roles-carousel__card:not(
+  [data-carousel-offset="0"]
+):not(
+  [data-carousel-offset="-1"]
+):not(
+  [data-carousel-offset="1"]
+) {
+  --carousel-scale: 0.68;
+  --carousel-opacity: 0;
+  --carousel-z: 0;
+  --carousel-pointer: none;
+}
+
+
+/* ROLE COLORS */
+
+.roles-carousel__card--duelist {
+  --role-color: #ff5b68;
+}
+
+.roles-carousel__card--controller {
+  --role-color: #b96cff;
+}
+
+.roles-carousel__card--initiator {
+  --role-color: #4ea8ff;
+}
+
+.roles-carousel__card--sentinel {
+  --role-color: #61d7d0;
+}
+
+
+.roles-carousel__card[data-carousel-offset="0"]:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--role-color) 58%,
+      rgba(255,255,255,0.14)
+    );
+
+  box-shadow:
+    0 24px 56px rgba(0,0,0,0.43),
+    0 0 26px
+      color-mix(
+        in srgb,
+        var(--role-color) 10%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+
+.roles-carousel__card[data-carousel-offset="0"]:hover
+.roles-carousel__icon {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--role-color) 34%,
+      rgba(255,255,255,0.05)
+    );
+
+  box-shadow:
+    0 0 26px
+      color-mix(
+        in srgb,
+        var(--role-color) 8%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+
+.roles-carousel__card[data-carousel-offset="0"]:hover
+.roles-carousel__cta {
+  color: #fff;
+}
+
+
+.roles-carousel__card[data-carousel-offset="0"]:hover
+.roles-carousel__cta b {
+  transform: translateX(3px);
+}
+
+
+.roles-carousel__cta b {
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease;
+}
+
+
+/* DECOR */
+
+.roles-carousel__glow {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 28%,
+      color-mix(
+        in srgb,
+        var(--role-color) 5%,
+        transparent
+      ) 63%,
+      color-mix(
+        in srgb,
+        var(--role-color) 11%,
+        transparent
+      ) 100%
+    );
+}
+
+
+.roles-carousel__icon {
+  position: absolute;
+
+  top: 28px;
+  left: 50%;
+
+  width: 145px;
+  height: 145px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  transform:
+    translateX(-50%);
+
+  border-radius: 36px;
+
+  background:
+    radial-gradient(
+      circle,
+      color-mix(
+        in srgb,
+        var(--role-color) 17%,
+        rgba(255,255,255,0.018)
+      ),
+      color-mix(
+        in srgb,
+        var(--role-color) 5%,
+        transparent
+      ) 54%,
+      transparent 72%
+    );
+
+  border:
+    1px solid
+      color-mix(
+        in srgb,
+        var(--role-color) 24%,
+        rgba(255,255,255,0.04)
+      );
+
+  box-shadow:
+    0 0 22px
+      color-mix(
+        in srgb,
+        var(--role-color) 6%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.025);
+}
+
+
+.roles-carousel__icon img {
+  width: 82px;
+  height: 82px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 0 14px
+      color-mix(
+        in srgb,
+        var(--role-color) 22%,
+        transparent
+      )
+    );
+}
+
+
+/* CONTENT */
+
+.roles-carousel__content {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+.roles-carousel__role {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color:
+    color-mix(
+      in srgb,
+      var(--role-color) 76%,
+      white 24%
+    );
+
+  font-size: 0.55rem;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+}
+
+
+.roles-carousel__content h3 {
+  margin:
+    0 0 10px;
+
+  color: #fff;
+
+  font-size:
+    clamp(1.2rem, 2vw, 1.55rem);
+
+  font-weight: 950;
+
+  letter-spacing: 0.075em;
+}
+
+
+.roles-carousel__content p {
+  margin:
+    0 0 17px;
+
+  min-height: 48px;
+
+  color:
+    rgba(255,255,255,0.58);
+
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
+
+.roles-carousel__meta {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding-top: 13px;
+
+  border-top:
+    1px solid rgba(255,255,255,0.06);
+
+  color:
+    rgba(255,255,255,0.38);
+
+  font-size: 0.52rem;
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+}
+
+
+.roles-carousel__cta {
+  color:
+    rgba(255,255,255,0.7);
+}
+
+
+.roles-carousel__cta b {
+  margin-left: 6px;
+
+  color:
+    var(--role-color);
+
+  font-size: 0.9rem;
+}
+
+
+/* NAV */
+
+.roles-carousel__nav {
+  position: absolute;
+
+  top: 50%;
+
+  width: 52px;
+  height: 52px;
+
+  display: grid;
+  place-items: center;
+
+  transform:
+    translateY(-50%);
+
+  z-index: 10;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(31,27,37,0.96),
+      rgba(14,12,18,0.98)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.09);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.roles-carousel__nav:hover {
+  transform:
+    translateY(-50%)
+    scale(1.07);
+
+  border-color:
+    color-mix(in srgb, var(--showcase-color) 40%, transparent);
+
+  box-shadow:
+    0 14px 32px rgba(0,0,0,0.38),
+    0 0 18px color-mix(in srgb, var(--showcase-color) 8%, transparent);
+}
+
+
+.roles-carousel__nav--prev {
+  left: 10px;
+}
+
+
+.roles-carousel__nav--next {
+  right: 10px;
+}
+
+
+.roles-carousel__nav span {
+  width: 12px;
+  height: 12px;
+
+  border-top:
+    2px solid rgba(255,255,255,0.86);
+
+  border-right:
+    2px solid rgba(255,255,255,0.86);
+}
+
+
+.roles-carousel__nav--prev span {
+  transform:
+    translateX(2px)
+    rotate(-135deg);
+}
+
+
+.roles-carousel__nav--next span {
+  transform:
+    translateX(-2px)
+    rotate(45deg);
+}
+
+
+/* DOTS */
+
+.roles-carousel__dots {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 8px;
+}
+
+
+.roles-carousel__dots button {
+  width: 7px;
+  height: 7px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  background:
+    rgba(255,255,255,0.16);
+
+  transition:
+    width 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+
+.roles-carousel__dots button.is-active {
+  width: 24px;
+
+  background:
+    #ff4655;
+
+  box-shadow:
+    0 0 12px rgba(255,70,85,0.26);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+  .roles-carousel__viewport {
+    width:
+      calc(100% - 94px);
+  }
+
+
+  .roles-carousel__card {
+    width:
+      min(400px, 58vw);
+
+    transform:
+      translate(-50%, -50%)
+      translateX(
+        calc(
+          var(--carousel-offset, 0)
+          * 255px
+        )
+      )
+      scale(
+        var(--carousel-scale, 1)
+      );
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .roles-carousel {
+    width:
+      calc(100vw - 18px);
+
+    padding:
+      24px 8px 18px;
+
+    border-radius: 20px;
+  }
+
+
+  .roles-carousel__stage {
+    min-height: 390px;
+  }
+
+
+  .roles-carousel__viewport {
+    width:
+      calc(100% - 72px);
+
+    height: 370px;
+  }
+
+
+  .roles-carousel__card {
+    width:
+      min(340px, 76vw);
+
+    height: 335px;
+
+    padding:
+      20px 18px 18px;
+
+    transform:
+      translate(-50%, -50%)
+      translateX(
+        calc(
+          var(--carousel-offset, 0)
+          * 210px
+        )
+      )
+      scale(
+        var(--carousel-scale, 1)
+      );
+  }
+
+
+  .roles-carousel__card[data-carousel-offset="-1"],
+  .roles-carousel__card[data-carousel-offset="1"] {
+    --carousel-scale: 0.76;
+    --carousel-opacity: 0.38;
+  }
+
+
+  .roles-carousel__icon {
+    width: 126px;
+    height: 126px;
+  }
+
+
+  .roles-carousel__icon img {
+    width: 68px;
+    height: 68px;
+  }
+
+
+  .roles-carousel__nav {
+    width: 44px;
+    height: 44px;
+  }
+
+
+  .roles-carousel__nav--prev {
+    left: 2px;
+  }
+
+
+  .roles-carousel__nav--next {
+    right: 2px;
+  }
+
+}
+
+
+
+
+/* ==================================================
+   ACTIVE AGENT CLASS SWITCHER
+   ================================================== */
+
+.agent-class-switcher {
+  position: relative;
+
+  width: min(
+    1460px,
+    calc(100vw - 30px)
+  );
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  margin-top: 22px;
+
+  scroll-margin-top: 90px;
+}
+
+
+.agent-class-panel[hidden] {
+  display: none !important;
+}
+
+
+.agent-class-panel.is-active {
+  animation:
+    agentClassSwapIn
+    0.26s
+    cubic-bezier(.2,.75,.2,1);
+}
+
+
+@keyframes agentClassSwapIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.agent-class-panel__eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color:
+    rgba(255,255,255,0.36);
+
+  font-size: 0.52rem;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* showcase class accents */
+
+.agent-showcase {
+  --showcase-color: #ff5b68;
+}
+
+
+.agent-showcase--duelist {
+  --showcase-color: #ff5b68;
+}
+
+
+.agent-showcase--controller {
+  --showcase-color: #b96cff;
+}
+
+
+.agent-showcase--initiator {
+  --showcase-color: #e7b85c;
+}
+
+
+.agent-showcase--sentinel {
+  --showcase-color: #61d7d0;
+}
+
+
+/* ==================================================
+   DUELIST AGENT SHOWCASE
+   ================================================== */
+
+.agent-showcase {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 470px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    18px 10px 22px;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% 14%,
+      color-mix(in srgb, var(--showcase-color) 9%, transparent),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 12% 50%,
+      rgba(185, 108, 255, 0.055),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 50%,
+      rgba(97, 215, 208, 0.04),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(17, 14, 21, 0.72),
+      rgba(8, 7, 11, 0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025),
+    0 20px 48px rgba(0,0,0,0.18);
+}
+
+
+.agent-showcase::before {
+  content: attr(data-role-label);
+
+  position: absolute;
+
+  top: 22px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 0;
+
+  color:
+    rgba(255,255,255,0.035);
+
+  font-size:
+    clamp(3.4rem, 8vw, 7.5rem);
+
+  font-weight: 950;
+
+  letter-spacing: 0.16em;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+.agent-showcase::after {
+  content: "";
+
+  position: absolute;
+
+  left: 8%;
+  right: 8%;
+  bottom: 24px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--showcase-color) 22%, transparent),
+      rgba(255,255,255,0.08),
+      color-mix(in srgb, var(--showcase-color) 22%, transparent),
+      transparent
+    );
+
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--showcase-color) 8%, transparent);
+
+  pointer-events: none;
+}
+
+
+.agent-showcase__viewport::before,
+.agent-showcase__viewport::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 110px;
+
+  z-index: 8;
+
+  pointer-events: none;
+}
+
+
+.agent-showcase__viewport::before {
+  left: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8,7,11,0.96),
+      transparent
+    );
+}
+
+
+.agent-showcase__viewport::after {
+  right: 0;
+
+  background:
+    linear-gradient(
+      270deg,
+      rgba(8,7,11,0.96),
+      transparent
+    );
+}
+
+
+
+.agent-showcase__viewport {
+  position: relative;
+
+  width:
+    min(1320px, calc(100% - 96px));
+
+  height: 430px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.012),
+      rgba(255,255,255,0)
+    );
+}
+
+
+.agent-showcase__track {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+.agent-showcase__card {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 300px;
+  height: 390px;
+
+  overflow: hidden;
+
+  contain: paint style;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #18141e,
+      #0b0a0e
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.07);
+
+  box-shadow:
+    0 18px 42px rgba(0,0,0,0.3);
+
+  transform:
+    translate(-50%, -50%);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    transform 0.52s cubic-bezier(.22,.75,.18,1),
+    opacity 0.38s ease;
+
+  will-change:
+    transform,
+    opacity;
+
+  backface-visibility: hidden;
+
+  transform-style: preserve-3d;
+}
+
+
+/* LEVEL 1 — CENTER */
+
+.agent-showcase__card[data-agent-offset="0"] {
+  z-index: 5;
+
+  width: 360px;
+  height: 430px;
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform:
+    translate(-50%, -50%)
+    translateX(0)
+    scale(1);
+
+  border-color:
+    color-mix(in srgb, var(--showcase-color) 50%, transparent);
+
+  box-shadow:
+    0 28px 64px rgba(0,0,0,0.48),
+    0 0 28px color-mix(in srgb, var(--showcase-color) 10%, transparent);
+}
+
+
+/* LEVEL 2 — NEAREST LEFT / RIGHT */
+
+.agent-showcase__card[data-agent-offset="-1"] {
+  z-index: 3;
+
+  opacity: 0.58;
+
+  pointer-events: auto;
+
+  transform:
+    translate(-50%, -50%)
+    translateX(-260px)
+    scale(0.78);
+
+}
+
+
+.agent-showcase__card[data-agent-offset="1"] {
+  z-index: 3;
+
+  opacity: 0.58;
+
+  pointer-events: auto;
+
+  transform:
+    translate(-50%, -50%)
+    translateX(260px)
+    scale(0.78);
+
+}
+
+
+/* LEVEL 3 — FAR LEFT / RIGHT */
+
+.agent-showcase__card[data-agent-offset="-2"] {
+  z-index: 1;
+
+  opacity: 0.28;
+
+  pointer-events: auto;
+
+  transform:
+    translate(-50%, -50%)
+    translateX(-455px)
+    scale(0.58);
+
+}
+
+
+.agent-showcase__card[data-agent-offset="2"] {
+  z-index: 1;
+
+  opacity: 0.28;
+
+  pointer-events: auto;
+
+  transform:
+    translate(-50%, -50%)
+    translateX(455px)
+    scale(0.58);
+
+}
+
+
+/* EVERYTHING BEYOND ±2 IS COMPLETELY HIDDEN */
+
+.agent-showcase__card:not(
+  [data-agent-offset="0"]
+):not(
+  [data-agent-offset="-1"]
+):not(
+  [data-agent-offset="1"]
+):not(
+  [data-agent-offset="-2"]
+):not(
+  [data-agent-offset="2"]
+) {
+  opacity: 0;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.45);
+
+  pointer-events: none;
+}
+
+
+.agent-showcase__card::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    rgba(6, 6, 9, var(--depth-dim, 0));
+
+  transition:
+    background-color 0.38s ease;
+}
+
+
+.agent-showcase__card[data-agent-offset="0"] {
+  --depth-dim: 0;
+}
+
+
+.agent-showcase__card[data-agent-offset="-1"],
+.agent-showcase__card[data-agent-offset="1"] {
+  --depth-dim: 0.18;
+}
+
+
+.agent-showcase__card[data-agent-offset="-2"],
+.agent-showcase__card[data-agent-offset="2"] {
+  --depth-dim: 0.38;
+}
+
+
+.agent-showcase__media {
+  position: absolute;
+
+  z-index: 0;
+
+  inset: 0;
+}
+
+
+.agent-showcase__image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
+
+  transition:
+    transform 0.44s cubic-bezier(.22,.75,.18,1);
+
+  will-change: transform;
+}
+
+
+.agent-showcase__card[data-agent-offset="0"]
+.agent-showcase__image {
+  transform:
+    scale(1.025);
+
+
+}
+
+
+.agent-showcase__overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 28%,
+      rgba(7,7,10,0.16) 52%,
+      rgba(7,7,10,0.78) 78%,
+      rgba(7,7,10,0.98) 100%
+    );
+}
+
+
+.agent-showcase__content {
+  position: absolute;
+
+  z-index: 3;
+
+  left: 18px;
+  right: 18px;
+  bottom: 17px;
+
+  padding:
+    12px 12px 10px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(12,10,15,0.22),
+      rgba(12,10,15,0.68)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.045);
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.2);
+
+  transition:
+    opacity 0.24s ease,
+    transform 0.28s ease;
+}
+
+
+.agent-showcase__card:not(
+  [data-agent-offset="0"]
+)
+.agent-showcase__content p,
+.agent-showcase__card:not(
+  [data-agent-offset="0"]
+)
+.agent-showcase__profile {
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+.agent-showcase__role {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--showcase-color);
+
+  font-size: 0.5rem;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+}
+
+
+.agent-showcase__content h3 {
+  margin:
+    0 0 9px;
+
+  color: #fff;
+
+  font-size: 1.28rem;
+  font-weight: 950;
+
+  letter-spacing: 0.08em;
+
+  text-shadow:
+    0 4px 14px rgba(0,0,0,0.7);
+}
+
+
+.agent-showcase__content p {
+  margin:
+    0 0 13px;
+
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.64rem;
+  line-height: 1.5;
+}
+
+
+.agent-showcase__profile {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  width: 100%;
+
+  padding:
+    11px 14px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 0.56rem;
+  font-weight: 950;
+
+  letter-spacing: 0.11em;
+
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(
+        in srgb,
+        var(--agent-accent) 58%,
+        #24212b 42%
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--agent-accent) 68%,
+        #17151d 32%
+      ) 52%,
+      color-mix(
+        in srgb,
+        var(--agent-accent) 54%,
+        #25212a 46%
+      ) 100%
+    );
+
+  border:
+    1px solid
+      color-mix(
+        in srgb,
+        var(--agent-accent) 34%,
+        rgba(255,255,255,0.16)
+      );
+
+  box-shadow:
+    0 8px 18px
+      color-mix(
+        in srgb,
+        var(--agent-accent) 9%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.09);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+
+.agent-showcase__profile::before {
+  content: "";
+
+  position: absolute;
+
+  top: -35%;
+  bottom: -35%;
+  left: -70%;
+
+  width: 58%;
+
+  transform:
+    skewX(-22deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(
+        in srgb,
+        var(--agent-accent) 18%,
+        rgba(255,255,255,0.10)
+      ) 28%,
+      rgba(255,255,255,0.30) 50%,
+      color-mix(
+        in srgb,
+        var(--agent-accent) 22%,
+        rgba(255,255,255,0.10)
+      ) 72%,
+      transparent 100%
+    );
+
+  filter:
+    blur(1px);
+
+  opacity: 0.78;
+
+  pointer-events: none;
+
+  transition:
+    left 0.62s cubic-bezier(.22,.75,.18,1);
+}
+
+
+.agent-showcase__profile:hover {
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.045);
+
+  box-shadow:
+    0 13px 28px
+      color-mix(
+        in srgb,
+        var(--agent-accent) 17%,
+        transparent
+      ),
+    0 0 16px
+      color-mix(
+        in srgb,
+        var(--agent-accent) 7%,
+        transparent
+      ),
+    inset 0 1px 0 rgba(255,255,255,0.13);
+}
+
+
+.agent-showcase__profile:hover::before {
+  left: 125%;
+}
+
+
+.agent-showcase__profile span:last-child {
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  place-items: center;
+
+  width: 24px;
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  border-radius: 50%;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--agent-accent) 46%,
+      rgba(255,255,255,0.10)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  font-size: 0.9rem;
+
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease;
+}
+
+
+.agent-showcase__profile span:first-child {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+.agent-showcase__profile:hover
+span:last-child {
+  transform:
+    translateX(3px);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--agent-accent) 62%,
+      rgba(255,255,255,0.16)
+    );
+}
+
+
+.agent-showcase__nav {
+  position: absolute;
+
+  top: 50%;
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+
+  place-items: center;
+
+  transform:
+    translateY(-50%);
+
+  z-index: 10;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(31,27,37,0.96),
+      rgba(14,12,18,0.98)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.09);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.3);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.agent-showcase__nav:hover {
+  transform:
+    translateY(-50%)
+    scale(1.07);
+
+  border-color:
+    color-mix(in srgb, var(--showcase-color) 40%, transparent);
+}
+
+
+.agent-showcase__nav--prev {
+  left: 8px;
+}
+
+
+.agent-showcase__nav--next {
+  right: 8px;
+}
+
+
+.agent-showcase__nav span {
+  width: 11px;
+  height: 11px;
+
+  border-top:
+    2px solid rgba(255,255,255,0.88);
+
+  border-right:
+    2px solid rgba(255,255,255,0.88);
+}
+
+
+.agent-showcase__nav--prev span {
+  transform:
+    translateX(2px)
+    rotate(-135deg);
+}
+
+
+.agent-showcase__nav--next span {
+  transform:
+    translateX(-2px)
+    rotate(45deg);
+}
+
+
+@media (max-width: 900px) {
+
+  .agent-showcase__viewport {
+    width:
+      calc(100% - 78px);
+  }
+
+  .agent-showcase__card {
+    width: 250px;
+    height: 350px;
+  }
+
+  .agent-showcase__card[data-agent-offset="0"] {
+    width: 305px;
+    height: 395px;
+  }
+
+  .agent-showcase__card[data-agent-offset="-1"] {
+    transform:
+      translate(-50%, -50%)
+      translateX(-205px)
+      scale(0.76);
+  }
+
+  .agent-showcase__card[data-agent-offset="1"] {
+    transform:
+      translate(-50%, -50%)
+      translateX(205px)
+      scale(0.76);
+  }
+
+  .agent-showcase__card[data-agent-offset="-2"] {
+    transform:
+      translate(-50%, -50%)
+      translateX(-350px)
+      scale(0.55);
+  }
+
+  .agent-showcase__card[data-agent-offset="2"] {
+    transform:
+      translate(-50%, -50%)
+      translateX(350px)
+      scale(0.55);
+  }
+
+}
+
+
+@media (max-width: 620px) {
+
+  .agent-showcase {
+    min-height: 400px;
+  }
+
+  .agent-showcase__viewport {
+    width:
+      calc(100% - 58px);
+
+    height: 380px;
+  }
+
+  .agent-showcase__card {
+    width: 205px;
+    height: 310px;
+  }
+
+  .agent-showcase__card[data-agent-offset="0"] {
+    width: 255px;
+    height: 355px;
+  }
+
+  .agent-showcase__card[data-agent-offset="-1"] {
+    opacity: 0.5;
+
+    transform:
+      translate(-50%, -50%)
+      translateX(-155px)
+      scale(0.72);
+  }
+
+  .agent-showcase__card[data-agent-offset="1"] {
+    opacity: 0.5;
+
+    transform:
+      translate(-50%, -50%)
+      translateX(155px)
+      scale(0.72);
+  }
+
+  .agent-showcase__card[data-agent-offset="-2"] {
+    opacity: 0.2;
+
+    transform:
+      translate(-50%, -50%)
+      translateX(-255px)
+      scale(0.5);
+  }
+
+  .agent-showcase__card[data-agent-offset="2"] {
+    opacity: 0.2;
+
+    transform:
+      translate(-50%, -50%)
+      translateX(255px)
+      scale(0.5);
+  }
+
+  .agent-showcase__nav {
+    width: 42px;
+    height: 42px;
+  }
+
+}
+
+
+
+
+/* ==================================================
+     AGENTS SECTION
+     ================================================== */
+
+  .agents-section {
+    position: relative;
+    scroll-margin-top: 90px;
+
+    width: min(
+      1460px,
+      calc(100vw - 30px)
+    );
+
+    left: 50%;
+
+    transform:
+      translateX(-50%);
+
+    padding: 24px;
+    padding-bottom: 76px;
+
+    border-radius: 26px;
+
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(230, 57, 70, 0.055),
+        transparent 35%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(20, 18, 25, 0.97),
+        rgba(11, 10, 14, 0.99)
+      );
+
+    border:
+      1px solid rgba(255, 255, 255, 0.055);
+
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.22);
+
+    overflow: visible;
+  }
+
+
+  /* ==================================================
+     BACK TO AGENT CLASSES
+     ================================================== */
+
+  .agents-section__back {
+    position: absolute;
+
+    right: 24px;
+    bottom: 22px;
+
+    z-index: 20;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    color:
+      rgba(255, 255, 255, 0.75);
+
+    background:
+      rgba(18, 16, 22, 0.92);
+
+    border:
+      1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    text-decoration: none;
+
+    transition:
+      transform 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .agents-section__back-arrow {
+    display: block;
+
+    width: 11px;
+    height: 11px;
+
+    border-top:
+      2px solid currentColor;
+
+    border-left:
+      2px solid currentColor;
+
+    transform:
+      translateY(3px)
+      rotate(45deg);
+
+    border-radius: 1px;
+  }
+
+
+  .agents-section__back:hover {
+    transform:
+      translateY(-4px);
+
+    color:
+      #ff6874;
+
+    background:
+      rgba(230, 57, 70, 0.1);
+
+    border-color:
+      rgba(230, 57, 70, 0.42);
+
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.4),
+      0 0 22px rgba(230, 57, 70, 0.12);
+  }
+
+
+  /* ==================================================
+     AGENT SECTION HEADER
+     ================================================== */
+
+  .agents-section__head {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1.15rem;
+  }
+
+
+  .agents-section__title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+  }
+
+
+  .agents-section__icon {
+    display: block;
+
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+    filter:
+      drop-shadow(
+        0 0 10px rgba(230, 57, 70, 0.18)
+      );
+  }
+
+
+  .agents-section__head h2 {
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 1.4rem;
+    font-weight: 900;
+
+    letter-spacing: 0.11em;
+
+    text-transform: uppercase;
+  }
+
+
+  .agents-section__count {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 30px;
+    height: 24px;
+
+    padding:
+      0 8px;
+
+    border-radius: 7px;
+
+    color:
+      rgba(255, 255, 255, 0.55);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    background:
+      rgba(255, 255, 255, 0.035);
+
+    border:
+      1px solid rgba(255, 255, 255, 0.06);
+  }
+
+
+  /* ==================================================
+     AGENTS GRID
+     ================================================== */
+
+  .agents-grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+
+    gap: 0.8rem;
+
+    align-items: start;
+  }
+
+
+  /* ==================================================
+     AGENT CARD
+     ================================================== */
+
+  .agent-card {
+  position: relative;
+
+  width: 100%;
+  height: 270px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #17131b 0%,
+      #0d0c11 100%
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.22);
+
+  transform-origin: center top;
+
+  transition:
+    transform 0.22s cubic-bezier(.22, .8, .22, 1),
+    border-radius 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+
+  will-change: transform;
+
+  contain: paint style;
+
+  isolation: isolate;
+}
+
+
+  .agent-card:hover {
+    transform:
+      translateY(-4px);
+
+    border-color:
+      rgba(230, 57, 70, 0.38);
+
+    box-shadow:
+      0 16px 34px rgba(0, 0, 0, 0.35),
+      0 0 22px rgba(230, 57, 70, 0.07);
+  }
+
+
+  /* ==================================================
+     AGENT IMAGE WRAPPER
+     ================================================== */
+
+ .agent-card__media {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+
+  transition:
+    transform 0.22s cubic-bezier(.22, .8, .22, 1);
+}
+
+
+  /* ==================================================
+     AGENT IMAGE
+     ================================================== */
+
+  .agent-card__image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
+
+  will-change: transform;
+
+  transition:
+    transform 0.22s cubic-bezier(.22, .8, .22, 1),
+    filter 0.18s ease;
+}
+
+
+  /* ==================================================
+     IMAGE OVERLAY
+     ================================================== */
+
+  .agent-card__overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 7, 11, 0) 28%,
+      rgba(8, 7, 11, 0.12) 50%,
+      rgba(8, 7, 11, 0.62) 78%,
+      rgba(8, 7, 11, 0.97) 100%
+    );
+
+  transition:
+    background 0.5s ease,
+    opacity 0.5s ease;
+}
+
+
+  /* ==================================================
+     AGENT CARD ACCENT
+     ================================================== */
+
+  .agent-card::before {
+    content: "";
+
+    position: absolute;
+
+    z-index: 7;
+
+    left: 15%;
+    right: 15%;
+    bottom: 0;
+
+    height: 2px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        #ff4655,
+        #c13b71,
+        transparent
+      );
+
+    box-shadow:
+      0 0 14px rgba(255, 70, 85, 0.25);
+
+    transition:
+      left 0.3s ease,
+      right 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+
+  /* ==================================================
+     AGENT CONTENT
+     ================================================== */
+
+  .agent-card__content {
+  position: absolute;
+
+  z-index: 6;
+
+  left: 13px;
+  right: 13px;
+  bottom: 12px;
+
+  transition:
+    left 0.4s ease,
+    right 0.4s ease,
+    bottom 0.4s ease;
+}
+
+  /* ==================================================
+     DETAILS
+     ================================================== */
+
+  .agent-details {
+    position: relative;
+
+    width: 100%;
+  }
+
+
+  /* ==================================================
+     AGENT NAME
+     ================================================== */
+
+  .agent-details__summary {
+    position: relative;
+
+    list-style: none;
+
+    display: flex;
+
+    align-items: center;
+
+    width: fit-content;
+
+    margin: 0;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    outline: none;
+  }
+
+
+  .agent-details__summary::-webkit-details-marker {
+    display: none;
+  }
+
+
+  .agent-details__summary::marker {
+    content: "";
+  }
+
+
+  .agent-details__name {
+    color: #fff;
+
+    font-size: 1.05rem;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    line-height: 1;
+
+    text-shadow:
+      0 3px 12px rgba(0, 0, 0, 0.8);
+
+    transition:
+      color 0.2s ease,
+      text-shadow 0.2s ease;
+  }
+
+
+  .agent-details__summary:hover
+  .agent-details__name {
+
+    color: var(--showcase-color);
+  }
+
+
+  /* ==================================================
+     DETAILS ARROW
+     ================================================== */
+
+  .agent-details__summary::after {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    margin-left: 9px;
+
+    border-right:
+      2px solid rgba(255, 255, 255, 0.55);
+
+    border-bottom:
+      2px solid rgba(255, 255, 255, 0.55);
+
+    transform:
+      translateY(-2px)
+      rotate(45deg);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+
+  .agent-details[open]
+  .agent-details__summary::after {
+
+    transform:
+      translateY(2px)
+      rotate(225deg);
+
+    border-color:
+      #ff6874;
+  }
+
+
+  /* ==================================================
+     DETAILS PANEL
+     ================================================== */
+
+  .agent-details__panel {
+    position: relative;
+
+    margin-top: 10px;
+
+    padding:
+      11px 12px;
+
+    border-radius: 11px;
+
+    background:
+      radial-gradient(
+        circle at 0% 0%,
+        rgba(230, 57, 70, 0.13),
+        transparent 50%
+      ),
+      linear-gradient(
+        145deg,
+        rgba(23, 19, 28, 0.96),
+        rgba(10, 9, 14, 0.97)
+      );
+
+    border:
+      1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.28);
+
+    backdrop-filter: none;
+
+    overflow: hidden;
+
+    animation:
+      agentPanelIn 0.18s ease-out;
+  }
+
+
+  @keyframes agentPanelIn {
+
+    from {
+      opacity: 0;
+
+      transform:
+        translateY(4px);
+    }
+
+    to {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+    }
+
+  }
+
+
+  .agent-details__panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 14px;
+    right: 14px;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 70, 85, 0.8),
+        rgba(190, 70, 220, 0.65),
+        transparent
+      );
+  }
+
+
+  /* ==================================================
+     ROLE HEADER
+     ================================================== */
+
+  .agent-details__header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+  }
+
+
+  /* ==================================================
+     ROLE ICON
+     ================================================== */
+
+  .agent-role-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+
+    background:
+      rgba(230, 57, 70, 0.08);
+
+    border:
+      1px solid rgba(230, 57, 70, 0.18);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  }
+
+
+  .agent-role-icon svg {
+    display: block;
+
+    width: 15px;
+    height: 15px;
+  }
+
+
+  .agent-role-icon--duelist {
+    color: #ff5b68;
+  }
+
+
+  .agent-role-icon--controller {
+    color: #b96cff;
+  }
+
+
+  .agent-role-icon--initiator {
+    color: #e7b85c;
+  }
+
+
+  .agent-role-icon--sentinel {
+    color: #61d7d0;
+  }
+
+
+  /* ==================================================
+     ROLE TEXT
+     ================================================== */
+
+  .agent-details__role {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+  }
+
+
+  .agent-details__role span {
+    color:
+      rgba(255, 255, 255, 0.32);
+
+    font-size: 0.46rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+  }
+
+
+  .agent-details__role strong {
+    color: #fff;
+
+    font-size: 0.67rem;
+    font-weight: 800;
+
+    letter-spacing: 0.09em;
+  }
+
+
+  /* ==================================================
+     DETAILS DIVIDER
+     ================================================== */
+
+  .agent-details__divider {
+    width: 100%;
+    height: 1px;
+
+    margin:
+      9px 0 8px;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.025),
+        transparent
+      );
+  }
+
+
+  /* ==================================================
+     AGENT DESCRIPTION
+     ================================================== */
+
+  .agent-details__description {
+    margin: 0;
+
+    color:
+      rgba(255, 255, 255, 0.62);
+
+    font-size: 0.57rem;
+
+    line-height: 1.42;
+  }
+
+
+  /* ==================================================
+     AGENT PROFILE BUTTON
+     ================================================== */
+
+  .agent-details__profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-top: 12px;
+    padding: 9px 11px;
+
+    border-radius: 8px;
+
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+
+    font-size: 0.52rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(230, 57, 70, 0.06),
+        rgba(255, 255, 255, 0.025)
+      );
+
+    border:
+      1px solid rgba(230, 57, 70, 0.16);
+
+    transition:
+      color 0.22s ease,
+      background 0.22s ease,
+      border-color 0.22s ease,
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+
+  .agent-details__profile-arrow {
+    color: #ff6874;
+    font-size: 0.85rem;
+
+    transition:
+      transform 0.22s ease;
+  }
+
+
+  .agent-details__profile:hover {
+    color: #fff;
+
+    transform:
+      translateY(-2px);
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(230, 57, 70, 0.13),
+        rgba(230, 57, 70, 0.045)
+      );
+
+    border-color:
+      rgba(230, 57, 70, 0.32);
+
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.2),
+      0 0 16px rgba(230, 57, 70, 0.07);
+  }
+
+
+  .agent-details__profile:hover
+  .agent-details__profile-arrow {
+    transform:
+      translateX(4px);
+  }
+
+
+
+
+  /* ==================================================
+     BULK OPEN / CLOSE PERFORMANCE
+     ================================================== */
+
+  .agents-section.is-bulk-toggling .agent-card,
+  .agents-section.is-bulk-toggling .agent-card__media,
+  .agents-section.is-bulk-toggling .agent-card__image,
+  .agents-section.is-bulk-toggling .agent-card__overlay,
+  .agents-section.is-bulk-toggling .agent-card__content,
+  .agents-section.is-bulk-toggling .agent-card::before,
+  .agents-section.is-bulk-toggling .agent-details__summary::after,
+  .agents-section.is-bulk-toggling .agent-details__panel {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .agents-section.is-bulk-toggling .agent-details__panel {
+    backdrop-filter: none !important;
+  }
+
+  .agents-section.is-bulk-reveal .agents-grid {
+    animation:
+      agentsBulkReveal 0.18s ease-out;
+  }
+
+  @keyframes agentsBulkReveal {
+    from {
+      opacity: 0.88;
+      transform: translateY(3px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agent-card,
+    .agent-card__media,
+    .agent-card__image,
+    .agent-card__overlay,
+    .agent-card__content,
+    .agent-card::before,
+    .agent-details__summary::after,
+    .agent-details__panel,
+    .agents-section.is-bulk-reveal .agents-grid {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* ==================================================
+     OPEN AGENT CARD
+     ================================================== */
+
+  .agent-card.is-open {
+  height: 520px;
+
+  transform:
+    scale(1.015);
+
+  transform-origin:
+    top center;
+
+  border-radius: 18px;
+
+  border-color:
+    rgba(255, 70, 85, 0.58);
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(230, 57, 70, 0.08),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #18131d 0%,
+      #0c0b10 100%
+    );
+
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.38),
+    0 0 18px color-mix(in srgb, var(--showcase-color) 9%, transparent);
+}
+
+
+  /* ==================================================
+     FULL IMAGE WHEN OPEN
+     ================================================== */
+
+ .agent-card.is-open
+.agent-card__image {
+  object-fit: cover;
+  object-position: center top;
+
+  transform: scale(1);
+
+  filter:
+    brightness(1.05)
+    saturate(1.06);
+}
+
+
+  /* ==================================================
+     OPEN OVERLAY
+     ================================================== */
+
+ .agent-card.is-open
+.agent-card__overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 7, 11, 0.01) 0%,
+      rgba(8, 7, 11, 0.03) 45%,
+      rgba(8, 7, 11, 0.4) 72%,
+      rgba(8, 7, 11, 0.96) 100%
+    );
+}
+
+
+  /* ==================================================
+     OPEN NAME
+     ================================================== */
+
+  .agent-card.is-open
+  .agent-details__name {
+
+    color: #fff;
+
+    text-shadow:
+      0 0 14px rgba(255, 70, 85, 0.35),
+      0 4px 14px rgba(0, 0, 0, 0.8);
+  }
+
+
+  /* ==================================================
+     OPEN CARD ACCENT
+     ================================================== */
+
+  .agent-card.is-open::before {
+
+    left: 5%;
+    right: 5%;
+
+    box-shadow:
+      0 0 18px rgba(255, 70, 85, 0.55);
+  }
+
+
+  /* ==================================================
+     OPEN CONTENT
+     ================================================== */
+
+  .agent-card.is-open
+  .agent-card__content {
+
+    left: 14px;
+    right: 14px;
+    bottom: 13px;
+  }
+
+
+  /* ==================================================
+     CLOSED CARD IMAGE HOVER
+     ================================================== */
+
+  .agent-card:not(.is-open):hover
+  .agent-card__image {
+
+    transform:
+      scale(1.055);
+
+    filter:
+      brightness(1.04)
+      saturate(1.05);
+  }
+
+
+  /* ==================================================
+     RESPONSIVE
+     ================================================== */
+
+  @media (max-width: 1250px) {
+
+    .agents-grid {
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    }
+
+  }
+
+
+  @media (max-width: 1100px) {
+
+    .game-row {
+      grid-template-columns:
+        minmax(0, 1fr)
+        170px
+        minmax(0, 1fr);
+    }
+
+    .info-cards {
+      width: 170px;
+    }
+
+  }
+
+
+  @media (max-width: 950px) {
+
+    .agents-grid {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    }
+
+    .game-row {
+      grid-template-columns: 1fr;
+    }
+
+    .info-cards {
+      width: 100%;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      grid-template-rows:
+        none;
+    }
+
+    .info-card {
+      min-height: 100px;
+    }
+
+  }
+
+
+  @media (max-width: 700px) {
+
+    .game-section {
+      padding: 18px;
+
+      border-radius: 20px;
+    }
+
+
+    .agents-section {
+      padding: 18px;
+
+      border-radius: 20px;
+    }
+
+
+    .agents-grid {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+
+    .agent-card {
+      height: 290px;
+    }
+
+
+    .agent-card.is-open {
+      height: 500px;
+    }
+
+
+    .agent-card.is-open
+    .agent-card__media {
+
+      inset:
+        10px
+        7px
+        130px;
+    }
+
+
+    .promo__title {
+      font-size: 1.3rem;
+    }
+
+  }
+
+
+  @media (max-width: 520px) {
+
+    .brand__title {
+      font-size: 2rem;
+    }
+
+
+    .brand__subtitle {
+      font-size: 0.78rem;
+    }
+
+
+    .game-section {
+      width:
+        calc(100vw - 18px);
+
+      padding: 12px;
+    }
+
+
+    .game-card {
+      min-height: 330px;
+    }
+
+
+    .info-cards {
+      grid-template-columns: 1fr;
+    }
+
+
+    .info-card {
+      min-height: 90px;
+    }
+
+  }
+
+
+  @media (max-width: 450px) {
+
+    .agents-section {
+      width:
+        calc(100vw - 20px);
+
+      padding: 14px;
+
+      border-radius: 18px;
+    }
+
+
+    .agents-section__icon {
+      width: 32px;
+      height: 32px;
+    }
+
+
+    .agents-section__head h2 {
+      font-size: 1.1rem;
+    }
+
+
+    .agents-grid {
+      grid-template-columns: 1fr;
+
+      gap: 0.9rem;
+    }
+
+
+    .agent-card {
+      height: 340px;
+    }
+
+
+    .agent-card.is-open {
+      height: 600px;
+    }
+
+
+    .agent-card.is-open
+    .agent-card__media {
+
+      inset:
+        12px
+        10px
+        135px;
+    }
+
+
+    .agent-details__name {
+      font-size: 1.15rem;
+    }
+
+
+    .agent-details__description {
+      font-size: 0.62rem;
+    }
+
+  }
+
+
+  /* ==================================================
+     AGENT GRID — STABLE INDEPENDENT COLUMNS
+     ================================================== */
+
+  .agents-grid.agents-grid--stable-columns {
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+
+    column-gap: 0.8rem;
+    row-gap: 0;
+
+    align-items: start;
+  }
+
+
+  :global(.agent-grid-column) {
+    display: flex;
+    flex-direction: column;
+
+    /* Реальный вертикальный отступ между карточками */
+    gap: 2.4rem;
+
+    min-width: 0;
+  }
+
+
+  :global(.agent-grid-column) > .agent-card {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+
+  :global(.agent-grid-column) > .agent-card.is-open {
+    margin-bottom: 0.55rem;
+    z-index: 3;
+  }
+
+
+  @media (max-width: 1250px) {
+
+    .agents-grid.agents-grid--stable-columns {
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    }
+
+  }
+
+
+  @media (max-width: 950px) {
+
+    .agents-grid.agents-grid--stable-columns {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+  }
+
+
+  @media (max-width: 650px) {
+
+    .agents-grid.agents-grid--stable-columns {
+      grid-template-columns: 1fr;
+    }
+
+  }
+
+
+
+
+  /* ==================================================
+     AGENT SECTION ACTIONS
+     ================================================== */
+
+  .agents-section__actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+  }
+
+
+
+  .agents-section__toggle-all:hover {
+    color: #fff;
+
+    transform:
+      translateY(-2px);
+
+    background:
+      rgba(230, 57, 70, 0.08);
+
+    border-color:
+      rgba(230, 57, 70, 0.28);
+
+    box-shadow:
+      0 7px 18px rgba(0, 0, 0, 0.22),
+      0 0 16px rgba(230, 57, 70, 0.07);
+  }
+
+
+  .agents-section__toggle-all.is-active {
+    color: #ff8b95;
+
+    background:
+      rgba(230, 57, 70, 0.11);
+
+    border-color:
+      rgba(230, 57, 70, 0.34);
+
+    box-shadow:
+      0 0 16px rgba(230, 57, 70, 0.08);
+  }
+
+
+  .agents-section__toggle-all:active {
+    transform:
+      translateY(0)
+      scale(0.98);
+  }
+
+
+  @media (max-width: 650px) {
+
+    .agents-section__head {
+      align-items: flex-start;
+
+      gap: 12px;
+    }
+
+
+    .agents-section__actions {
+      gap: 7px;
+    }
+
+
+    .agents-section__toggle-all {
+      min-height: 30px;
+
+      padding:
+        0 9px;
+
+      font-size: 0.49rem;
+    }
+
+  }
+
+
+
+
+  html.agents-scrolling .agent-card,
+  html.agents-scrolling .roles-hybrid__card,
+  html.agents-scrolling .info-card,
+  html.agents-scrolling .game-card {
+    transition: none !important;
+  }
+
+  html.agents-scrolling .agent-card:hover,
+  html.agents-scrolling .roles-hybrid__card:hover,
+  html.agents-scrolling .info-card:hover {
+    transform: none !important;
+  }
+
+
+
+
+
+
+  /* ==================================================
+     WEAPONS CONTENT — FEATURED WEAPON
+     ================================================== */
+
+  .weapons-content {
+    width: 100%;
+  }
+
+  .weapons-content[hidden] {
+    display: none;
+  }
+
+  .weapons-showcase {
+    width: 100%;
+    margin-top: 30px;
+    padding: 24px;
+    scroll-margin-top: 24px;
+    border-radius: 24px;
+    background:
+      radial-gradient(
+        circle at 48% -12%,
+        rgba(255,70,85,0.055),
+        transparent 34%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(18,16,22,0.985),
+        rgba(9,8,12,0.995)
+      );
+    border: 1px solid rgba(255,255,255,0.055);
+    box-shadow:
+      0 22px 58px rgba(0,0,0,0.24);
+  }
+
+  .weapons-showcase.is-entering {
+    animation:
+      weaponsShowcaseIn 0.42s cubic-bezier(.22,.75,.18,1);
+  }
+
+  @keyframes weaponsShowcaseIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px) scale(0.993);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .weapons-showcase__head {
+    display: grid;
+    grid-template-columns:
+      minmax(220px, 0.62fr)
+      minmax(0, 1.8fr);
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .weapons-showcase__eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: rgba(255,70,85,0.64);
+    font-size: 0.5rem;
+    font-weight: 900;
+    letter-spacing: 0.19em;
+  }
+
+  .weapons-showcase__title h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+    font-weight: 950;
+    letter-spacing: 0.075em;
+    line-height: 1;
+  }
+
+  .weapons-showcase__title p {
+    max-width: 410px;
+    margin: 0;
+    color: rgba(255,255,255,0.38);
+    font-size: 0.69rem;
+    line-height: 1.55;
+  }
+
+  .weapon-tabs {
+    display: grid;
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .weapon-tab {
+    position: relative;
+
+    min-width: 0;
+
+    padding:
+      11px 38px 11px 16px;
+
+    overflow: hidden;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    border-radius: 13px;
+
+    color:
+      rgba(255,255,255,0.76);
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255,255,255,0.028),
+        rgba(255,255,255,0.008)
+      );
+
+    border:
+      1px solid rgba(255,255,255,0.052);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.012);
+
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .weapon-tab::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 9px;
+    bottom: 9px;
+
+    width: 2px;
+
+    border-radius: 0 3px 3px 0;
+
+    background:
+      rgba(255,255,255,0.07);
+
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease,
+      top 0.2s ease,
+      bottom 0.2s ease;
+  }
+
+  .weapon-tab::after {
+    content: "";
+
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    right: -36px;
+    bottom: -48px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(255,70,85,0.07),
+        transparent 68%
+      );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.2s ease;
+  }
+
+  .weapon-tab:hover {
+    transform:
+      translateY(-2px);
+
+    color:
+      rgba(255,255,255,0.82);
+
+    border-color:
+      rgba(255,70,85,0.14);
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255,255,255,0.035),
+        rgba(255,70,85,0.02)
+      );
+  }
+
+  .weapon-tab:hover::after {
+    opacity: 1;
+  }
+
+  .weapon-tab:focus-visible,
+  .weapon-mini-card:focus-visible,
+  .weapon-panel:focus-visible {
+    outline: 2px solid #ff6572;
+    outline-offset: 3px;
+  }
+
+  .weapon-tab:focus:not(:focus-visible),
+  .weapon-mini-card:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .weapon-tab:hover::before {
+    background:
+      rgba(255,70,85,0.38);
+  }
+
+  .weapon-tab.is-active {
+    color: #fff;
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255,70,85,0.145),
+        rgba(255,70,85,0.04) 58%,
+        rgba(255,255,255,0.015)
+      );
+
+    border-color:
+      rgba(255,70,85,0.27);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.04),
+      0 9px 24px rgba(0,0,0,0.14),
+      0 0 18px rgba(255,70,85,0.025);
+  }
+
+  .weapon-tab.is-active::before {
+    top: 7px;
+    bottom: 7px;
+
+    background:
+      #ff4655;
+
+    box-shadow:
+      0 0 10px rgba(255,70,85,0.34);
+  }
+
+  .weapon-tab.is-active::after {
+    opacity: 1;
+  }
+
+  .weapon-tab__number {
+    position: absolute;
+
+    top: 9px;
+    right: 11px;
+
+    color:
+      rgba(255,255,255,0.11);
+
+    font-size: 0.42rem;
+    font-weight: 900;
+
+    letter-spacing: 0.1em;
+
+    transition:
+      color 0.2s ease;
+  }
+
+  .weapon-tab:hover
+  .weapon-tab__number {
+    color:
+      rgba(255,255,255,0.2);
+  }
+
+  .weapon-tab.is-active
+  .weapon-tab__number {
+    color:
+      rgba(255,70,85,0.42);
+  }
+
+  .weapon-tab__eyebrow {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+      rgba(255,110,121,0.85);
+
+    font-size: 0.5rem;
+    font-weight: 900;
+
+    letter-spacing: 0.14em;
+
+    line-height: 1;
+  }
+
+  .weapon-tab.is-active
+  .weapon-tab__eyebrow {
+    color:
+      rgba(255,92,105,0.82);
+  }
+
+  .weapon-tab strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: inherit;
+
+    font-size: 0.72rem;
+    font-weight: 900;
+
+    letter-spacing: 0.045em;
+
+    line-height: 1.2;
+
+    white-space: normal;
+
+    text-overflow: ellipsis;
+  }
+
+  .weapon-panel[hidden] {
+    display: none;
+  }
+
+  .weapon-panel.is-active {
+    animation:
+      weaponPanelIn 0.3s cubic-bezier(.22,.75,.18,1);
+  }
+
+  @keyframes weaponPanelIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .weapon-panel {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.34fr)
+      minmax(300px, 0.82fr);
+    gap: 14px;
+    min-height: 0;
+    align-items: start;
+  }
+
+  .weapon-feature {
+    display: grid;
+    grid-template-rows:
+      minmax(0, 1fr)
+      auto;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background:
+      radial-gradient(
+        circle at 52% 34%,
+        rgba(255,70,85,0.075),
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 50% 48%,
+        rgba(255,255,255,0.035),
+        transparent 56%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(27,23,33,0.99),
+        rgba(13,12,17,0.995)
+      );
+    border: 1px solid rgba(255,255,255,0.055);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+
+  .weapon-feature__visual {
+    position: relative;
+    display: flex;
+    min-height: 205px;
+    align-items: center;
+    justify-content: center;
+    padding: 26px 28px 20px;
+    overflow: hidden;
+  }
+
+  .weapon-feature__visual::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 18px;
+    height: 1px;
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,70,85,0.16),
+        transparent
+      );
+    opacity: 0.8;
+  }
+
+  .weapon-feature__category {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    z-index: 3;
+    color: rgba(255,70,85,0.5);
+    font-size: 0.45rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+  }
+
+  .weapon-feature__visual img {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: min(88%, 690px);
+    height: 158px;
+    /* Keep small source images at their native size instead of enlarging them. */
+    object-fit: scale-down;
+    filter:
+      drop-shadow(
+        0 16px 22px rgba(0,0,0,0.38)
+      );
+    transition:
+      opacity 0.18s ease,
+      transform 0.25s cubic-bezier(.22,.75,.18,1);
+  }
+
+  .weapon-feature__visual img.is-changing {
+    opacity: 0;
+    transform:
+      scale(0.97)
+      translateY(4px);
+  }
+
+  /* A modest enlargement gives sidearms more presence in the main card. */
+  .weapon-panel[data-weapon-panel="0"] .weapon-feature__visual img {
+    width: min(78%, 360px);
+    object-fit: contain;
+  }
+
+  .weapon-feature__glow {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    width: 62%;
+    height: 72px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        ellipse,
+        rgba(255,70,85,0.11),
+        transparent 70%
+      );
+    filter: blur(18px);
+    opacity: 0.9;
+  }
+
+  .weapon-feature__info {
+    padding: 16px 20px 18px;
+    border-top: 1px solid rgba(255,255,255,0.045);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.012),
+        rgba(255,255,255,0)
+      );
+  }
+
+  .weapon-feature__label {
+    display: block;
+    margin-bottom: 6px;
+    color: #ff7a85;
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+  }
+
+  .weapon-feature__info h3 {
+    margin: 0 0 11px;
+    color: #fff;
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    font-weight: 950;
+    letter-spacing: 0.07em;
+    line-height: 1.05;
+    transition: opacity 0.18s ease;
+  }
+
+  .weapon-feature__type {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 7px 10px;
+    margin-bottom: 9px;
+  }
+
+  .weapon-feature__type span {
+    color: rgba(255,255,255,0.62);
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+  }
+
+  .weapon-feature__type strong {
+    color: #ff7a85;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.065em;
+    line-height: 1.3;
+    transition: opacity 0.18s ease;
+  }
+
+  .weapon-feature__info p {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255,255,255,0.74);
+    font-size: 0.85rem;
+    line-height: 1.65;
+    transition: opacity 0.18s ease;
+  }
+
+  .weapon-feature__info h3.is-changing,
+  .weapon-feature__type strong.is-changing,
+  .weapon-feature__info p.is-changing {
+    opacity: 0;
+  }
+
+  .weapon-mini-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+    scrollbar-width: thin;
+    scrollbar-color:
+      rgba(255,70,85,0.22)
+      transparent;
+  }
+
+  .weapon-mini-list::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .weapon-mini-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background:
+      rgba(255,70,85,0.18);
+  }
+
+  .weapon-mini-card {
+    display: grid;
+    grid-template-columns:
+      118px minmax(0, 1fr);
+    min-width: 0;
+    min-height: 62px;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 14px;
+    color: rgba(255,255,255,0.78);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.028),
+        rgba(255,255,255,0.012)
+      );
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.012);
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .weapon-mini-card:hover {
+    transform: translateX(-3px);
+    color: #fff;
+    border-color: rgba(255,70,85,0.14);
+  }
+
+  .weapon-mini-card.is-active {
+    color: #fff;
+
+    background:
+      linear-gradient(
+        100deg,
+        rgba(255,70,85,0.14),
+        rgba(255,70,85,0.03)
+      );
+
+    border-color:
+      rgba(255,70,85,0.28);
+
+    box-shadow:
+      0 10px 22px rgba(0,0,0,0.14),
+      inset 3px 0 0 rgba(255,70,85,0.7);
+  }
+
+  .weapon-mini-card.is-active
+  .weapon-mini-card__visual {
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255,70,85,0.08),
+        transparent 66%
+      );
+  }
+
+  .weapon-mini-card__visual {
+    display: flex;
+    width: 118px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    border-right: 1px solid rgba(255,255,255,0.035);
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255,255,255,0.025),
+        transparent 68%
+      );
+  }
+
+  .weapon-mini-card__visual img {
+    width: 100%;
+    height: 44px;
+    object-fit: contain;
+
+    opacity: 0.72;
+
+    filter:
+      drop-shadow(
+        0 6px 10px rgba(0,0,0,0.24)
+      );
+
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .weapon-mini-card:hover
+  .weapon-mini-card__visual img {
+    opacity: 0.82;
+
+    transform:
+      scale(1.055);
+  }
+
+  .weapon-mini-card.is-active
+  .weapon-mini-card__visual img {
+    opacity: 1;
+
+    transform:
+      scale(1.06);
+
+    filter:
+      drop-shadow(
+        0 0 10px rgba(255,70,85,0.2)
+      )
+      drop-shadow(
+        0 7px 10px rgba(0,0,0,0.24)
+      );
+  }
+
+  .weapon-mini-card__name {
+    min-width: 0;
+    padding: 0 12px;
+  }
+
+  .weapon-mini-card__name span {
+    display: block;
+    margin-bottom: 3px;
+    color: rgba(255,255,255,0.22);
+    font-size: 0.42rem;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+  }
+
+  .weapon-mini-card__name strong {
+    display: block;
+    overflow: hidden;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.055em;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 1050px) {
+    .weapons-showcase__head {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .weapon-panel {
+      grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(230px, 0.75fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .weapons-showcase {
+      margin-top: 24px;
+      padding: 18px 11px 14px;
+      border-radius: 20px;
+    }
+
+    .weapon-tabs {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 8px;
+    }
+
+    .weapon-tab {
+      padding:
+        10px 34px 10px 14px;
+    }
+
+    .weapon-panel {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .weapon-feature__visual {
+      min-height: 195px;
+      padding: 24px 18px;
+    }
+
+    .weapon-feature__visual img {
+      height: 145px;
+    }
+
+    .weapon-feature__info {
+      padding: 15px 16px 17px;
+    }
+
+    .weapon-feature__info h3 {
+      font-size: 1.45rem;
+    }
+
+    .weapon-feature__info p {
+      font-size: 0.82rem;
+    }
+
+    .weapon-mini-list {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    .weapon-mini-card {
+      grid-template-columns: 1fr;
+    }
+
+    .weapon-mini-card__visual {
+      width: 100%;
+      height: 72px;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.035);
+    }
+
+    .weapon-mini-card__visual img {
+      height: 54px;
+    }
+
+    .weapon-mini-card__name {
+      padding: 9px 10px 10px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .weapon-mini-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .weapons-showcase.is-entering,
+    .weapon-panel.is-active,
+    .weapon-mini-card,
+    .weapon-mini-card__visual img,
+    .weapon-feature__visual img,
+    .weapon-feature__info h3,
+    .weapon-tab {
+      animation: none;
+      transition: none;
+    }
+  }
+
+
+
+
+  .maps-content[hidden], .map-scene[hidden] { display: none; }
+  .maps-content { width: 100%; }
+  .maps-stage { display: grid; }
+  .maps-stage > .map-scene { grid-area: 1 / 1; }
+  .maps-gallery { margin-top: 34px; scroll-margin-top: 24px; }
+  .maps-heading { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 20px; }
+  .maps-heading > div > span { color: #ff7582; font-size: .58rem; letter-spacing: .18em; font-weight: 800; }
+  .maps-heading h2 { margin: 7px 0 0; color: white; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: .05em; line-height: 1; }
+  .maps-controls { display: flex; align-items: center; gap: 8px; }
+  .maps-controls > span { margin-right: 14px; white-space: nowrap; }
+  .maps-controls button { width: 42px; height: 42px; border: 1px solid #ffffff24; border-radius: 50%; background: #ffffff05; color: white; font-size: 1.2rem; cursor: pointer; }
+  .maps-controls button:hover { border-color: #ff4655; background: #ff465518; }
+  .map-scene { position: relative; isolation: isolate; overflow: hidden; min-height: 410px; border-radius: 22px; background: radial-gradient(ellipse at 75% 35%, #392430, #141119 65%); border: 1px solid #ffffff12; }
+  .map-scene__photo { position: absolute; inset: 0; z-index: -2; background-size: cover; background-position: center; }
+  .map-scene::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #0c0a10e8, #0c0a1066 65%, #0c0a1022), linear-gradient(0deg, #0c0a10c9, transparent 70%); }
+  .map-scene__info { padding: 110px 42px 65px; max-width: 630px; }
+  .map-scene h3 { margin: 15px 0 20px; color: white; font-size: clamp(2.3rem, 5.5vw, 4.6rem); line-height: .95; letter-spacing: .045em; overflow-wrap: anywhere; }
+  .map-scene p { margin: 0; max-width: 450px; color: #e0dbe3; font-size: .9rem; line-height: 1.7; }
+  .map-scene__details {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    margin-top: 38px;
+    padding: 12px 28px;
+    min-height: 44px;
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 10px;
+    background: transparent;
+    backdrop-filter: blur(3px);
+    color: #fff;
+    font: inherit;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease, border-color .2s ease, background .2s ease;
+  }
+  .map-scene:hover .map-scene__details,
+  .map-scene:focus-within .map-scene__details {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .map-scene__details:hover {
+    border-color: #ff7582;
+    background: rgba(255,70,85,.06);
+  }
+  @media (hover: none) {
+    .map-scene__details { opacity: 1; transform: none; pointer-events: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .map-scene__details { transition: none; transform: none; }
+  }
+  .map-scene__index { position: absolute; top: 22px; right: 28px; color: #ffffff33; font-size: 3.2rem; font-weight: 900; line-height: 1; }
+  .maps-nav { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 15px; padding: 0 4px; }
+  .maps-nav button { display: flex; align-items: center; gap: 7px; padding: 14px 0; border: 0; border-bottom: 2px solid transparent; background: none; color: #a59da9; font-size: .68rem; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
+  .maps-nav button > span { color: #796b7f; font-size: .48rem; }
+  .maps-nav button:hover { color: white; }
+  .maps-nav button[aria-pressed="true"] { color: white; }
+  .maps-nav__name { position: relative; font: inherit; }
+  .maps-nav__name::after { content: ''; position: absolute; left: 0; right: 0; bottom: -14px; height: 2px; background: transparent; }
+  .maps-nav button[aria-pressed="true"] .maps-nav__name::after { background: #ff4655; }
+  .maps-nav button[aria-pressed="true"] > span { color: #ff7582; }
+  .maps-gallery button:focus-visible { outline: 2px solid #ff6572; outline-offset: 4px; }
+  @media (max-width: 600px) {
+    .map-scene { min-height: 380px; border-radius: 16px; }
+    .map-scene__info { padding: 120px 22px 60px; }
+    .map-scene p { font-size: .82rem; }
+    .map-scene__index { font-size: 2.4rem; right: 20px; }
+    .maps-controls > span { margin-right: 4px; font-size: .5rem; }
+    .maps-controls button { width: 36px; height: 36px; }
+    .maps-nav { gap: 0 16px; }
+    .maps-nav button { min-height: 44px; }
+  }
+
+  .site-guide[hidden] { display: none; }
+  .site-guide { margin-top: 48px; scroll-margin-top: 28px; padding: 24px 12px 40px; }
+  .site-guide__head { max-width: 640px; margin: 0 auto 76px; text-align: center; }
+  .site-guide__head > span { color: #ff7582; font-size: .6rem; letter-spacing: .18em; font-weight: 800; }
+  .site-guide h2 { margin: 16px 0 20px; font-size: clamp(2rem, 4vw, 3.2rem); color: white; line-height: 1.1; letter-spacing: -.035em; }
+  .site-guide__head p, .site-guide__text p { color: #c3bdc9; font-size: .88rem; line-height: 1.8; margin: 0; }
+  .site-guide__steps { list-style: none; padding: 0; margin: 0; display: grid; gap: clamp(64px, 8vw, 112px); }
+  .site-guide__step { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 76px); align-items: center; }
+  .site-guide__text { max-width: 390px; justify-self: center; }
+  .site-guide__number { display: block; color: rgba(255,117,130,.38); font-size: clamp(3rem, 5vw, 4.8rem); font-weight: 900; letter-spacing: -.06em; line-height: 1; margin-bottom: 20px; }
+  @media (min-width: 761px) {
+    .site-guide__step:nth-child(odd) { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+    .site-guide__step:nth-child(odd) .site-guide__figure { grid-column: 1; grid-row: 1; }
+    .site-guide__step:nth-child(odd) .site-guide__text { grid-column: 2; grid-row: 1; }
+  }
+  .site-guide h3 { color: white; font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.2; letter-spacing: -.02em; margin: 0 0 18px; }
+  .site-guide__figure { position: relative; isolation: isolate; margin: 0; min-width: 0; width: 100%; }
+  .site-guide__figure::before { content: ''; position: absolute; inset: -30px -15px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse, rgba(255,70,85,.09), transparent 68%); }
+  .site-guide__screen { position: relative; min-height: 160px; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px; background: radial-gradient(ellipse at 60% 40%, #241821, #121016 75%); box-shadow: 0 20px 45px rgba(0,0,0,.22); }
+  .site-guide__placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; text-align: center; color: #ff7582; font-size: 1.4rem; font-weight: 800; letter-spacing: .1em; }
+  .site-guide__placeholder small { font-size: .7rem; font-weight: 400; color: #b7adbf; letter-spacing: 0; }
+  .site-guide__screen img { position: relative; display: block; width: 100%; height: 100%; object-fit: contain; background: #100e15; }
+  .site-guide__screen img[hidden] { display: none; }
+  .site-guide figcaption { color: #968c9d; font-size: .65rem; margin-top: 14px; padding-left: 22px; position: relative; }
+  .site-guide figcaption::before { content: ''; position: absolute; left: 0; top: .6em; width: 12px; height: 1px; background: #ff7582; }
+  .site-guide__hint { max-width: 580px; margin: 76px auto 0; padding: 0; text-align: center; color: #a99eaf; font-size: .8rem; line-height: 1.8; }
+  @media (max-width: 760px) {
+    .site-guide { padding: 16px 4px 28px; }
+    .site-guide__head { margin-bottom: 44px; }
+    .site-guide__step { grid-template-columns: 1fr; gap: 24px; }
+    .site-guide__text { max-width: none; justify-self: stretch; }
+    .site-guide__number { font-size: 2.6rem; margin-bottom: 12px; }
+    .site-guide__hint { margin-top: 48px; }
+  }
+</style>
