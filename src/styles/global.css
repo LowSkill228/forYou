@@ -176,3 +176,23 @@ main {
 .page-transition {
   animation: pageIn 0.3s ease;
 }
+
+@media (max-width: 1024px) {
+  main { padding: 2rem 1.25rem; }
+  .topbar { gap: 1rem; }
+}
+
+@media (max-width: 600px) {
+  main { padding: 1.5rem 12px; min-width: 0; }
+  .topbar { height: auto; min-height: 60px; flex-wrap: wrap; gap: 4px 12px; padding: 8px 12px; }
+  .logo { font-size: 1rem; letter-spacing: 1px; }
+  .auth { margin-left: auto; }
+  .main-nav { order: 3; flex-basis: 100%; min-width: 0; }
+  .nav-item { min-height: 44px; padding: 8px 12px; font-size: .85rem; }
+  .sign-in { min-height: 44px; padding: 8px 12px; font-size: .8rem; white-space: nowrap; }
+  html { scroll-padding-top: 116px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition { animation: none; }
+}
