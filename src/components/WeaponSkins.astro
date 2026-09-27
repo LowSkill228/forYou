@@ -1,0 +1,174 @@
+---
+import catalog from '../data/weapon-skins.json';
+const { weapons } = Astro.props;
+const entries = Object.fromEntries(weapons.map((w) => [w.slug, catalog[w.slug] ?? []]));
+---
+<weapon-skins data-base={import.meta.env.BASE_URL}>
+  <script type="application/json" data-catalog set:html={JSON.stringify(entries).replace(/</g, '\\u003c')} />
+  <div class="skins-heading"><span>СКИНЫ ОРУЖИЯ <span data-count></span></span><div class="skins-controls"><button type="button" data-prev aria-label="Прокрутить скины назад" title="Назад">←</button><button type="button" data-next aria-label="Прокрутить скины вперёд" title="Вперёд">→</button></div></div>
+  <input type="search" aria-label="Поиск скина" placeholder="Найти скин…" data-search />
+  <div class="skins-list" data-list aria-label="Скины оружия"></div>
+  <p data-empty hidden>По этому запросу скинов нет.</p>
+  <div class="skins-selection"><span data-selection aria-live="polite">Стандартный</span><div data-variants aria-label="Расцветки"></div></div>
+</weapon-skins>
+<script>
+// @ts-nocheck
+class WeaponSkins extends HTMLElement {
+  connectedCallback() {
+    if (this.ready) return;
+    this.ready = true;
+    this.catalog = JSON.parse(this.querySelector('[data-catalog]').textContent);
+    this.panel = this.closest('[data-weapon-panel]');
+    this.search = this.querySelector('[data-search]');
+    this.list = this.querySelector('[data-list]');
+    this.variants = this.querySelector('[data-variants]');
+    this.previous = this.querySelector('[data-prev]');
+    this.next = this.querySelector('[data-next]');
+    this.previous.addEventListener('click', () => this.page(-1));
+    this.next.addEventListener('click', () => this.page(1));
+    this.list.addEventListener('scroll', () => this.updateControls(), { passive: true });
+    this.list.addEventListener('keydown', (event) => {
+      const buttons = [...this.list.querySelectorAll('button')];
+      const index = buttons.indexOf(event.target);
+      if (index < 0) return;
+      let target;
+      if (event.key === 'ArrowRight') target = Math.min(index + 1, buttons.length - 1);
+      else if (event.key === 'ArrowLeft') target = Math.max(index - 1, 0);
+      else if (event.key === 'Home') target = 0;
+      else if (event.key === 'End') target = buttons.length - 1;
+      else return;
+      event.preventDefault();
+      event.stopPropagation();
+      buttons[target].focus({ preventScroll: true });
+      buttons[target].click();
+    });
+    this.resizeObserver = new ResizeObserver(() => {
+      this.revealSelected('instant');
+      this.updateControls();
+    });
+    this.resizeObserver.observe(this.list);
+    this.search.addEventListener('input', () => this.render());
+    this.panel.addEventListener('weaponchange', () => this.reset());
+    this.reset();
+  }
+  disconnectedCallback() { this.resizeObserver?.disconnect(); }
+  motion() { return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'; }
+  page(direction) {
+    this.list.scrollBy({ left: direction * Math.max(134, this.list.clientWidth - 134), behavior: this.motion() });
+  }
+  updateControls() {
+    const max = this.list.scrollWidth - this.list.clientWidth;
+    this.previous.disabled = this.list.scrollLeft <= 1;
+    this.next.disabled = max <= 1 || this.list.scrollLeft >= max - 1;
+  }
+  revealSelected(behavior = this.motion()) {
+    const button = this.list.querySelector('[aria-pressed="true"]');
+    if (!button || !this.list.clientWidth) return;
+    const item = button.getBoundingClientRect();
+    const list = this.list.getBoundingClientRect();
+    const delta = item.left < list.left ? item.left - list.left - 2 : item.right > list.right ? item.right - list.right + 2 : 0;
+    if (delta) this.list.scrollBy({ left: delta, behavior });
+  }
+  reset() {
+    this.choice = this.panel.querySelector('[data-weapon-choice].is-active');
+    this.slug = this.choice.dataset.weaponSlug;
+    this.skins = this.catalog[this.slug] || [];
+    this.selected = null;
+    this.search.value = '';
+    this.render();
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem('weapon-skin-' + this.slug)); } catch {}
+    const skin = this.skins.find(s => s.id === saved?.skin);
+    this.select(skin, skin?.variants.find(v => v.id === saved?.variant));
+  }
+  render() {
+    this.list.replaceChildren();
+    const query = this.search.value.trim().toLocaleLowerCase();
+    const items = [{ id: '', name: 'Стандартный', variants: [{ image: this.choice.dataset.weaponImage }] }, ...this.skins];
+    const visible = items.filter(s => s.name.toLocaleLowerCase().includes(query));
+    this.querySelector('[data-count]').textContent = String(this.skins.length);
+    this.querySelector('[data-empty]').hidden = visible.length > 0;
+    for (const skin of visible) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.skin = skin.id;
+      button.setAttribute('aria-pressed', String(skin.id === (this.selected?.id || '')));
+      const img = document.createElement('img');
+      img.src = skin.id ? this.asset(skin.variants[0].image) : skin.variants[0].image;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      const name = document.createElement('span');
+      name.textContent = skin.name;
+      button.append(img, name);
+      button.addEventListener('click', () => this.select(skin.id ? skin : null));
+      this.list.append(button);
+    }
+    const selected = this.list.querySelector('[aria-pressed="true"]') || this.list.querySelector('button');
+    this.list.querySelectorAll('button').forEach(b => b.tabIndex = b === selected ? 0 : -1);
+    this.list.scrollLeft = 0;
+    this.updateControls();
+  }
+  asset(file) { return this.dataset.base + 'weapons/WeaponSkins/' + file; }
+  async select(skin, variant = skin?.variants[0]) {
+    const request = this.request = (this.request || 0) + 1;
+    this.selected = skin;
+    const name = variant?.name || 'Стандартный';
+    const src = variant ? this.asset(variant.image) : this.choice.dataset.weaponImage;
+    this.panel.dispatchEvent(new CustomEvent('skinchange'));
+    // No standard-weapon video is substituted for a skin without its own video.
+    this.panel.dataset.skinImage = variant ? src : '';
+    this.panel.dataset.skinName = name;
+    this.querySelector('[data-selection]').textContent = name;
+    this.list.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.skin === (skin?.id || ''))));
+    const active = this.list.querySelector('[aria-pressed="true"]') || this.list.querySelector('button');
+    this.list.querySelectorAll('button').forEach(b => b.tabIndex = b === active ? 0 : -1);
+    this.revealSelected();
+    this.variants.replaceChildren();
+    for (const v of skin?.variants || []) {
+      if (skin.variants.length < 2) break;
+      const b = document.createElement('button');
+      b.type = 'button'; b.title = v.name;
+      b.setAttribute('aria-label', v.name);
+      b.setAttribute('aria-pressed', String(v.id === variant.id));
+      const img = document.createElement('img'); img.src = this.asset(v.swatch || v.image); img.alt = '';
+      b.append(img); b.addEventListener('click', () => this.select(skin, v)); this.variants.append(b);
+    }
+    try { localStorage.setItem('weapon-skin-' + this.slug, JSON.stringify({ skin: skin?.id, variant: variant?.id })); } catch {}
+    const image = new Image(); image.src = src;
+    try {
+      await image.decode();
+      if (this.request !== request) return;
+      const featured = this.panel.querySelector('[data-featured-image]');
+      featured.src = src; featured.alt = this.choice.dataset.weaponName + ' — ' + name;
+    } catch {
+      if (this.request === request) this.querySelector('[data-selection]').textContent = 'Не удалось загрузить скин. Выбери его ещё раз.';
+    }
+  }
+}
+if (!customElements.get('weapon-skins')) customElements.define('weapon-skins', WeaponSkins);
+</script>
+<style>
+weapon-skins { display: block; min-width: 0; padding: 20px; border-top: 1px solid #ffffff0b; }
+.skins-heading { display:flex; justify-content:space-between; color:#ff7582; font-size:.65rem; font-weight:800; letter-spacing:.12em; margin-bottom:12px; }
+.skins-heading { align-items:center; gap:12px; }
+.skins-heading [data-count] { margin-left:8px; color:#99909e; }
+.skins-controls { display:flex; gap:6px; }
+.skins-controls button { width:44px; height:36px; border:1px solid #ffffff20; border-radius:8px; background:#ffffff03; color:#eee; font-size:1.15rem; cursor:pointer; transition:background .18s, border-color .18s; }
+.skins-controls button:disabled { opacity:.25; cursor:default; }
+.skins-controls button:disabled:hover { border-color:#ffffff20; }
+input { box-sizing:border-box; width:100%; padding:11px 14px; border:1px solid #ffffff14; border-radius:8px; background:#ffffff03; color:white; margin-bottom:12px; font:inherit; font-size:.8rem; }
+.skins-list { display:flex; gap:8px; overflow-x:auto; padding:3px 2px 10px; scrollbar-width:thin; scrollbar-color:#ff465550 transparent; }
+.skins-list :global(button) { flex:0 0 126px; padding:10px; border:1px solid #ffffff0c; border-radius:10px; background:#ffffff02; color:#b9b6bf; cursor:pointer; text-align:left; }
+.skins-list :global(img) { display:block; width:104px; height:48px; object-fit:contain; margin-bottom:8px; }
+.skins-list :global(span) { display:block; font-size:.65rem; line-height:1.5; }
+weapon-skins :global(button[aria-pressed="true"]) { border-color:#ff465580; background:#ff46550b; color:white; }
+weapon-skins :global(button:hover) { border-color:#ff7582; }
+weapon-skins :global(button:focus-visible), input:focus-visible { outline:2px solid #ff7582; outline-offset:2px; }
+.skins-selection { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; color:#ddd; font-size:.75rem; }
+[data-variants] { display:flex; flex-wrap:wrap; gap:6px; }
+[data-variants] :global(button) { width:44px; height:44px; padding:4px; border:1px solid #ffffff20; border-radius:50%; background:transparent; cursor:pointer; }
+[data-variants] :global(img) { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+[data-empty] { color:#aaa; font-size:.8rem; } [hidden] { display:none; }
+@media(max-width:600px) { weapon-skins { padding:16px; } }
+</style>

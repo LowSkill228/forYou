@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import maps from '../../data/maps.json';
+
+export function getStaticPaths() {
+  return maps.map((map) => ({ params: { slug: map.slug }, props: { map } }));
+}
+
+const { map } = Astro.props;
+---
+
+<BaseLayout title={`${map.name} — GAMESENSE`}>
+  <article class="map-page">
+    <a href={`${import.meta.env.BASE_URL}valorant/#maps-content`}>← Назад к картам</a>
+    <h1>{map.name}</h1>
+    <p>{map.description}</p>
+    <!-- Здесь будет подробная информация и схема этой карты. -->
+  </article>
+</BaseLayout>
+
+<style>
+  .map-page { max-width: 900px; margin: 0 auto; }
+  .map-page a { color: #ff7582; display: inline-block; padding: 12px 0; }
+  .map-page h1 { margin: 24px 0 16px; font-size: clamp(2rem, 6vw, 3rem); overflow-wrap: anywhere; }
+  .map-page p { line-height: 1.7; color: #c3bdc9; }
+</style>

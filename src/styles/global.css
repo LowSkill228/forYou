@@ -13,6 +13,19 @@
   padding: 0;
 }
 
+/* Hide the page scrollbars without disabling scrolling. */
+html,
+body {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 body {
   background: var(--bg);
   color: var(--text);

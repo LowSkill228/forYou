@@ -1,4 +1,6 @@
 ---
+import maps from "../data/maps.json";
+import WeaponSkins from '../components/WeaponSkins.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const games = [
@@ -358,73 +360,7 @@ const weaponGroups = [
 ];
 
 // Add map photos to public/images/maps/<slug>.png.
-const valorantMaps = [
-  {
-    "name": "SUMMIT",
-    "slug": "summit",
-        "description": "Академия радиантов в Китае. Опускающиеся стены меняют доступные маршруты прямо во время раунда."
-  },
-  {
-    "name": "CORRODE",
-    "slug": "corrode",
-        "description": "Французский замок и промышленный комплекс: древние улицы, укрытия и три линии для тактической игры."
-  },
-  {
-    "name": "ABYSS",
-    "slug": "abyss",
-        "description": "Секретная база над бездонной пропастью. Опасные края и смелые перемещения открывают новые возможности."
-  },
-  {
-    "name": "SUNSET",
-    "slug": "sunset",
-        "description": "Городские кварталы, три линии и борьба за центр карты возле объекта Kingdom."
-  },
-  {
-    "name": "LOTUS",
-    "slug": "lotus",
-        "description": "Древние руины, вращающиеся каменные двери и три точки установки Spike."
-  },
-  {
-    "name": "PEARL",
-    "slug": "pearl",
-        "description": "Подводный город с двумя точками. Узкий центр и длинные боковые проходы задают темп боя."
-  },
-  {
-    "name": "FRACTURE",
-    "slug": "fracture",
-        "description": "Исследовательский комплекс, расколотый экспериментом. Атака с разных направлений требует слаженной защиты."
-  },
-  {
-    "name": "BREEZE",
-    "slug": "breeze",
-        "description": "Тропические руины и открытые пространства. Дальние перестрелки и контроль флангов решают исход раунда."
-  },
-  {
-    "name": "ICEBOX",
-    "slug": "icebox",
-        "description": "Арктическая база Kingdom: контейнеры, высоты и тросы для неожиданных перемещений."
-  },
-  {
-    "name": "ASCENT",
-    "slug": "ascent",
-        "description": "Открытый центр и две точки с закрывающимися дверьми. Контроль пространства помогает управлять ходом раунда."
-  },
-  {
-    "name": "SPLIT",
-    "slug": "split",
-        "description": "Городская карта с перепадами высот. Верёвки и высокие позиции связывают центр с двумя точками."
-  },
-  {
-    "name": "HAVEN",
-    "slug": "haven",
-        "description": "Монастырский комплекс с тремя точками установки Spike. Защите приходится быстро менять позиции."
-  },
-  {
-    "name": "BIND",
-    "slug": "bind",
-        "description": "Две точки без центральной линии. Односторонние телепорты позволяют быстро менять направление атаки."
-  }
-].map((map) => ({ ...map, image: `${import.meta.env.BASE_URL}images/maps/${map.slug}.png` }));
+const valorantMaps = maps.map((map) => ({ ...map, image: `${import.meta.env.BASE_URL}images/maps/${map.slug}.png` }));
 
 ---
 
@@ -1072,8 +1008,16 @@ const valorantMaps = [
               />
 
               <div class="weapon-feature__glow"></div>
+              <button type="button" class="weapon-inspect-trigger" data-weapon-inspect aria-expanded="false" aria-controls={`weapon-inspect-${groupIndex}`}>ОСМОТРЕТЬ</button>
+              <div class="weapon-inspect" id={`weapon-inspect-${groupIndex}`} data-weapon-viewer hidden role="region" aria-label="Осмотр оружия">
+                <p class="weapon-inspect__status" data-inspect-status role="status">Загрузка…</p>
+                <video class="weapon-inspect__video" data-inspect-video hidden muted loop playsinline controls preload="none"></video>
+                <img class="weapon-inspect__image" data-inspect-image hidden alt="" />
+                <button type="button" class="weapon-inspect__close" data-inspect-close aria-label="Закрыть осмотр оружия">×</button>
+              </div>
             </div>
 
+            <WeaponSkins weapons={group.weapons} />
             <div class="weapon-feature__info">
 
               <span class="weapon-feature__label">
@@ -1112,8 +1056,10 @@ const valorantMaps = [
                   weaponIndex === 0 && "is-active"
                 ]}
                 data-weapon-choice
+                data-weapon-slug={weapon.slug}
                 data-weapon-name={weapon.name}
                 data-weapon-image={weapon.image}
+                data-weapon-video={`${import.meta.env.BASE_URL}videos/weapons/inspect/${weapon.slug}.mp4`}
                 data-weapon-icon={weapon.icon}
                 data-weapon-type={group.title}
                 data-weapon-description={weapon.description}
@@ -1203,9 +1149,9 @@ const valorantMaps = [
           <div class="map-scene__info">
             <h3 id={'map-name-' + map.slug}>{map.name}</h3>
             <p>{map.description}</p>
-            <button class="map-scene__details" type="button" aria-label={'Подробнее о карте ' + map.name}>
+            <a class="map-scene__details" href={`${import.meta.env.BASE_URL}maps/${map.slug}/`} aria-label={'Подробнее о карте ' + map.name}>
               Подробнее
-            </button>
+            </a>
           </div>
         </article>
       ))}
@@ -2350,8 +2296,81 @@ const valorantMaps = [
       document.querySelectorAll("[data-weapon-panel]")
     );
 
+  function closeWeaponInspect(panel, restoreFocus = false) {
+    const viewer = panel.querySelector('[data-weapon-viewer]');
+    const trigger = panel.querySelector('[data-weapon-inspect]');
+    if (!viewer || viewer.hidden) return;
+    viewer.hidden = true;
+    viewer.querySelector('[data-inspect-image]').hidden = true;
+    const video = viewer.querySelector('[data-inspect-video]');
+    video.onloadeddata = null;
+    video.onerror = null;
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    video.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.inert = false;
+    if (restoreFocus) trigger.focus({ preventScroll: true });
+  }
+
+  weaponPanels.forEach((panel) => {
+    panel.addEventListener('skinchange', () => closeWeaponInspect(panel));
+    const trigger = panel.querySelector('[data-weapon-inspect]');
+    const viewer = panel.querySelector('[data-weapon-viewer]');
+    const close = panel.querySelector('[data-inspect-close]');
+    trigger.addEventListener('click', () => {
+      const choice = panel.querySelector('[data-weapon-choice].is-active');
+      if (!choice) return;
+      if (panel.dataset.skinImage) {
+        const image = viewer.querySelector('[data-inspect-image]');
+        image.src = panel.dataset.skinImage;
+        image.alt = panel.dataset.skinName;
+        image.hidden = false;
+        viewer.querySelector('[data-inspect-video]').hidden = true;
+        viewer.querySelector('[data-inspect-status]').hidden = true;
+        viewer.hidden = false;
+        viewer.setAttribute('aria-label', 'Осмотр ' + panel.dataset.skinName);
+        trigger.setAttribute('aria-expanded', 'true');
+        trigger.inert = true;
+        close.focus({ preventScroll: true });
+        return;
+      }
+      // Isolate each playback from events belonging to the previous selection.
+      const previous = viewer.querySelector('[data-inspect-video]');
+      previous.pause();
+      const video = previous.cloneNode(false);
+      previous.replaceWith(video);
+      const status = viewer.querySelector('[data-inspect-status]');
+      video.hidden = true;
+      video.muted = true;
+      video.setAttribute('aria-label', 'Осмотр ' + choice.dataset.weaponName);
+      status.hidden = false;
+      status.textContent = 'Загрузка…';
+      video.onloadeddata = () => { video.hidden = false; status.hidden = true; };
+      video.onerror = () => { video.hidden = true; status.hidden = false; status.textContent = 'Видео осмотра пока недоступно.'; };
+      viewer.hidden = false;
+      viewer.setAttribute('aria-label', 'Осмотр ' + choice.dataset.weaponName);
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.inert = true;
+      video.src = choice.dataset.weaponVideo;
+      video.load();
+      video.play().catch(() => { /* Native controls allow manual playback. */ });
+      close.focus({ preventScroll: true });
+    });
+    close.addEventListener('click', () => closeWeaponInspect(panel, true));
+    viewer.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        closeWeaponInspect(panel, true);
+      }
+    });
+  });
+
   const activateWeaponChoice = (panel, button) => {
     if (!panel || !button) return;
+    closeWeaponInspect(panel);
 
     const buttons =
       Array.from(
@@ -2413,10 +2432,12 @@ const valorantMaps = [
     if (featuredDescription && nextDescription) {
       featuredDescription.textContent = nextDescription;
     }
+    panel.dispatchEvent(new CustomEvent('weaponchange'));
   };
 
   const setWeaponCategory = (index) => {
     if (!Number.isInteger(index) || !weaponTabs[index] || !weaponPanels[index]) return;
+    weaponPanels.forEach((panel) => closeWeaponInspect(panel));
 
     weaponTabs.forEach((tab, tabIndex) => {
       const isActive =
@@ -2558,6 +2579,7 @@ const valorantMaps = [
       scene.hidden = i !== target && i !== previous;
       scene.style.zIndex = i === target ? '2' : '1';
       scene.setAttribute('aria-hidden', String(i !== target));
+      scene.inert = i !== target;
     });
     mapSelectors.forEach((button, i) => button.setAttribute('aria-pressed', String(i === currentMap)));
     document.querySelector('[data-map-counter]').textContent =
@@ -2593,6 +2615,7 @@ const valorantMaps = [
     mapSelectors[next].focus();
   });
 
+  if (window.location.hash === '#maps-content') mapsToggle.click();
 </script>
 
 </BaseLayout>
@@ -7630,6 +7653,7 @@ span:last-child {
   .map-scene h3 { margin: 15px 0 20px; color: white; font-size: clamp(2.3rem, 5.5vw, 4.6rem); line-height: .95; letter-spacing: .045em; overflow-wrap: anywhere; }
   .map-scene p { margin: 0; max-width: 450px; color: #e0dbe3; font-size: .9rem; line-height: 1.7; }
   .map-scene__details {
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7662,6 +7686,7 @@ span:last-child {
     border-color: #ff7582;
     background: rgba(255,70,85,.06);
   }
+  .map-scene__details:focus-visible { outline: 2px solid #ff6572; outline-offset: 4px; }
   @media (hover: none) {
     .map-scene__details { opacity: 1; transform: none; pointer-events: auto; }
   }
@@ -7779,4 +7804,25 @@ span:last-child {
     .weapon-mini-card__name { padding-top: 0; }
     .brand__title { font-size: 1.7rem; letter-spacing: 2px; }
   }
+  .weapon-feature__visual { padding-bottom: 70px; }
+  .weapon-inspect-trigger {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 4;
+    min-height: 40px; padding: 10px 28px; border: 1px solid rgba(255,255,255,.2);
+    border-radius: 9px; background: rgba(255,255,255,.025); color: #eee9f0;
+    font: inherit; font-size: .65rem; font-weight: 800; letter-spacing: .13em; cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .weapon-inspect-trigger:hover { border-color: #ff7582; background: rgba(255,70,85,.08); }
+  .weapon-inspect { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: #0c0b10; }
+  .weapon-inspect[hidden], .weapon-inspect [hidden] { display: none; }
+  .weapon-panel .weapon-feature__visual .weapon-inspect__video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+    filter: none; transform: none; transition: none;
+  }
+  .weapon-inspect__status { padding: 24px 56px; text-align: center; color: #bdb5c6; font-size: .8rem; line-height: 1.6; }
+  .weapon-inspect__close { position: absolute; top: 10px; right: 10px; z-index: 3; width: 44px; height: 44px; border: 1px solid #ffffff20; border-radius: 10px; background: #101016cc; color: white; font-size: 1.5rem; cursor: pointer; }
+  .weapon-inspect__close:hover { border-color: #ff7582; }
+  .weapon-panel .weapon-feature__visual .weapon-inspect__image { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; padding: 36px 24px; box-sizing: border-box; object-fit: contain; transform: none; }
+  .weapon-inspect-trigger:focus-visible, .weapon-inspect__close:focus-visible { outline: 2px solid #ff7582; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .weapon-inspect-trigger { transition: none; } }
 </style>

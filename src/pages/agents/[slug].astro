@@ -1,6 +1,8 @@
 ---
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 export function getStaticPaths() {
 
@@ -2231,6 +2233,7 @@ export function getStaticPaths() {
 }
 
 const agent = Astro.props.agent;
+const hasAsset = (path: string) => existsSync(resolve('public', path));
 
 const roleIcons = {
 
@@ -2256,7 +2259,7 @@ const firstAbility =
 
 <BaseLayout title={`GAMESENSE — ${agent.name}`}>
 
-  <main class="agent-page">
+  <div class="agent-page">
 
     <a
 
@@ -2313,6 +2316,7 @@ const firstAbility =
 
 
 
+      <div class="agent-hero__panel">
       <div class="agent-hero__content">
 
         <span class="agent-hero__eyebrow">
@@ -2407,7 +2411,9 @@ const firstAbility =
 
                 data-description={`Демонстрация способности ${ability.name} агента ${agent.name}.`}
 
-                data-video={`${import.meta.env.BASE_URL}${ability.video}`}
+                data-video={hasAsset(ability.video) ? `${import.meta.env.BASE_URL}${ability.video}` : ''}
+                aria-expanded="false"
+                aria-controls="ability-preview"
 
                 aria-label={ability.name}
 
@@ -2421,13 +2427,13 @@ const firstAbility =
 
                 </span>
 
-                <img
+                {hasAsset(ability.icon) ? <img
 
                   src={`${import.meta.env.BASE_URL}${ability.icon}`}
 
                   alt={ability.name}
 
-                />
+                /> : <span class="agent-hero__ability-fallback" aria-hidden="true">{ability.key}</span>}
 
               </button>
 
@@ -2470,6 +2476,7 @@ const firstAbility =
 
 
         <div class="ability-preview__media">
+          <p id="ability-preview-unavailable" hidden>Видео этой способности пока не добавлено.</p>
 
           <video
 
@@ -2529,9 +2536,10 @@ const firstAbility =
 
       </div>
 
+      </div>
     </section>
 
-  </main>
+  </div>
 
 
 
@@ -2608,6 +2616,7 @@ const firstAbility =
 
 
     function closePreview() {
+      abilityButtons.forEach((button) => button.setAttribute('aria-expanded', 'false'));
 
       activeAbility = null;
 
@@ -2690,6 +2699,7 @@ const firstAbility =
         "is-active"
 
       );
+      abilityButtons.forEach((item) => item.setAttribute('aria-expanded', String(item === button)));
 
       if (previewKey) {
 
@@ -2736,6 +2746,17 @@ const firstAbility =
         source
 
       ) {
+        const available = Boolean(button.dataset.video);
+        preview?.classList.toggle('has-no-video', !available);
+        video.hidden = !available;
+        const unavailable = document.getElementById('ability-preview-unavailable');
+        if (unavailable) unavailable.hidden = available;
+        if (!available) {
+          video.pause();
+          source.removeAttribute('src');
+          video.load();
+          return;
+        }
 
         video.pause();
 
@@ -3621,7 +3642,7 @@ const firstAbility =
 
     color 0.22s ease,
 
-    *background* 0.22s ease,
+    background 0.22s ease,
 
     border-color 0.22s ease,
 
@@ -3737,7 +3758,7 @@ const firstAbility =
 
     transform 0.22s ease,
 
-    *background* 0.22s ease,
+    background 0.22s ease,
 
     border-color 0.22s ease,
 
@@ -4063,7 +4084,7 @@ const firstAbility =
 
     color 0.2s ease,
 
-    *background* 0.2s ease,
+    background 0.2s ease,
 
     border-color 0.2s ease;
 
@@ -4433,6 +4454,35 @@ const firstAbility =
 
 }
 
+/* A soft backdrop connects the profile text to the character artwork. */
+.agent-hero__content {
+  background: radial-gradient(ellipse at 15% 35%, rgba(230,57,70,.035), transparent 70%);
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+.agent-hero__content::before,
+.agent-hero__content::after { display: none; }
+.agent-hero__role-badge {
+  padding: 6px 0;
+  background: transparent;
+  border-color: transparent;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.agent-hero__description { color: rgba(255,255,255,.75); font-size: .9rem; line-height: 1.8; }
+.agent-hero__attributes-title,
+.agent-hero__abilities-title { color: rgba(255,255,255,.55); }
+.agent-hero__tags span {
+  background: rgba(255,255,255,.018);
+  border-color: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.72);
+  font-size: .55rem;
+}
+.agent-hero__abilities { border-top-color: rgba(255,255,255,.035); }
+.agent-hero__ability { background: rgba(255,255,255,.02); border-color: rgba(255,255,255,.055); border-radius: 10px; }
+.agent-hero__ability:focus-visible { outline: 2px solid #ff7582; outline-offset: 4px; }
+
 @media (max-width: 1024px) {
   .agent-page { width: 100%; max-width: 100%; min-width: 0; }
   .agent-hero { min-width: 0; }
@@ -4450,5 +4500,103 @@ const firstAbility =
   .agent-hero h1 { font-size: clamp(2.1rem, 11vw, 3.6rem); overflow-wrap: anywhere; }
   .agent-hero__description { font-size: .88rem; line-height: 1.75; }
   .agent-page__back { min-height: 44px; display: inline-flex; align-items: center; }
+}
+/* Ability player: a compact heading above an unobstructed video. */
+.ability-preview {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #111015;
+  border: 1px solid rgba(255,255,255,.065);
+  box-shadow: 0 20px 55px rgba(0,0,0,.35);
+}
+.ability-preview__info {
+  order: 0;
+  min-height: 88px;
+  padding: 18px 70px 18px 20px;
+  gap: 14px;
+  background: linear-gradient(110deg, rgba(255,70,85,.055), transparent 70%);
+}
+.ability-preview__info > div { min-width: 0; }
+.ability-preview__info > span {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.025);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: 0 3px 0 rgba(0,0,0,.25);
+  font-size: .85rem;
+}
+.ability-preview__info h3 { font-size: .95rem; letter-spacing: .045em; overflow-wrap: anywhere; margin-bottom: 5px; }
+.ability-preview__info p { font-size: .75rem; line-height: 1.55; color: #a9a2b1; }
+.ability-preview__media { order: 1; border-radius: 0; border-top: 1px solid rgba(255,255,255,.045); }
+.ability-preview__media video { object-fit: contain; }
+.ability-preview__close {
+  top: 20px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  border-color: transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #b7afbe;
+  font-size: 1.5rem;
+}
+.ability-preview__close:focus-visible { outline: 2px solid #ff7582; outline-offset: -3px; }
+@media (max-width: 1000px) {
+  .ability-preview { max-height: calc(100dvh - 140px); overflow-y: auto; }
+  .ability-preview__media { flex-shrink: 0; }
+}
+@media (max-width: 600px) {
+  .ability-preview { border-radius: 12px; }
+  .ability-preview__info { padding: 16px 60px 16px 14px; gap: 10px; }
+  .ability-preview__info h3 { font-size: .82rem; }
+  .ability-preview__info p { font-size: .7rem; }
+  .ability-preview__close { top: 16px; right: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .ability-preview { transition: none; } }
+/* Shared alignment for every agent, independent of portrait dimensions. */
+.agent-page { width: 100%; max-width: 1200px; }
+.agent-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; min-height: 650px; }
+.agent-hero__visual { min-height: 650px; }
+.agent-page .agent-hero .agent-hero__visual .agent-hero__image,
+.agent-page .agent-hero:hover .agent-hero__visual .agent-hero__image {
+  inset: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; transform: scale(1.2); transform-origin: center; object-fit: contain;
+}
+.agent-hero__content { transform: none; padding: 32px 24px; }
+.agent-hero h1 { font-size: clamp(2.6rem, 5vw, 5rem); overflow-wrap: anywhere; }
+.agent-hero__watermark { left: 0; max-width: 100%; overflow: hidden; font-size: clamp(3rem, 8vw, 7rem); }
+.agent-hero__abilities-list { display: grid; grid-template-columns: repeat(4, minmax(0, 72px)); gap: 12px; }
+.agent-hero__ability { width: 100%; aspect-ratio: 1; height: auto; min-height: 44px; }
+.agent-hero__ability-fallback { font-size: 1.5rem; color: #aaa2b2; font-weight: 700; }
+.agent-hero__panel { position: relative; min-width: 0; width: 100%; }
+.agent-hero__panel > .ability-preview {
+  position: absolute; inset: 0 0 auto; width: 100%; max-width: 100%; margin: 0;
+  transform: translateY(8px);
+}
+.agent-hero__panel > .ability-preview.is-open { transform: none; }
+.ability-preview.has-no-video .ability-preview__media { aspect-ratio: auto; }
+.ability-preview__media video[hidden], #ability-preview-unavailable[hidden] { display: none; }
+#ability-preview-unavailable { padding: 36px 24px; color: #b8aebe; text-align: center; font-size: .9rem; }
+@media (max-width: 1000px) {
+  .agent-hero { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 16px; }
+  .agent-hero__visual { min-height: 560px; }
+  .agent-hero__content { padding: 24px; }
+  .agent-hero__panel > .ability-preview { position: relative; inset: auto; width: 100%; }
+  .ability-preview:not(.is-open) { display: none; }
+}
+@media (max-width: 600px) {
+  .agent-hero__visual { min-height: 440px; }
+  .agent-hero__content { padding: 20px 8px; }
+  .agent-hero__abilities-list { gap: 10px; }
+}
+@media (max-width: 1000px) {
+  .agent-page .agent-hero .agent-hero__visual .agent-hero__image,
+  .agent-page .agent-hero:hover .agent-hero__visual .agent-hero__image { transform: none; }
 }
 </style>
