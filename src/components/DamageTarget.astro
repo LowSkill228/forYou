@@ -1,0 +1,104 @@
+---
+const { stats, knife } = Astro.props;
+const ranges = stats?.damageRanges ?? [];
+---
+<damage-target data-ranges={JSON.stringify(ranges)} data-knife={String(knife)} data-pellets={stats?.shotgunPelletCount ?? 1}>
+  <header><span>ПРОВЕРЬ ПОПАДАНИЕ</span><h4>УРОН ПО ЦЕЛИ</h4></header>
+  <label class="range-label">{knife ? 'Тип удара' : 'Дистанция'}
+    <select aria-label={knife ? 'Тип удара' : 'Дистанция'} data-range>
+      {knife ? <><option value="50">Быстрый · спереди</option><option value="100">Быстрый · со спины</option><option value="75">Сильный · спереди</option><option value="150">Сильный · со спины</option></> : ranges.map((r, i) => <option value={i}>{ranges.length === 1 ? 'Любая дистанция' : i === ranges.length - 1 ? `${r.rangeStartMeters}+ м` : `${r.rangeStartMeters}–${r.rangeEndMeters} м`}</option>)}
+    </select>
+  </label>
+  <div class="target-scene" data-zone="bodyDamage">
+    <svg viewBox="0 0 240 340" aria-hidden="true">
+      <g class="guides" fill="none"><path d="M120 8V330M25 65H215M25 153H215M25 270H215"/><ellipse cx="120" cy="325" rx="72" ry="8"/></g>
+      <g class="zone head" data-hit="headDamage"><path d="M103 22L120 16L137 22L141 44L132 62H108L99 44Z"/><path class="detail" d="M102 37H138M110 53H130"/></g>
+      <g class="zone body" data-hit="bodyDamage"><path d="M108 67H132L140 75L162 80L172 123L185 178L174 188L163 177L147 127L145 173L133 192H107L95 173L93 127L77 177L66 188L55 178L68 123L78 80L100 75Z"/><path class="detail" d="M95 88L120 104L145 88M120 104V162M97 143H143M101 173H139"/></g>
+      <g class="zone legs" data-hit="legDamage"><path d="M105 197H135L147 240L144 286L155 312L152 320H128L122 287L120 236L118 287L112 320H88L85 312L96 286L93 240Z"/><path class="detail" d="M96 260H117M123 260H144"/></g>
+    </svg>
+    <div class="zone-controls" role="group" aria-label="Зона попадания">
+      <button type="button" data-zone-button="headDamage" aria-pressed="false">Голова <b data-damage="headDamage"></b></button>
+      <button type="button" data-zone-button="bodyDamage" aria-pressed="true">Корпус <b data-damage="bodyDamage"></b></button>
+      <button type="button" data-zone-button="legDamage" aria-pressed="false">Ноги <b data-damage="legDamage"></b></button>
+    </div>
+  </div>
+  <div class="armor" role="group" aria-label="Броня цели">
+    <button type="button" data-health="100" aria-pressed="false"><span class="no-armor" aria-hidden="true">—</span><span>Без брони</span></button>
+    <button type="button" data-health="125" aria-pressed="false"><img src={`${import.meta.env.BASE_URL}images/weapons/small.png`} alt="" width="24" height="24" /><span>Лёгкая</span></button>
+    <button type="button" data-health="125" data-regen aria-pressed="false"><img src={`${import.meta.env.BASE_URL}images/weapons/second.png`} alt="" width="24" height="24" /><span>Реген-щит</span></button>
+    <button type="button" data-health="150" aria-pressed="true"><img src={`${import.meta.env.BASE_URL}images/weapons/big.png`} alt="" width="24" height="24" /><span>Тяжёлая</span></button>
+  </div>
+  <div class="result" aria-live="polite" aria-atomic="true"><strong data-hits>—</strong><div><span data-unit>ПОПАДАНИЙ ДО УСТРАНЕНИЯ</span><small data-summary></small></div></div>
+</damage-target>
+<script>
+class DamageTarget extends HTMLElement {
+  connectedCallback() {
+    if (this.dataset.ready) return;
+    this.dataset.ready = 'true';
+    const ranges = JSON.parse(this.dataset.ranges || '[]');
+    const knife = this.dataset.knife === 'true';
+    const select = this.querySelector<HTMLSelectElement>('[data-range]')!;
+    let zone = 'bodyDamage', health = 150, regen = false;
+    const draw = () => {
+      const range = ranges[Number(select.value)];
+      const damage = (key: string) => knife ? Number(select.value) : range?.[key] ?? 0;
+      this.querySelectorAll<HTMLElement>('[data-damage]').forEach(el => el.textContent = damage(el.dataset.damage!).toLocaleString('ru-RU', { maximumFractionDigits: 2 }));
+      this.querySelector('.target-scene')!.setAttribute('data-zone', zone);
+      this.querySelectorAll<HTMLButtonElement>('[data-zone-button]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.zoneButton === zone)));
+      const d = damage(zone);
+      this.querySelector('[data-hits]')!.textContent = d > 0 ? String(Math.ceil(health / d)) : '—';
+      this.querySelector('[data-unit]')!.textContent = Number(this.dataset.pellets) > 1 ? 'ДРОБИНОК ДО УСТРАНЕНИЯ' : 'ПОПАДАНИЙ ДО УСТРАНЕНИЯ';
+      this.querySelector('[data-summary]')!.textContent = `100 здоровья + ${health - 100} брони · урон ${d.toLocaleString('ru-RU', { maximumFractionDigits: 2 })}${regen ? ' · резерв 50: расчёт без пауз на восстановление' : ''}`;
+    };
+    select.addEventListener('change', draw);
+    this.querySelectorAll<HTMLElement>('[data-zone-button], [data-hit]').forEach(el => {
+      const choose = () => { zone = el.dataset.zoneButton || el.dataset.hit!; draw(); };
+      el.addEventListener('pointerenter', choose);
+      el.addEventListener('click', choose);
+      el.addEventListener('focus', choose);
+    });
+    this.querySelectorAll<HTMLButtonElement>('[data-health]').forEach(button => button.addEventListener('click', () => {
+      health = Number(button.dataset.health);
+      regen = button.hasAttribute('data-regen');
+      this.querySelectorAll('[data-health]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+      draw();
+    }));
+    draw();
+  }
+}
+if (!customElements.get('damage-target')) customElements.define('damage-target', DamageTarget);
+</script>
+<style>
+damage-target { display:block; min-width:0; padding-left:28px; border-left:1px solid #ffffff0b; color:#eee9f3; }
+header span { color:#ff7582; font-size:.52rem; font-weight:750; letter-spacing:.18em; }
+h4 { margin:7px 0 20px; font-size:1rem; letter-spacing:.09em; }
+.range-label { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:.65rem; color:#9990a5; }
+select { max-width:70%; background:#17141c; color:#e4dfe9; border:1px solid #ffffff16; border-radius:6px; padding:8px; font:inherit; }
+.target-scene { position:relative; display:grid; grid-template-columns:1fr 110px; align-items:center; min-height:290px; background:radial-gradient(ellipse at 35% 45%,#ff465509,transparent 65%); }
+svg { width:100%; height:290px; overflow:visible; }
+.guides { stroke:#ffffff0a; stroke-dasharray:3 6; }
+.zone { fill:#292530; stroke:#635a70; stroke-width:1; cursor:pointer; transition:fill .18s,stroke .18s; }
+.detail { fill:none; stroke:#ffffff18; }
+[data-zone="headDamage"] .head, [data-zone="bodyDamage"] .body, [data-zone="legDamage"] .legs { fill:#ff46552b; stroke:#ff7582; }
+.zone-controls { display:grid; gap:28px; }
+button { font:inherit; cursor:pointer; }
+.zone-controls button { text-align:left; padding:8px 0 8px 12px; background:none; border:0; border-left:1px solid #ffffff18; color:#a198ae; font-size:.65rem; min-height:44px; }
+.zone-controls b { display:block; margin-top:5px; color:#e5deed; font-size:1.15rem; font-variant-numeric:tabular-nums; }
+.zone-controls button[aria-pressed="true"] { border-color:#ff4655; color:#ff8994; }
+.zone-controls button[aria-pressed="true"] b { color:#ff8994; }
+.armor { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
+.armor button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-width:0; min-height:70px; border:1px solid #ffffff10; border-radius:5px; background:transparent; color:#a79dad; font-size:.57rem; padding:9px 3px; }
+.armor img, .no-armor { width:24px; height:24px; object-fit:contain; opacity:.55; }
+.no-armor { display:grid; place-items:center; font-size:20px; }
+.armor button:hover img, .armor button[aria-pressed="true"] img { opacity:1; }
+.armor button[aria-pressed="true"] { border-color:#ff46554d; background:#ff46550b; color:#ffe5e8; }
+button:hover { color:white; }
+button:focus-visible,select:focus-visible { outline:2px solid #ff7582; outline-offset:3px; }
+.result { display:flex; align-items:center; gap:14px; margin-top:20px; padding-top:16px; border-top:1px solid #ffffff0b; }
+.result strong { color:#ff7582; font-size:2.6rem; line-height:1; font-variant-numeric:tabular-nums; }
+.result span { font-size:.53rem; letter-spacing:.07em; font-weight:750; }
+.result small { display:block; margin-top:6px; font-size:.6rem; color:#9b92a5; }
+p { color:#867d91; font-size:.6rem; line-height:1.6; margin:14px 0 0; }
+@media(max-width:760px) { damage-target { border-left:0; border-top:1px solid #ffffff0b; padding:24px 0 0; } .target-scene { max-width:380px; margin:auto; } }
+@media(prefers-reduced-motion:reduce) { .zone { transition:none; } }
+</style>

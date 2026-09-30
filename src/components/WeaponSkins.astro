@@ -5,7 +5,7 @@ const entries = Object.fromEntries(weapons.map((w) => [w.slug, catalog[w.slug] ?
 ---
 <weapon-skins data-base={import.meta.env.BASE_URL}>
   <script type="application/json" data-catalog set:html={JSON.stringify(entries).replace(/</g, '\\u003c')} />
-  <div class="skins-heading"><span>СКИНЫ ОРУЖИЯ <span data-count></span></span><div class="skins-controls"><button type="button" data-prev aria-label="Прокрутить скины назад" title="Назад">←</button><button type="button" data-next aria-label="Прокрутить скины вперёд" title="Вперёд">→</button></div></div>
+  <div class="skins-heading"><button type="button" class="stats-toggle" data-stats-toggle aria-expanded="false" aria-controls={`weapon-stats-${weapons[0].slug}`}>ХАРАКТЕРИСТИКИ</button><div class="skins-controls"><button type="button" data-prev aria-label="Прокрутить скины назад" title="Назад">←</button><button type="button" data-next aria-label="Прокрутить скины вперёд" title="Вперёд">→</button></div></div>
   <input type="search" aria-label="Поиск скина" placeholder="Найти скин…" data-search />
   <div class="skins-list" data-list aria-label="Скины оружия"></div>
   <p data-empty hidden>По этому запросу скинов нет.</p>
@@ -86,7 +86,7 @@ class WeaponSkins extends HTMLElement {
     const query = this.search.value.trim().toLocaleLowerCase();
     const items = [{ id: '', name: 'Стандартный', variants: [{ image: this.choice.dataset.weaponImage }] }, ...this.skins];
     const visible = items.filter(s => s.name.toLocaleLowerCase().includes(query));
-    this.querySelector('[data-count]').textContent = String(this.skins.length);
+
     this.querySelector('[data-empty]').hidden = visible.length > 0;
     for (const skin of visible) {
       const button = document.createElement('button');
@@ -152,13 +152,23 @@ if (!customElements.get('weapon-skins')) customElements.define('weapon-skins', W
 weapon-skins { display: block; min-width: 0; padding: 20px; border-top: 1px solid #ffffff0b; }
 .skins-heading { display:flex; justify-content:space-between; color:#ff7582; font-size:.65rem; font-weight:800; letter-spacing:.12em; margin-bottom:12px; }
 .skins-heading { align-items:center; gap:12px; }
-.skins-heading [data-count] { margin-left:8px; color:#99909e; }
+.stats-toggle { min-height:40px; padding:10px 28px; border:1px solid rgba(255,255,255,.2); border-radius:9px; background:rgba(255,255,255,.025); color:#eee9f0; font:inherit; font-size:.65rem; font-weight:800; letter-spacing:.13em; cursor:pointer; transition:background .2s,border-color .2s; }
+.stats-toggle:hover,.stats-toggle[aria-expanded="true"] { border-color:#ff7582; background:rgba(255,70,85,.08); }
+@media(pointer:coarse) { .stats-toggle { min-height:44px; } }
 .skins-controls { display:flex; gap:6px; }
-.skins-controls button { width:44px; height:36px; border:1px solid #ffffff20; border-radius:8px; background:#ffffff03; color:#eee; font-size:1.15rem; cursor:pointer; transition:background .18s, border-color .18s; }
+.skins-controls button { width:32px; height:30px; border:1px solid #ffffff12; border-radius:5px; background:transparent; color:#b9b2c2; font-size:1rem; cursor:pointer; transition:color .18s, border-color .18s; }
+.skins-controls button:not(:disabled):hover { background:transparent; color:#ff7582; border-color:#ff465560; }
 .skins-controls button:disabled { opacity:.25; cursor:default; }
 .skins-controls button:disabled:hover { border-color:#ffffff20; }
 input { box-sizing:border-box; width:100%; padding:11px 14px; border:1px solid #ffffff14; border-radius:8px; background:#ffffff03; color:white; margin-bottom:12px; font:inherit; font-size:.8rem; }
-.skins-list { display:flex; gap:8px; overflow-x:auto; padding:3px 2px 10px; scrollbar-width:thin; scrollbar-color:#ff465550 transparent; }
+.skins-list { display:flex; gap:8px; overflow-x:auto; padding:3px 2px 14px; scrollbar-width:thin; scrollbar-color:#8c535d #ffffff05; }
+@supports selector(::-webkit-scrollbar) { .skins-list { scrollbar-width:auto; scrollbar-color:auto; } }
+.skins-list::-webkit-scrollbar { height:6px; }
+.skins-list::-webkit-scrollbar-track { background:#ffffff05; border-radius:3px; }
+.skins-list::-webkit-scrollbar-thumb { background:#8c535d; border:0; border-radius:3px; min-width:48px; }
+.skins-list::-webkit-scrollbar-thumb:hover { background:#ff7582; }
+.skins-list::-webkit-scrollbar-button { display:none; width:0; }
+@media(pointer:coarse) { .skins-controls button { width:44px; height:44px; } }
 .skins-list :global(button) { flex:0 0 126px; padding:10px; border:1px solid #ffffff0c; border-radius:10px; background:#ffffff02; color:#b9b6bf; cursor:pointer; text-align:left; }
 .skins-list :global(img) { display:block; width:104px; height:48px; object-fit:contain; margin-bottom:8px; }
 .skins-list :global(span) { display:block; font-size:.65rem; line-height:1.5; }

@@ -1,0 +1,167 @@
+---
+import catalog from '../data/weapon-stats.json';
+import DamageTarget from './DamageTarget.astro';
+const { weapons } = Astro.props;
+const fmt = (value: number) => value.toLocaleString('ru-RU', { maximumFractionDigits: 2 });
+---
+<weapon-stats id={`weapon-stats-${weapons[0].slug}`} tabindex="-1" hidden>
+  {weapons.map((weapon, index) => {
+    const stats = catalog.weapons[weapon.slug];
+    const knife = weapon.slug === 'melee';
+    return (
+      <section data-stats-weapon={weapon.slug} hidden={index !== 0} aria-label={`Характеристики ${weapon.name}`}>
+        <div class="stats-details">
+        <h4>ХАРАКТЕРИСТИКИ</h4>
+        {stats ? <>
+          <dl class="stats-summary">
+            <div><dt>Цена</dt><dd>{stats.cost === 0 ? 'Бесплатно' : fmt(stats.cost)}</dd></div>
+            <div><dt>Магазин</dt><dd>{stats.magazineSize} <small>патронов</small></dd></div>
+            <div><dt>Скорострельность</dt><dd>{fmt(stats.fireRate)} <small>выстр./с</small></dd></div>
+            <div><dt>Перезарядка</dt><dd>{fmt(stats.reloadTimeSeconds)} <small>с</small></dd></div>
+          </dl>
+          <h4 class="details-heading">ОСОБЕННОСТИ ОРУЖИЯ</h4>
+          <dl class="stats-extra">
+            <div><dt>Пробитие стен</dt><dd>{{ Low: 'Низкое', Medium: 'Среднее', High: 'Высокое' }[stats.wallPenetration.split('::').pop()] ?? '—'}</dd></div>
+            <div><dt>Экипировка</dt><dd>{fmt(stats.equipTimeSeconds)} <small>с</small></dd></div>
+            {stats.adsStats && <div><dt>Прицел · увеличение</dt><dd>×{fmt(stats.adsStats.zoomMultiplier)}</dd></div>}
+            {stats.shotgunPelletCount > 1 && <div><dt>Дробинок в выстреле</dt><dd>{stats.shotgunPelletCount}</dd></div>}
+          </dl>
+          {stats.adsStats?.burstCount > 1 && <p class="weapon-detail">В прицеле стреляет очередями по {stats.adsStats.burstCount} пули.</p>}
+          {stats.altShotgunStats && <p class="weapon-detail">Альтернативный огонь: {stats.altShotgunStats.shotgunPelletCount} пули за выстрел.</p>}
+          {weapon.slug === 'odin' && <p class="weapon-detail">При непрерывном огне темп возрастает до 15,6 выстр./с.</p>}
+          {weapon.slug === 'outlaw' && <p class="weapon-detail">Перезарядка после одного выстрела быстрее, чем из пустого оружия.</p>}
+        </> : knife ? <>
+          <dl class="stats-summary"><div><dt>Цена</dt><dd>Бесплатно</dd></div><div><dt>Тип атаки</dt><dd>Ближний бой</dd></div></dl>
+          <h4 class="details-heading">ОСОБЕННОСТИ АТАКИ</h4>
+          <dl class="stats-extra">
+            <div><dt>Быстрый удар</dt><dd>ЛКМ</dd></div>
+            <div><dt>Сильный удар</dt><dd>ПКМ</dd></div>
+          </dl>
+          <p class="weapon-detail">Удар со спины наносит больше урона. Выбери тип удара у манекена, чтобы сравнить результат.</p>
+        </> : <p class="stats-note">Характеристики пока недоступны.</p>}
+        </div>
+        <DamageTarget stats={stats} knife={knife} />
+        <p class="stats-note shared-note">{knife ? 'Урон удара одинаков для всех зон. Скин не изменяет характеристики.' : `Расчёт для основного огня: одна зона, без прострела, лечения и модификаторов.${stats?.shotgunPelletCount > 1 ? ' Считаются дробинки, а не выстрелы.' : ''} Урон до округления интерфейсом.`}</p>
+      </section>
+    );
+  })}
+  <div class="stats-footer">
+    <button type="button" class="stats-close" data-stats-close aria-label="Закрыть характеристики и вернуться к оружию" title="Вернуться к оружию"><span aria-hidden="true">×</span></button>
+  </div>
+</weapon-stats>
+<script>
+  class WeaponStats extends HTMLElement {
+    connectedCallback() {
+      const panel = this.closest('[data-weapon-panel]');
+      const toggle = panel?.querySelector<HTMLButtonElement>('[data-stats-toggle]');
+      let frame = 0;
+      let closing = false;
+      const moveTo = (target: HTMLElement, done = () => {}, maxScroll = document.documentElement.scrollHeight - innerHeight) => {
+        cancelAnimationFrame(frame);
+        const from = window.scrollY;
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const to = Math.max(0, Math.min(from + target.getBoundingClientRect().top - offset, maxScroll));
+        const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = duration ? Math.min(1, (now - start) / duration) : 1;
+          const eased = t * t * (3 - 2 * t);
+          window.scrollTo({ top: from + (to - from) * eased, behavior: 'instant' });
+          if (t < 1) frame = requestAnimationFrame(step);
+          else done();
+        };
+        frame = requestAnimationFrame(step);
+      };
+      const close = () => {
+        if (closing) return;
+        closing = true;
+        // Measure the collapsed document before choosing the scroll destination.
+        // Otherwise hiding the stats can clamp scrollY a second time at the bottom.
+        const root = document.documentElement;
+        const originalAnchor = root.style.overflowAnchor;
+        root.style.overflowAnchor = 'none';
+        const initialY = window.scrollY;
+        this.hidden = true;
+        const collapsedMax = Math.max(0, root.scrollHeight - innerHeight);
+        this.hidden = false;
+        void this.offsetHeight;
+        window.scrollTo({ top: initialY, behavior: 'instant' });
+        root.style.overflowAnchor = originalAnchor;
+        const finish = () => {
+        const finalY = window.scrollY;
+        const anchor = root.style.overflowAnchor;
+        root.style.overflowAnchor = 'none';
+        this.hidden = true;
+        closing = false;
+        toggle?.setAttribute('aria-expanded', 'false');
+        if (toggle) toggle.textContent = 'ХАРАКТЕРИСТИКИ';
+        const inspect = panel?.querySelector<HTMLButtonElement>('[data-weapon-inspect]');
+        (inspect && !inspect.inert ? inspect : toggle)?.focus({ preventScroll: true });
+        void root.scrollHeight;
+        window.scrollTo({ top: finalY, behavior: 'instant' });
+        requestAnimationFrame(() => { root.style.overflowAnchor = anchor; });
+        };
+        const visual = panel?.querySelector<HTMLElement>('.weapon-feature__visual');
+        if (visual) moveTo(visual, finish, collapsedMax);
+        else finish();
+      };
+      this.querySelector('[data-stats-close]')?.addEventListener('click', close);
+      toggle?.addEventListener('click', () => {
+        if (!this.hidden) { close(); return; }
+        this.hidden = !this.hidden;
+        toggle.setAttribute('aria-expanded', String(!this.hidden));
+        toggle.textContent = this.hidden ? 'ХАРАКТЕРИСТИКИ' : 'СКРЫТЬ ХАРАКТЕРИСТИКИ';
+        if (!this.hidden) requestAnimationFrame(() => {
+          if (this.hidden) return;
+          this.focus({ preventScroll: true });
+          moveTo(this);
+        });
+      });
+      const update = () => {
+        cancelAnimationFrame(frame);
+        closing = false;
+        this.hidden = true;
+        toggle?.setAttribute('aria-expanded', 'false');
+        if (toggle) toggle.textContent = 'ХАРАКТЕРИСТИКИ';
+        const slug = panel?.querySelector<HTMLElement>('[data-weapon-choice].is-active')?.dataset.weaponSlug;
+        this.querySelectorAll<HTMLElement>('[data-stats-weapon]').forEach(section => section.hidden = section.dataset.statsWeapon !== slug);
+      };
+      panel?.addEventListener('weaponchange', update);
+      update();
+    }
+  }
+  if (!customElements.get('weapon-stats')) customElements.define('weapon-stats', WeaponStats);
+</script>
+<style>
+weapon-stats { display:block; grid-column:1 / -1; padding:26px 22px; border-top:1px solid #ffffff08; border-radius:16px; }
+section { display:grid; grid-template-columns:minmax(0,1.34fr) minmax(260px,.82fr); gap:36px; }
+.stats-details { min-width:0; }
+@media(max-width:760px) { section { grid-template-columns:1fr; gap:28px; } }
+weapon-stats { scroll-margin-top:100px; outline:none; background:#100e15; }
+@media(max-width:760px) { weapon-stats { scroll-margin-top:130px; } }
+weapon-stats[hidden] { display:none; }
+[hidden] { display:none; }
+.stats-footer { display:flex; justify-content:flex-end; margin-top:8px; }
+.stats-close { display:grid; place-items:center; width:32px; height:32px; padding:0; border:1px solid #ffffff12; border-radius:6px; background:transparent; color:#a69aaf; font-size:22px; line-height:1; cursor:pointer; transition:color .18s,border-color .18s; }
+.stats-close:hover { color:#ff8994; border-color:#ff46554d; }
+.stats-close:focus-visible { outline:2px solid #ff7582; outline-offset:3px; }
+@media(pointer:coarse) { .stats-close { width:44px; height:44px; } }
+@media(prefers-reduced-motion:reduce) { .stats-close { transition:none; } }
+h4 { display:flex; align-items:center; gap:10px; margin:0 0 22px; color:#c3bbc9; font-size:.6rem; letter-spacing:.18em; }
+h4::before { content:''; width:16px; height:2px; background:#ff4655; }
+.stats-summary { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; margin:0 0 28px; }
+.stats-summary > div { padding:14px 16px; border-left:1px solid #ffffff12; }
+.stats-summary > div:first-child { border-left-color:#ff4655; }
+dt { color:#8f879a; font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+dd { margin:0; color:#f4f0f7; font-weight:750; font-size:clamp(1rem,2vw,1.4rem); font-variant-numeric:tabular-nums; line-height:1.3; }
+small { display:inline-block; font-size:.65rem; font-weight:400; color:#9c93a6; }
+.stats-note { margin:12px 0 0; color:#8f879a; font-size:.65rem; line-height:1.65; }
+@media(max-width:540px) { weapon-stats { padding:22px 16px; } .stats-summary > div { padding:12px; } }
+.details-heading { margin-top:28px; }
+.stats-extra { margin:0; }
+.stats-extra > div { display:flex; justify-content:space-between; align-items:baseline; gap:20px; padding:15px 0; border-bottom:1px solid #ffffff09; }
+.stats-extra dt { margin:0; text-transform:none; font-size:.75rem; letter-spacing:0; }
+.stats-extra dd { font-size:.9rem; text-align:right; }
+.weapon-detail { margin:16px 0 0; padding-left:12px; border-left:2px solid #ff46553b; color:#aaa1b5; font-size:.72rem; line-height:1.7; }
+.shared-note { grid-column:1 / -1; margin:0; padding-top:16px; border-top:1px solid #ffffff09; }
+</style>
