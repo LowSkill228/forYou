@@ -134,7 +134,7 @@ renderReasons();renderCats();resetMemory();renderNotes();renderFinal();
 for(let i=0;i<8;i++){const h=document.createElement('span');h.className='float-heart';h.textContent=i%2?'♡':'✧';h.style.left=(i*13+3)+'%';h.style.top='0';h.style.animationDelay=(-i*1.7)+'s';h.style.animationDuration=(12+i)+'s';h.setAttribute('aria-hidden','true');document.body.append(h)}
 
 // Set this to the deployed notification endpoint. Never place a bot token here.
-const NOTIFY_ENDPOINT = '';
+const NOTIFY_ENDPOINT = 'https://sveta-notify.bbvmisha.workers.dev/notify';
 let notificationSent=false;
 $('read-confirm').hidden=!NOTIFY_ENDPOINT;
 $('read-button').onclick=async()=>{
