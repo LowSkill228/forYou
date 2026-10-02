@@ -1,5 +1,6 @@
 ---
 
+import abilityDetails from '../../data/agent-abilities-ru.json';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -2214,7 +2215,7 @@ export function getStaticPaths() {
 
   ];
 
-  return agents.map((agent) => ({
+  return agents.map((agent, index) => ({
 
     params: {
 
@@ -2224,7 +2225,9 @@ export function getStaticPaths() {
 
     props: {
 
-      agent
+      agent,
+      previous: agents[(index + agents.length - 1) % agents.length],
+      next: agents[(index + 1) % agents.length]
 
     }
 
@@ -2233,6 +2236,11 @@ export function getStaticPaths() {
 }
 
 const agent = Astro.props.agent;
+const { previous, next } = Astro.props;
+const roleNames = { DUELIST: 'ДУЭЛЯНТ', CONTROLLER: 'СПЕЦИАЛИСТ', INITIATOR: 'ЗАЧИНЩИК', SENTINEL: 'СТРАЖ' };
+const attributeNames = { ENTRY: 'ВХОД НА ТОЧКУ', 'POST-PLANT': 'ЗАЩИТА SPIKE', 'ANTI-UTILITY': 'ПОДАВЛЕНИЕ УМЕНИЙ', SPIKE: 'РАБОТА СО SPIKE', 'СНОУБОЛЛ': 'УСИЛЕНИЕ ПОСЛЕ УБИЙСТВ', 'ЗОН-КОНТРОЛЬ': 'КОНТРОЛЬ ЗОН', 'УТИЛИТИ': 'ПОДДЕРЖКА УМЕНИЯМИ', 'ЛАЙНАПЫ': 'ТОЧНЫЕ БРОСКИ', 'СЕТАПЫ': 'ПОДГОТОВКА ПОЗИЦИИ' };
+const abilityAliases = { NEBULA: 'NEBULA  / DISSIPATE', 'COSMIC DIVIDE': 'ASTRAL FORM / COSMIC DIVIDE' };
+const detail = (ability) => abilityDetails[`${agent.name.toLowerCase()}|${abilityAliases[ability.name] ?? ability.name.toUpperCase()}`];
 const hasAsset = (path: string) => existsSync(resolve('public', path));
 
 const roleIcons = {
@@ -2263,7 +2271,7 @@ const firstAbility =
 
     <a
 
-      href={`${import.meta.env.BASE_URL}valorant/`}
+      href={`${import.meta.env.BASE_URL}valorant/#agent-roles`}
 
       class="agent-page__back"
 
@@ -2339,7 +2347,7 @@ const firstAbility =
 
           <span>
 
-            {agent.role}
+            {roleNames[agent.role]}
 
           </span>
 
@@ -2375,7 +2383,7 @@ const firstAbility =
 
             {agent.attributes.map((attribute: string) => (
 
-              <span>{attribute}</span>
+              <span>{attributeNames[attribute] ?? attribute}</span>
 
             ))}
 
@@ -2407,17 +2415,17 @@ const firstAbility =
 
                 data-key={ability.key}
 
-                data-name={ability.name}
+                data-name={detail(ability)?.name ?? ability.name}
 
-                data-description={`Демонстрация способности ${ability.name} агента ${agent.name}.`}
+                data-description={detail(ability)?.description ?? 'Описание этой способности пока не добавлено.'}
 
                 data-video={hasAsset(ability.video) ? `${import.meta.env.BASE_URL}${ability.video}` : ''}
                 aria-expanded="false"
                 aria-controls="ability-preview"
 
-                aria-label={ability.name}
+                aria-label={detail(ability)?.name ?? ability.name}
 
-                title={ability.name}
+                title={detail(ability)?.name ?? ability.name}
 
               >
 
@@ -2435,6 +2443,7 @@ const firstAbility =
 
                 /> : <span class="agent-hero__ability-fallback" aria-hidden="true">{ability.key}</span>}
 
+                <span class="agent-hero__ability-name">{detail(ability)?.name ?? ability.name}</span>
               </button>
 
             ))}
@@ -2482,6 +2491,7 @@ const firstAbility =
 
             id="ability-preview-video"
 
+            controls
             muted
 
             loop
@@ -2538,6 +2548,11 @@ const firstAbility =
 
       </div>
     </section>
+
+    <nav class="agent-navigation" aria-label="Другие агенты">
+      <a href={`${import.meta.env.BASE_URL}agents/${previous.slug}/`}><small>← ПРЕДЫДУЩИЙ АГЕНТ</small><strong>{previous.name}</strong></a>
+      <a href={`${import.meta.env.BASE_URL}agents/${next.slug}/`}><small>СЛЕДУЮЩИЙ АГЕНТ →</small><strong>{next.name}</strong></a>
+    </nav>
 
   </div>
 
@@ -2676,6 +2691,7 @@ const firstAbility =
 
       }
 
+      const wasOpen = preview?.classList.contains('is-open');
       activeAbility =
 
         abilityId;
@@ -2751,6 +2767,42 @@ const firstAbility =
         video.hidden = !available;
         const unavailable = document.getElementById('ability-preview-unavailable');
         if (unavailable) unavailable.hidden = available;
+        // Reserve the tallest description for this agent at the current width.
+        // Switching text must not move the media or shrink the document.
+        const info = preview?.querySelector<HTMLElement>('.ability-preview__info');
+        if (info && preview) {
+          const probe = info.cloneNode(true) as HTMLElement;
+          probe.removeAttribute('id');
+          probe.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+          Object.assign(probe.style, { position: 'absolute', visibility: 'hidden',
+            pointerEvents: 'none', width: `${info.getBoundingClientRect().width}px`,
+            boxSizing: 'border-box', height: 'auto', minHeight: '0', top: '0', left: '0' });
+          preview.append(probe);
+          let height = 0;
+          abilityButtons.forEach(item => {
+            probe.querySelector('h3')!.textContent = item.dataset.name ?? '';
+            probe.querySelector('p')!.textContent = item.dataset.description ?? '';
+            height = Math.max(height, probe.getBoundingClientRect().height);
+          });
+          probe.remove();
+          info.style.minHeight = `${Math.ceil(height)}px`;
+        }
+        requestAnimationFrame(() => {
+          if (activeAbility !== abilityId || !preview?.classList.contains('is-open')) return;
+          const target = available ? preview.querySelector('.ability-preview__media') : preview;
+          if (!target) return;
+          const rect = target.getBoundingClientRect();
+          const header = document.querySelector('.topbar')?.getBoundingClientRect();
+          const topInset = Math.max(0, header?.bottom ?? 0) + 16;
+          const visibleHeight = window.innerHeight - topInset - 16;
+          // A visible video needs no second scroll when changing abilities.
+          if (wasOpen && rect.top >= topInset && rect.bottom <= window.innerHeight - 16) return;
+          const offset = rect.height <= visibleHeight ? topInset + (visibleHeight - rect.height) / 2 : topInset;
+          window.scrollTo({
+            top: Math.max(0, window.scrollY + rect.top - offset),
+            behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+          });
+        });
         if (!available) {
           video.pause();
           source.removeAttribute('src');
@@ -2842,66 +2894,7 @@ const firstAbility =
 
   
 
-    /* ==================================================
-       FAST RETURN TO VALORANT
-       ================================================== */
-
-    const backToAgents =
-      document.getElementById(
-        "back-to-agents"
-      );
-
-
-    backToAgents?.addEventListener(
-      "click",
-      (event) => {
-
-        const cameFromValorant =
-          sessionStorage.getItem(
-            "gamesense:cameFromValorant"
-          ) === "1";
-
-
-        /*
-          Если страницу агента открыли из нашей галереи,
-          возвращаемся через browser history.
-          Так Valorant-страница может восстановиться из BFCache
-          уже полностью готовой: без повторной отрисовки кусками,
-          без ручного scrollTo и без пересборки каруселей.
-        */
-        if (
-          cameFromValorant &&
-          window.history.length > 1
-        ) {
-
-          event.preventDefault();
-
-          sessionStorage.removeItem(
-            "gamesense:cameFromValorant"
-          );
-
-          if (video) {
-            video.pause();
-          }
-
-          window.history.back();
-
-          return;
-        }
-
-
-        /*
-          Если агент открыт напрямую или в новой вкладке —
-          оставляем обычный href как безопасный fallback.
-        */
-        sessionStorage.setItem(
-          "gamesense:returnToValorant",
-          "1"
-        );
-
-      }
-    );
-
+    // Return directly to the agents section, regardless of profile navigation history.
 </script>
 
 </BaseLayout>
@@ -4598,5 +4591,48 @@ const firstAbility =
 @media (max-width: 1000px) {
   .agent-page .agent-hero .agent-hero__visual .agent-hero__image,
   .agent-page .agent-hero:hover .agent-hero__visual .agent-hero__image { transform: none; }
+}
+/* A shared, in-flow ability reader on every agent page. */
+.agent-page { box-sizing:border-box; width:100%; padding:24px 24px 48px; }
+.agent-page__back { position:relative; inset:auto; min-height:44px; margin-bottom:12px; }
+.agent-hero { align-items:start; min-height:0; gap:32px; }
+.agent-hero__visual { min-height:560px; height:min(650px,75vh); }
+.agent-hero__content { padding:20px 20px 24px; }
+.agent-hero h1 { margin:18px 0; }
+.agent-hero__attributes { margin-top:20px; }
+.agent-hero__abilities { margin-top:24px; }
+.agent-hero__abilities-list { grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.agent-hero__ability { display:flex; flex-direction:column; justify-content:flex-start; gap:10px; aspect-ratio:auto; min-height:108px; padding:25px 6px 12px; }
+.agent-hero__ability img { width:30px; height:30px; object-fit:contain; }
+.agent-hero__ability-name { color:#d7cedf; font-size:.65rem; line-height:1.45; letter-spacing:.025em; text-align:center; overflow-wrap:anywhere; }
+.agent-hero__panel > .ability-preview { position:relative; inset:auto; display:none; width:100%; max-width:100%; max-height:none; height:auto; min-height:0; margin:0; transform:none; overflow:hidden; box-shadow:none; }
+.agent-hero__panel > .ability-preview.is-open { display:flex; transform:none; }
+.ability-preview__info { padding:20px 54px 20px 20px; }
+.ability-preview__info p { font-size:.82rem; line-height:1.75; white-space:pre-line; }
+.ability-preview__media, .ability-preview.has-no-video .ability-preview__media { flex-shrink:0; position:relative; aspect-ratio:16 / 9; }
+.ability-preview__media video { position:absolute; inset:0; width:100%; height:100%; }
+.ability-preview__info { box-sizing:border-box; flex-shrink:0; }
+#ability-preview-unavailable { box-sizing:border-box; margin:0; position:absolute; inset:0; display:grid; place-items:center; }
+.agent-navigation { display:flex; justify-content:space-between; gap:20px; border-top:1px solid #ffffff0d; margin-top:32px; padding-top:22px; }
+.agent-navigation a { display:grid; gap:8px; color:#e7e1ed; text-decoration:none; padding:10px 0; }
+.agent-navigation a:last-child { text-align:right; }
+.agent-navigation small { color:#978a9d; font-size:.6rem; letter-spacing:.08em; }
+.agent-navigation strong { font-size:1.1rem; }
+.agent-navigation a:hover strong { color:#ff7582; }
+.agent-navigation a:focus-visible { outline:2px solid #ff7582; outline-offset:5px; }
+@media(max-width:1000px) {
+  .agent-hero { grid-template-columns:minmax(0,.8fr) minmax(0,1fr); gap:16px; }
+  .agent-hero__visual { min-height:440px; height:520px; }
+  .agent-hero__content { padding:16px 0 24px; }
+  .agent-hero__abilities-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:600px) {
+  .agent-page { padding:16px 16px 32px; }
+  .agent-hero { grid-template-columns:minmax(0,1fr); gap:0; }
+  .agent-hero__visual { height:340px; min-height:0; }
+  .agent-hero__content { padding:20px 0; }
+  .agent-hero__ability { min-height:96px; }
+  .ability-preview__info { padding:16px 48px 16px 12px; }
+  .agent-navigation small { font-size:.52rem; }
 }
 </style>
