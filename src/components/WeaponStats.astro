@@ -136,7 +136,8 @@ const fmt = (value: number) => value.toLocaleString('ru-RU', { maximumFractionDi
 weapon-stats { display:block; grid-column:1 / -1; padding:26px 22px; border-top:1px solid #ffffff08; border-radius:16px; }
 section { display:grid; grid-template-columns:minmax(0,1.34fr) minmax(260px,.82fr); gap:36px; }
 .stats-details { min-width:0; }
-@media(max-width:760px) { section { grid-template-columns:1fr; gap:28px; } }
+@media(max-width:1100px) { section { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; } }
+@media(max-width:900px) { section { grid-template-columns:1fr; gap:28px; } }
 weapon-stats { scroll-margin-top:100px; outline:none; background:#100e15; }
 @media(max-width:760px) { weapon-stats { scroll-margin-top:130px; } }
 weapon-stats[hidden] { display:none; }
@@ -145,7 +146,7 @@ weapon-stats[hidden] { display:none; }
 .stats-close { display:grid; place-items:center; width:32px; height:32px; padding:0; border:1px solid #ffffff12; border-radius:6px; background:transparent; color:#a69aaf; font-size:22px; line-height:1; cursor:pointer; transition:color .18s,border-color .18s; }
 .stats-close:hover { color:#ff8994; border-color:#ff46554d; }
 .stats-close:focus-visible { outline:2px solid #ff7582; outline-offset:3px; }
-@media(pointer:coarse) { .stats-close { width:44px; height:44px; } }
+@media(pointer:coarse), (max-width:900px) { .stats-close { width:44px; height:44px; } }
 @media(prefers-reduced-motion:reduce) { .stats-close { transition:none; } }
 h4 { display:flex; align-items:center; gap:10px; margin:0 0 22px; color:#c3bbc9; font-size:.6rem; letter-spacing:.18em; }
 h4::before { content:''; width:16px; height:2px; background:#ff4655; }

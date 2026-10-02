@@ -180,5 +180,13 @@ weapon-skins :global(button:focus-visible), input:focus-visible { outline:2px so
 [data-variants] :global(button) { width:44px; height:44px; padding:4px; border:1px solid #ffffff20; border-radius:50%; background:transparent; cursor:pointer; }
 [data-variants] :global(img) { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 [data-empty] { color:#aaa; font-size:.8rem; } [hidden] { display:none; }
-@media(max-width:600px) { weapon-skins { padding:16px; } }
+@media(max-width:600px) {
+  weapon-skins { padding:16px; }
+  .skins-heading { flex-wrap:wrap; gap:10px; }
+  .stats-toggle { flex:1 1 170px; padding:10px 12px; min-height:44px; letter-spacing:.07em; }
+  .skins-controls { flex-shrink:0; margin-left:auto; }
+  .skins-controls button { width:44px; height:44px; }
+  input { font-size:16px; }
+  .skins-selection { overflow-wrap:anywhere; }
+}
 </style>

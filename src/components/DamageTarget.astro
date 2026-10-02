@@ -99,6 +99,16 @@ button:focus-visible,select:focus-visible { outline:2px solid #ff7582; outline-o
 .result span { font-size:.53rem; letter-spacing:.07em; font-weight:750; }
 .result small { display:block; margin-top:6px; font-size:.6rem; color:#9b92a5; }
 p { color:#867d91; font-size:.6rem; line-height:1.6; margin:14px 0 0; }
-@media(max-width:760px) { damage-target { border-left:0; border-top:1px solid #ffffff0b; padding:24px 0 0; } .target-scene { max-width:380px; margin:auto; } }
+@media(max-width:900px) {
+  damage-target { border-left:0; border-top:1px solid #ffffff0b; padding:24px 0 0; }
+  .target-scene { max-width:420px; margin:auto; grid-template-columns:minmax(0,1fr) 100px; }
+  select { min-height:44px; font-size:16px; }
+  .range-label { font-size:.75rem; }
+  .armor button { font-size:.65rem; min-height:76px; }
+  .result span { font-size:.65rem; }
+  .result small { font-size:.72rem; line-height:1.6; }
+  .zone-controls button { font-size:.75rem; }
+}
+@media(max-width:380px) { .armor { grid-template-columns:repeat(2,minmax(0,1fr)); } .armor button { flex-direction:row; gap:8px; min-height:48px; } }
 @media(prefers-reduced-motion:reduce) { .zone { transition:none; } }
 </style>
